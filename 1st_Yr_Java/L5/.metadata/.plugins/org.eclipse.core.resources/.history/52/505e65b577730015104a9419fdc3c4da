@@ -1,0 +1,46 @@
+/* -----------------------------------------------------------------------------
+ *
+ * File Name: LCM.java
+ * Author: Liam Ormiston Ljormiston@ku.edu
+ * Assignment: EECS-168/169 Lab5
+ * Description: Program find and displays the Lowest Common Multiple of two 
+ * integers given by the user.
+ * Date: 10/15/15
+ *
+ ---------------------------------------------------------------------------- */
+import java.util.Scanner;
+public class LCM 
+{
+	public static void main(String[]args)
+	{
+		int a = 0;
+		int b = 0;
+		int LCM = 0;
+		Scanner myScan = new Scanner(System.in);
+		System.out.println("Welcome");
+		System.out.println("");
+		System.out.print("Input your first number: ");
+		a = myScan.nextInt();
+		System.out.print("Input your second number: ");
+		b = myScan.nextInt();
+		if (a < 1 || b < 1)
+		{
+			System.out.println("ERROR: both numbers must be positive!");
+		}
+		else
+		{
+			LCM = LCM(a, b);
+			System.out.println("The lease common multiple of "+ a +" and "+ b +" is: "+ LCM);
+		}
+		System.out.println("Program ending...");
+	}
+	public static int LCM(int a, int b)
+	{
+		int i =1; 
+		while (i*a % b != 0)
+		{
+			i++;
+		}
+		return(i*a);
+	}
+}

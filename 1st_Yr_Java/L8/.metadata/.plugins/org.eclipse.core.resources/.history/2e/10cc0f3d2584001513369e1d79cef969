@@ -1,0 +1,18 @@
+import java.util.Scanner;
+public class OldMacDonaldTest 
+{
+	public static void main(String[]args)
+	{
+		Animal animalA = new Animal();
+		OldMacDonald md = new OldMacDonald();
+		Scanner myScan = new Scanner(System.in);
+		System.out.print("Input a animal: ");
+		animalA.set_Type(myScan.nextLine());
+		System.out.print("What sound does a "+animalA.get_Type()+" make?: ");
+		animalA.set_Sound(myScan.nextLine());
+		System.out.println("Let's sing!");
+		md.sing();
+
+
+	}
+}

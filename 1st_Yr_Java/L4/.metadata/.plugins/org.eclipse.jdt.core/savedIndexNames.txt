@@ -1,0 +1,6 @@
+INDEX VERSION 1.126+/Users/Liam/EECS_168/workspace/Lab4/.metadata/.plugins/org.eclipse.jdt.core
+1665727645.index
+1840261136.index
+1975323307.index
+920842738.index
+4109046840.index

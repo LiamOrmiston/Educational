@@ -1,0 +1,15 @@
+import java.util.Scanner;
+public class KUStudentTest 
+{
+	public static void main(String[]args)
+	{
+		String firstname = null;
+		String lastname = null;
+		Scanner myScan = new Scanner(System.in);
+		System.out.println("Please input the student's name (firstname lastname");
+		firstname = myScan.next();
+		lastname = myScan.next();
+		System.out.println(firstname);
+		System.out.println(lastname);
+	}
+}

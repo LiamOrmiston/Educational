@@ -1,0 +1,14 @@
+import java.util.Random;
+public class Dice 
+{
+	final int numSides;
+	public Dice(int sides)
+	{
+		sides = numSides;
+	}
+	public int roll()
+	{
+		Random myRand = new Random ();
+		return myRand.nextInt(numSides);
+	}
+}

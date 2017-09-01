@@ -1,0 +1,58 @@
+import java.util.Scanner;
+public class Lab6_Strings 
+{
+	public static void main(String[]args)
+	{
+		int size = 0;
+		char [ ] arr = null;
+		int l = 0;
+		int max = 0;
+		int min = 0;
+		char x = 0;
+		String s = "";
+		Scanner myScan = new Scanner(System.in);
+		do
+		{
+			System.out.print("Input an array size for your words array: ");
+			size = myScan.nextInt();
+		}
+		while (size <=0);
+		arr = new char[size];
+		System.out.println("Now please enter "+ size +" words");
+		for (int i = 0; i < arr.length; i++)
+		{	
+			System.out.print("Input a word: ");
+			s = myScan.nextLine();
+			x = s.char;
+			arr [i] = x;
+		}
+		max = max(arr);
+		System.out.println("The longest word is: "+ max);
+		
+	}
+	public static int max(char [ ] max)
+	{
+		char x = max [0];
+		for (int i = 1; i < max.length; i++)
+		{
+			if (x < max [i])
+			{
+				x = max [i];
+			}
+		}
+		return (x);
+	}
+	public static int min(char [ ] min)
+	{
+		char x = min [0];
+		for (int i = 1; i < min.length; i++)
+		{
+			if (x > min [i])
+			{
+				x = min [i];
+			}
+		}
+		return (x);
+	}
+	
+}

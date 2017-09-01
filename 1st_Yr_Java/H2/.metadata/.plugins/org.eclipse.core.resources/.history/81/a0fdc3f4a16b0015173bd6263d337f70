@@ -1,0 +1,35 @@
+import java.util.Scanner;
+public class Prime 
+{
+	public static void main(String[]args)
+	{
+		int choice = 0;
+		int result = 0;
+		int i = 0;
+		Scanner myScan = new Scanner(System.in);
+		System.out.print("Input a positive integer: ");
+		choice = myScan.nextInt();
+		if (choice < 1)
+		{
+			System.out.print("Error: Input a positive integer");
+		}
+		if (choice == 1)
+		{
+			System.out.println("Not prime, but worth talking to a Professor of Maths about.");
+		}
+		while (choice % i != 0 && i < choice)
+		{
+			result = i;
+			i++;
+		}
+		if (choice % result == 0)
+		{
+			System.out.println(choice+" is not prime");
+		}
+		if (choice % result != 0)
+		{
+			System.out.println(choice+" is prime");
+		}
+	}
+
+}

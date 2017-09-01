@@ -1,0 +1,39 @@
+import java.util.Scanner;
+public class GameDriver 
+{
+	public static void main(String[]args)
+	{
+		String guess = "";
+		Scanner myScan = new Scanner(System.in);
+		Hangman h1 = new Hangman ();
+		System.out.println("Welcome to the Hangman Game!");
+		System.out.println("----------------------------");
+		System.out.println("");
+		do
+		{
+		System.out.println("Guess this: "+Hangman.getDisguisedword());
+		System.out.println("Guesses so far: "+Hangman.getGuessCount());
+		System.out.println("Misses: "+Hangman.getMissedMarker());
+		System.out.print("Enter your guess character: ");
+		guess = myScan.next();
+		if (Hangman.guessCharacter(guess.charAt(0)) == false)
+		{
+			System.out.println(guess.charAt(0)+" is not in the sercet word. Death draws closer.");
+		}
+		else
+		{
+			System.out.println(guess.charAt(0)+" is in the sercet word!");
+		}
+		System.out.println("");
+		
+		}
+		while (Hangman.isGameOver() == false);
+		System.out.println("Game Over!");
+		if (Hangman.getMissesCount() != Hangman.getMissedMarker().length())
+		{
+			System.out.println("Congratulations! You guessed the secret word: "+Hangman.getDisguisedword()+" in "+Hangman.getGuessCount()+" guesses!");
+		}
+		System.out.println("Do you want to play again? (yes/no):");
+	}
+
+}

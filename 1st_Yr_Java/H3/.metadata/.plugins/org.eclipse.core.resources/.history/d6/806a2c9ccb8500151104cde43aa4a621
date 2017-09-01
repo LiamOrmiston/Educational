@@ -1,0 +1,68 @@
+import java.util.Scanner;
+public class GameDriver 
+{
+	public static void main(String[]args)
+	{
+		String guess = "";
+		String again = "";
+		Scanner myScan = new Scanner(System.in);
+		Hangman h1 = new Hangman ();
+		do
+		{
+		playGame();
+		if (Hangman.getMissesCount() != Hangman.getMissedMarker().length())
+		{
+			System.out.println("Congratulations! You guessed the secret word: "+Hangman.getDisguisedword()+" in "+Hangman.getGuessCount()+" guesses!");
+		}
+		else
+		{
+			System.out.println("You died. Next time, guess as if your life depended on it.");
+		}
+		System.out.println("Do you want to play again? (yes/no):");
+		again = myScan.nextLine();
+		again = again.toLowerCase();
+		if (again.equals("yes"))
+		{
+			System.out.print("Input a new secret word: ");
+			Hangman h2 = new Hangman(myScan.nextLine());
+			for (int i = 0; i < 100; i++)
+			{
+				System.out.println("");
+			}
+			playGame();
+		}
+		}
+		while (again.equals("")||again.equals("yes"));
+		
+	}
+	public static void playGame()
+	{
+		String guess = "";
+		String again = "";
+		Scanner myScan = new Scanner(System.in);
+		System.out.println("Welcome to the Hangman Game!");
+		System.out.println("----------------------------");
+		System.out.println("");
+		do
+		{
+		System.out.println("Guess this: "+Hangman.getDisguisedword());
+		System.out.println("Guesses so far: "+Hangman.getGuessCount());
+		System.out.println("Misses: "+Hangman.getMissedMarker());
+		System.out.print("Enter your guess character: ");
+		guess = myScan.next();
+		if (Hangman.guessCharacter(guess.charAt(0)) == false)
+		{
+			System.out.println(guess.charAt(0)+" is not in the sercet word. Death draws closer.");
+		}
+		else
+		{
+			System.out.println(guess.charAt(0)+" is in the sercet word!");
+		}
+		System.out.println("");
+		
+		}
+		while (Hangman.isGameOver() == false);
+		System.out.println("Game Over!");
+	}
+
+}

@@ -1,0 +1,13 @@
+/* -----------------------------------------------------------------------------
+ *
+ * File Name: WordGuessingGame.java
+ * Author: Liam Ormiston Ljormiston@ku.edu
+ * Assignment: EECS-168/169 Lab03
+ * Description: The user guesses a word and will continue guessing
+ * until the correct word is guessed. The correct word is "valentine".
+ * Date: 10/01/15
+ *
+ ---------------------------------------------------------------------------- */
+public class WordGuessingGame {
+
+}

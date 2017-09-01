@@ -1,0 +1,24 @@
+/* -----------------------------------------------------------------------------
+ *
+ * File Name: Factorial.java
+ * Author: Liam Ormiston Ljormiston@ku.edu
+ * Assignment: EECS-168/169 Lab03 
+ * Description: 
+ * Date: 10/01/15
+ *
+ ---------------------------------------------------------------------------- */
+import java.util.Scanner;
+public class Factorial 
+{	public static void main(String[]args)
+	{int factorial = 0;
+	int output = 0;
+	int i = 0;
+	System.out.println("Enter the number to compute factorial");
+	while (factorial > i)
+	{System.out.print(factorial);
+	factorial = (factorial-1);
+		}
+	
+	}
+
+}

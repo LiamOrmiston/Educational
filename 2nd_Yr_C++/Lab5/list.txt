@@ -1,0 +1,6 @@
+eggs
+milk
+bread
+skittles
+phone
+shoe

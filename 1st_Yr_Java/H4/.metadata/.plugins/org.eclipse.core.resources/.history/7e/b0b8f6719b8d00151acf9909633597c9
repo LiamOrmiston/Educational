@@ -1,0 +1,85 @@
+
+public class Pokemon 
+{
+	private int hp;
+	private int attack;
+	private int defense;
+	private String name;
+	private Dice d20;
+	private Dice d6;
+	
+	public Pokemon()
+	{
+		hp = 0;
+		attack = 0;
+		defense = 0;
+		name = "";
+		d20 = new Dice(20);
+		d6 = new Dice(6);
+	}
+	public boolean attack(Pokemon opponent)
+	{
+		System.out.println(this.getName()+" is attacking "+opponent.getName());
+		int attackBonus = 0;
+		int defenseBonus = 0;
+		attackBonus = d20.roll();
+		System.out.println(this.getName()+" rolls an attack bonus of "+attackBonus);
+		defenseBonus = d20.roll();
+		System.out.println(opponent.getName()+" rolls an defense bonus of "+defenseBonus);
+		this.attack = this.attack + attackBonus;
+		opponent.defense = opponent.defense + defenseBonus;
+		int attack = 0;
+		if (this.attack > opponent.defense)
+		{
+			int roll1 = 0;
+			int roll2 = 0;
+			int roll3 = 0;
+			System.out.println("The attack hits dealing a 3-D6 damage!");
+			roll1 = d6.roll();
+			roll2 = d6.roll();
+			roll3 = d6.roll();
+			attack = roll1 + roll2 + roll3;
+			System.out.println("The rolls are "+roll1+", "+roll2+", and "+roll3+" totalling: "+attack+" damage!");
+			opponent.hp = opponent.hp - attack;
+			System.out.println(opponent.getName()+" has "+opponent.hp+" hit points left");
+			System.out.println("");
+		}
+		else
+		{
+			System.out.println("The attack missed!");
+		}
+		return (opponent.hp <= 0);
+	}
+	public void setHP(int HP)
+	{
+		hp = HP;
+	}
+	public int getHP()
+	{
+		return hp;
+	}
+	public void setAttack(int Attack)
+	{
+		attack = Attack;
+	}
+	public int getAttack()
+	{
+		return attack;
+	}
+	public void setDefense(int Defense)
+	{
+		defense = Defense;
+	}
+	public int getDefense()
+	{
+		return defense;
+	}
+	public void setName(String Name)
+	{
+		name = Name;
+	}
+	public String getName()
+	{
+		return name;
+	}
+}

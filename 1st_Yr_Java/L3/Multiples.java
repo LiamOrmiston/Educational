@@ -1,0 +1,32 @@
+/* -----------------------------------------------------------------------------
+ *
+ * File Name: Multiples.java
+ * Author: Liam Ormiston Ljormiston@ku.edu
+ * Assignment: EECS-168/169 Lab 
+ * Description: Program will list multiples of a number based on the number 
+ * 				and the amount of multiples the user wishes to see.
+ * Date: 9/24/15
+ *
+ ---------------------------------------------------------------------------- */
+import java.util.Scanner;
+public class Multiples 
+	{	public static void main(String[]args)
+	{	int num = 0;
+		int mult = 0;
+		Scanner myScan = new Scanner(System.in);
+		System.out.println("What number do you wish to see multiples of?");
+		num = myScan.nextInt();
+		System.out.println("How many multiples?");
+		mult = myScan.nextInt();
+		System.out.println("Here are the first "+ mult +" multiples of the number "+ num);
+		if (mult > 0)
+		{	for (int i=1; i <= mult; i=i+1)
+			{System.out.println(num * i);}
+		}
+		else
+		{	System.out.println("Error: The amount of multiples to display must be greater than zero");	}
+		
+		
+	}
+
+}

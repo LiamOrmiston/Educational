@@ -1,0 +1,26 @@
+import java.util.Scanner;
+public class Lab09 
+{
+	public static void main(String[]args)
+	{
+		ArrayHelper a1 = new ArrayHelper();
+		int rows = 0;
+		int columns = 0;
+		Scanner myScan = new Scanner(System.in);
+		System.out.print("How many rows?: ");
+		rows = myScan.nextInt();
+		System.out.print("How many columns?: ");
+		columns = myScan.nextInt();
+		int [][] Array = new int [rows][columns];
+		for (int i = 0; i < Array.length; i++)
+		{
+			for (int j = 0; j < Array[i].length; j++)
+			{
+				System.out.print("Enter a value for position ("+i+","+j+")");
+				Array[i][j] = myScan.nextInt();
+			}
+		}
+		System.out.println("Here is your array:");
+		a1.print2DArray(Array);
+	}
+}

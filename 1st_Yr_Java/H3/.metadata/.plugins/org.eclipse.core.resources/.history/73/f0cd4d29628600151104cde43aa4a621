@@ -1,0 +1,128 @@
+
+public class Hangman 
+{
+	private static final String secretWord = new String ();
+	private static char [] disguisedWord;
+	private static int guessCount;
+	private static int missesCount;
+	private static int MAX_MISSES_ALLOWED;
+	private static char [] missedMarkers;
+	public static int GamesPlayed = 0;
+	public Hangman()
+	{
+		final String secretWord = "big bang";
+		disguisedWord = new char[secretWord.length()];
+		setDisguisedWord();
+		MAX_MISSES_ALLOWED = 7;
+		missedMarkers = new char [MAX_MISSES_ALLOWED];
+		guessCount = 0;
+		missesCount = 0;
+		setMissedMarkers();
+		Hangman.GamesPlayed ++;
+	}
+	public Hangman(String secret)
+	{
+		final String secretWord = secret;
+		disguisedWord = new char[secretWord.length()];
+		setDisguisedWord();
+		MAX_MISSES_ALLOWED = 7;
+		missedMarkers = new char [MAX_MISSES_ALLOWED];
+		guessCount = 0;
+		missesCount = 0;
+		setMissedMarkers();
+		Hangman.GamesPlayed ++;
+	}
+	public static boolean guessCharacter (char c)
+	{
+		boolean guess = false;
+		for (int i = 0; i < getsecretWord().length(); i++)
+		{
+		if ( c == secretWord.charAt(i))
+		{
+			disguisedWord [i] = c;
+			guess = true;
+		}
+		}
+		if (guess == false)
+		{
+			missedMarkers [missesCount] = 'X';
+			missesCount ++;
+		}
+		guessCount ++;
+		return (guess);
+	}
+	public static boolean isGameOver ()
+	{
+		boolean game = false;
+		for (int i = 0; i < disguisedWord.length; i++)
+		{
+		if (missesCount == MAX_MISSES_ALLOWED || isFound() == true )
+		{
+			game = true; 
+		}
+		}
+		return (game);
+	}
+	public static boolean isFound ()
+	{
+		boolean found = true;
+		for (int i = 0; i < disguisedWord.length; i++)
+		{
+			if (disguisedWord [i] == '?')
+			{
+				found = false;
+			}
+		}
+		return (found);
+	}
+	public static String getDisguisedword ()
+	{
+		String Disguisedword = new String (disguisedWord);
+		return(Disguisedword);
+	}
+	public static int getGuessCount ()
+	{
+		return (guessCount);
+	}
+	public static int getMissesCount ()
+	{
+		return (missesCount);
+	}
+	public static String getMissedMarker ()
+	{
+		String Markers = new String (missedMarkers);
+		return(Markers);
+	}
+	public static int getGamesPlayed()
+	{
+		return (GamesPlayed);
+	}
+
+	private void setDisguisedWord()
+	{
+		for (int i = 0; i < getsecretWord().length(); i ++)
+		{
+			if (secretWord.charAt(i) == ' ')
+			{
+				disguisedWord [i] = ' ';
+			}
+			else
+			{
+				disguisedWord [i] = '?';
+			}
+		}
+	}
+	private static void setMissedMarkers() 
+	{
+		for (int i = 0; i < MAX_MISSES_ALLOWED; i++)
+		{
+			missedMarkers [i] = 'O';
+		}
+		
+	}
+	private static String getsecretWord ()
+	{
+		return secretWord;
+	}
+	
+}
