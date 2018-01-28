@@ -1,0 +1,117 @@
+/* File Name: BananaStand.java
+* Author: Liam Ormiston
+* KUID: 2767240
+* Email Address: Ljormiston@ku.edu 
+* Homework Assignment Number: Homework1
+* Description: User will pick the type and quantity of banana and where they want it shipped and the program
+* will calculate the cost.
+* Last Changed: 9-27-15
+*/
+import java.util.Scanner;
+public class BananaStand {
+	public static void main(String[]args)
+	{	String Type = "";
+		String Color = "";
+		char typeChar = '\0';
+		char colorChar = '\0';
+		int Quantity = 0;
+		double Discount = 0.0;
+		double Markup = 0.0;
+		double Cost = 0.0;
+		double TotalMarkup = 0.0;
+		double TotalDiscount = 0.0;
+		double TotalCost = 0.0;
+		String City = "";
+		String State = "";
+		String Address = "";
+		String InState = "Kansas";
+		int Zip = 0;
+		double Shipping = 0.0;
+		Scanner Choice = new Scanner(System.in);
+		System.out.println("Welcome to the Banana Stand!");
+		System.out.println("----------------------------");
+		System.out.println("Select type of banana");
+		System.out.println("Regular (r/R) (no markup)");
+		System.out.println("Organic (o/O) (20% markup)");
+		System.out.println("Saturated with Gamma Rays (g/G) (50% mark up)");
+		System.out.print("Input your choice: "); 
+		Type = Choice.nextLine();
+		typeChar = Type.charAt(0);
+		if (typeChar == 'r' || typeChar == 'R')
+		{	Markup = 0.0;	}
+		if (typeChar == 'o' || typeChar == 'O')
+		{	Markup = .20;	}
+		if (typeChar == 'g' || typeChar == 'G')
+		{	Markup = .50;	}
+		System.out.println("----------------------------");
+		System.out.println("Select color of banana");
+		System.out.println("Yellow (y/Y) (no discount)");
+		System.out.println("Green (g/G) (10% discount)");
+		System.out.println("Mixed (m/M) (5% discount)");
+		System.out.print("Input your choice: "); 
+		Color = Choice.nextLine();
+		colorChar =  Color.charAt(0);
+		if (colorChar == 'y' || colorChar == 'Y')
+		{	Discount = 0.0;	}
+		if (colorChar == 'g' || colorChar == 'G')
+		{	Discount = .10;	}
+		if (colorChar == 'm' || colorChar == 'M')
+		{	Discount = .05;	}
+		System.out.println("----------------------------");
+		System.out.print("How many bananas do you want?: ");
+		Quantity = Choice.nextInt();
+		Address = Choice.nextLine();
+		System.out.println("Input your street address: ");
+		Address = Choice.nextLine();
+		System.out.println("Input your city: ");
+		City = Choice.nextLine();
+		System.out.println("Input your state: ");
+		State = Choice.nextLine();
+		State.toLowerCase();
+		System.out.println("Input your zip code: ");
+		Zip = Choice.nextInt();
+		if (State.equalsIgnoreCase(InState))
+		{	Shipping = 0.0;	}
+		if (!State.equalsIgnoreCase(InState))
+		{	Shipping = 35.50;	}
+		System.out.println("----------------------------");
+		
+		Cost = Quantity * 0.03;
+		TotalMarkup = Markup*Cost+Shipping;
+		TotalDiscount = Discount*Cost;
+		TotalCost = Cost-TotalDiscount+TotalMarkup;
+		System.out.print("Total cost for "+ Quantity);
+		System.out.printf(" banana(s) before markups or discounts: $%.2f", Cost);
+		System.out.printf("%nTotal markups: $%.2f", TotalMarkup);
+		System.out.printf("%nTotal discounts: $%.2f", TotalDiscount);
+		System.out.printf("%nTotal cost: $%.2f", TotalCost);
+		System.out.println("");
+		System.out.println("Shipping to:");
+		System.out.println("	"+Address);
+		System.out.println("	"+City);
+		System.out.println("	"+State);
+		System.out.println("	"+Zip);
+		int Truck = 2400;
+		int Barrel = 64;
+		int Bunch = 8;
+		int Single = 1;
+		int Start = 0;
+		int Remainder1 = 0;
+		int Remainder2 = 0;
+		int Remainder3 = 0;
+		int Remainder4 = 0;
+		if (Quantity >= Truck)
+		{	Start = Quantity/Truck;
+			Remainder1 = Quantity%Truck;	}
+		if (Remainder1 >= Barrel)
+		{	Remainder2 = Remainder1/Barrel;	
+			Remainder1 = Remainder1%Barrel;	}
+		if (Remainder2 >= Barrel);
+		{	Remainder3 = Remainder2/Barrel;
+			Remainder2 = Remainder2%Barrel;	}
+		if (Remainder3 >= Bunch)
+		{	Remainder4 = Remainder3/Bunch;
+			Remainder3 = Remainder3%Bunch;	}
+		System.out.println("Your order of "+Quantity+" will be shipped to you in "+Start+"truck(s) "+Remainder1+" barrel(s) "+Remainder2+" bunch(es) "+Remainder3+" single(s).");
+	}
+}

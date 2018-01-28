@@ -1,0 +1,196 @@
+import java.util.Scanner;
+public class Colosseum 
+{
+	public static void main(String[]args)
+	{
+		Pokemon fighter1 = new Pokemon ();
+		Pokemon fighter2 = new Pokemon ();
+		Dice d2 = new Dice(2);
+		int order = 0;
+		String again = "yes";
+		Scanner myScan = new Scanner(System.in);
+		//builds player 1 pokemon
+		System.out.println("Player 1, build your Pokemon!");
+		System.out.println("=====================");
+		userBuild(fighter1);
+		//builds player 2 pokemon
+		System.out.println("Player 2, build your Pokemon!");
+		System.out.println("=====================");
+		userBuild(fighter2);
+		//determines who goes first
+		order = order(d2);
+		do
+		{
+			//tells users who goes first
+			if (order == 1)
+			{
+				System.out.println("Player 1 rolls a 1 and will go first");
+			}
+			else
+			{
+				System.out.println("Player 1 rolls a 2 and will go second");
+			}
+			//begins game
+				int i = 1;
+				do
+				{
+					System.out.println("");
+					System.out.println("Round "+i+"!");
+					System.out.println("");
+					if (1 == order)
+					{
+						fighter1.attack(fighter2);
+						if (fighter2.getHP() > 0)
+						{
+							fighter2.attack(fighter1);
+						}
+					}
+					else
+					{
+						fighter2.attack(fighter1);
+						if (fighter1.getHP() > 0)
+						{
+							fighter1.attack(fighter2);
+						}
+					}
+					//displays if fighters go to 10 without dying
+					if(i == 10)
+					{
+						System.out.println("Bother fighters are still standing! It's a draw!");
+					}
+					i++;
+				}
+				//runs until a pokemon dies or Round 10 is over
+				while(fighter1.getHP() > 0 && fighter2.getHP() > 0 && i <= 10);
+				//resets defense or attack if pokemon used a spell to increase it
+				if (fighter1.getDefenseSpell()==1)
+				{
+					fighter1.setDefenseSpell(0);
+					fighter1.setDefense(fighter1.getDefense() - 5);
+				}
+				if (fighter1.getAttackSpell()==1)
+				{
+					fighter1.setAttackSpell(0);
+					fighter1.setAttack(fighter1.getAttack() - 5);
+				}
+				if (fighter2.getDefenseSpell()==1)
+				{
+					fighter2.setDefenseSpell(0);
+					fighter2.setDefense(fighter2.getDefense() - 5);
+				}
+				if (fighter2.getAttackSpell()==1)
+				{
+					fighter2.setAttackSpell(0);
+					fighter2.setAttack(fighter2.getAttack() - 5);
+				}
+				System.out.println("Do you want to play again? (yes/no)");
+				//plays again if user types "yes"
+				again = myScan.nextLine();
+				again = again.toLowerCase();
+				//sets new pokemon if user wants to play again
+				if (again.equals("yes"))
+				{
+					//if player 2 lost
+					if (fighter2.getHP() <= 0)
+					{
+						fighter1.setHP(fighter1.getBegHP());
+						fighter1.setAttack(fighter1.getBegAtt());
+						fighter1.setDefense(fighter1.getBegDef());
+						System.out.println("Player 2, please remake another pokemon.");
+						userBuild(fighter2);
+					}
+					//if player 1 lost
+					if (fighter1.getHP() <= 0)
+					{
+						fighter2.setHP(fighter2.getBegHP());
+						fighter2.setAttack(fighter2.getBegAtt());
+						fighter2.setDefense(fighter2.getBegDef());
+						System.out.println("Player 1, please remake another pokemon.");
+						userBuild(fighter1);
+					}
+					//if it was a draw
+					else
+					{
+						System.out.println("Player 1, please remake another pokemon.");
+						userBuild(fighter1);
+						System.out.println("Player 2, please remake another pokemon.");
+						userBuild(fighter2);
+					}
+				}
+		}
+		//runs endlessly until the users type anything except "yes"
+		while (again.equals("yes"));
+		System.out.println("Thank you for playing!");
+	}
+	
+	//method used to build new pokemon
+	public static void userBuild(Pokemon p)
+	{
+		int attack = 0;
+		int defense = 0;
+		int hp = 0;
+		Scanner myScan = new Scanner(System.in);
+		System.out.print("Please name your pokemon: ");
+		p.setName(myScan.nextLine());
+		System.out.println("");
+		System.out.print("How many hit points will it have? (1-50): ");
+		//sets hit points
+		hp = myScan.nextInt();
+		System.out.println("");
+		if (hp > 50 || hp < 1)
+		{
+			//asks user repeatedly until input is correct
+			do
+			{
+				System.out.print("Sorry. The hp level must be between 1 and 50: ");
+				hp = myScan.nextInt();
+				System.out.println("");
+			}
+			while (hp > 50 || hp < 1);
+		}
+		p.setHP(hp);
+		System.out.println("Split fifty points between attack level and defense level");
+		System.out.print("Enter your attack level (1-49): ");
+		//sets attack level
+		attack = myScan.nextInt();
+		System.out.println("");
+		if (attack > 49 || attack < 1)
+		{
+			//asks user repeatedly until input is correct
+			do
+			{
+				System.out.print("Sorry. The attack level must be between 1 and 49: ");
+				attack = myScan.nextInt();
+				System.out.println("");
+			}
+			while (attack > 49 || attack < 1);
+		}
+		p.setAttack(attack);
+		myScan.nextLine();
+		
+		//sets defense level
+		System.out.print("Enter your defense level (1-"+(50-attack)+"): ");
+		defense = myScan.nextInt();
+		System.out.println("");
+		if( defense > (50-attack)|| defense < 1) 
+		{
+			//asks user repeatedly until input is correct
+			do
+			{
+			System.out.print("Sorry. The defense level must be between 1-"+(50-attack)+": ");
+			defense = myScan.nextInt();
+			System.out.println("");
+			}
+			while ( defense > (50-attack)|| defense < 1);
+		}
+		p.setDefense(defense);
+	}
+	
+	//2 sided dice roll to see who goes first
+	public static int order(Dice d2)
+	{
+		int order = 0;
+		order = d2.roll() + 1;
+		return order;
+	}
+}

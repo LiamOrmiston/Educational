@@ -1,0 +1,46 @@
+/* -----------------------------------------------------------------------------
+ *
+ * File Name: Palindrome.java
+ * Author: Liam Ormiston Ljormiston@ku.edu
+ * Assignment: EECS-168/169 Lab5
+ * Description: Program tells user length of an number inputed, then give
+ * the user the number in reverse order and tell the user whether the number
+ * is a palindrome or not. The program will run this program as long as the
+ * user wants to run the program again.
+ * Date: 10/15/15
+ *
+ ---------------------------------------------------------------------------- */
+import java.util.Scanner;
+public class Palindrome 
+{
+	public static void main(String[]args)
+	{
+		int num = 0;
+		int length = 0;
+		int reverse = 0;
+		boolean palindrome = true;
+		Scanner myScan = new Scanner(System.in);
+		System.out.println("Please enter a Number:");
+		num = myScan.nextInt();
+		length = lengthOfNumber(num);
+		System.out.println("Length of the Number is: "+length);
+	}
+	public static int lengthOfNumber(int x)
+	{
+		int i = 0;
+		while (x!=0)
+		{
+			x = x/10;
+			i++;
+		}
+		return(i);
+	}
+	public static int reverse(int x)
+	{
+		
+	}
+	public static boolean isPalindrome(int x)
+	{
+		
+	}
+}

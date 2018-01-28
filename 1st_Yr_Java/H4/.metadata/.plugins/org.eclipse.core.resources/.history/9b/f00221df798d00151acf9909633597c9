@@ -1,0 +1,55 @@
+import java.util.Scanner;
+public class Colosseum 
+{
+	public static void main(String[]args)
+	{
+		Pokemon fighter1 = new Pokemon ();
+		Pokemon fighter2 = new Pokemon ();
+		Dice d2 = new Dice(2);
+		Scanner myScan = new Scanner(System.in);
+		System.out.println("Player 1, build your Pokemon!");
+		System.out.println("=====================");
+		userBuild(fighter1);
+		System.out.println("Player 2, build your Pokemon!");
+		System.out.println("=====================");
+		userBuild(fighter2);
+		System.out.println(fighter1.getAttack());
+		System.out.println(fighter1.getDefense());
+		System.out.println(fighter1.getHP());
+		System.out.println(fighter2.getAttack());
+		System.out.println(fighter2.getDefense());
+		System.out.println(fighter2.getHP());
+	}
+	public static void userBuild(Pokemon p)
+	{
+		int attack = 0;
+		int defense = 0;
+		Scanner myScan = new Scanner(System.in);
+		System.out.print("Please name your pokemon: ");
+		p.setName(myScan.nextLine());
+		System.out.println("");
+		System.out.print("How many hit points will it have? (1-50): ");
+		p.setHP(myScan.nextInt());
+		System.out.println("");
+		System.out.println("Split fifty points between attack level and defense level");
+		System.out.println("Enter your attack level (1-49): ");
+		attack = myScan.nextInt();
+		do 
+		{
+			System.out.println("Sorry. The attack level must be between 1 and 49: ");
+			attack = myScan.nextInt();
+		}
+		while (attack > 49 || attack < 1);
+		p.setAttack(attack);
+		System.out.println("");
+		System.out.println("Enter your defense level (1-"+(50-attack)+"): ");
+		defense = myScan.nextInt();
+		do 
+		{
+			System.out.println("Sorry. The defense level must be between 1-"+(50-attack)+": ");
+			defense = myScan.nextInt();
+		}
+		while ( defense > (50-attack)|| defense < 1);
+		p.setDefense(defense);
+	}
+}

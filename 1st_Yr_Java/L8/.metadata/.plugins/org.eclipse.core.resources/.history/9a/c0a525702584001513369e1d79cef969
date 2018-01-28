@@ -1,0 +1,31 @@
+
+public class Animal 
+{
+	private String Type;
+	private String Sound;
+	public String [] animal;
+	public Animal()
+	{
+		 Type = null;
+		 Sound = null;
+		 animal = new String [2];
+	}
+	public void set_Type(String a)
+	{
+		Type = a;
+		animal [0] = Type;
+	}
+	public void set_Sound(String noise)
+	{
+		Sound = noise;
+		animal [1] = Sound;
+	}
+	public String get_Type()
+	{
+		return (animal [0]);
+	}
+	public String get_Sound()
+	{
+		return (animal [1]);
+	}
+}

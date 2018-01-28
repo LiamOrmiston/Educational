@@ -1,0 +1,177 @@
+/* File Name: Hangman.java 
+*Author: Liam Ormiston 
+*KUID: 2767240
+*Email Address: ljormiston@ku.edu 
+*Homework Assignment Number: 3 
+*Description: A hangman game that lets the user guess a character in a secret word. 
+The user can guess the word once and if missed, can only guess characters for the rest
+of that game. The user gets 7 misses before the game ends. At the end of the game the
+user and choose to play again using their own word.
+*Last Changed: 11/08/2015 */
+public class Hangman 
+{
+	// member variables
+	private static /*final*/ String secretWord = "big bang";
+	private static char [] disguisedWord;
+	private static int guessCount;
+	private static int missesCount;
+	private static int MAX_MISSES_ALLOWED;
+	private static char [] missedMarkers;
+	private static int wordGuess;
+	public static int GamesPlayed = 0;
+	//constructor if no value is entered ie. the first game.
+	public Hangman()
+	{
+		secretWord = new String (secretWord);
+		disguisedWord = new char[secretWord.length()];
+		setDisguisedWord();
+		MAX_MISSES_ALLOWED = 7;
+		missedMarkers = new char [MAX_MISSES_ALLOWED];
+		guessCount = 0;
+		missesCount = 0;
+		wordGuess = 0;
+		setMissedMarkers();
+		Hangman.GamesPlayed ++;
+	}
+	// will run Hangman game as the secretWord being "big bang".
+	
+	//constructor if a value for secretWord is given. Games after the 1st.
+	public Hangman(String secret)
+	{
+		secretWord = secret;
+		disguisedWord = new char[secretWord.length()];
+		setDisguisedWord();
+		MAX_MISSES_ALLOWED = 7;
+		missedMarkers = new char [MAX_MISSES_ALLOWED];
+		guessCount = 0;
+		missesCount = 0;
+		wordGuess = 0;
+		setMissedMarkers();
+		Hangman.GamesPlayed ++;
+	}
+	// will run Hangman game as the secretWord being whatever the user enters.
+	
+	//method for when a user guesses a single character. assumes that the user will enter a letter.
+	public static boolean guessCharacter (char c)
+	{
+		boolean guess = false;
+		for (int i = 0; i < secretWord.length(); i++)
+		{
+		if ( c == secretWord.charAt(i))
+		{
+			disguisedWord [i] = c;
+			guess = true;
+		}
+		}
+		if (guess == false)
+		{
+			missedMarkers [missesCount] = 'X';
+			missesCount ++;
+		}
+		guessCount ++;
+		return (guess);
+	}
+	//if user enters a single letter the method will check if it matches any characters
+	//in the secretWord. If so then returns True and changes "?" in disguisedWord to the character.
+	//If the character is not found the will return False and will change "O" in missedMarkers to "X".
+	//It will also add to the missesCount value by one. Once this method runs it will add to the guessCount
+	//by one.
+	
+	//method to check if the game is over. Assumes game is not over until conditions are met. 
+	public static boolean isGameOver ()
+	{
+		boolean game = false;
+		if (missesCount == MAX_MISSES_ALLOWED || isFound() == true )
+		{
+			game = true; 
+		}
+		return (game);
+	}
+	//if the conditions are met then the method will return true. 
+	public static boolean isFound ()
+	{
+		boolean found = true;
+		for (int i = 0; i < disguisedWord.length; i++)
+		{
+			if (disguisedWord [i] == '?')
+			{
+				found = false;
+			}
+		}
+		return (found);
+	}
+	public static String getDisguisedword ()
+	{
+		String Disguisedword = new String (disguisedWord);
+		return(Disguisedword);
+	}
+	public static int getGuessCount ()
+	{
+		return (guessCount);
+	}
+	public static int getMissesCount ()
+	{
+		return (missesCount);
+	}
+	public static String getMissedMarker ()
+	{
+		String Markers = new String (missedMarkers);
+		return(Markers);
+	}
+	public static int getGamesPlayed()
+	{
+		return (GamesPlayed);
+	}
+	
+	public static boolean guessWord (String word)
+	{
+		boolean guess = false;
+		word = word.toLowerCase();
+		if (word.equals(secretWord))
+		{
+			guess = true;
+			for (int i = 0; i < secretWord.length(); i ++)
+			{
+				disguisedWord [i] = secretWord.charAt(i);
+			}
+		}
+		guessCount ++;
+		wordGuess ++;			
+		return guess;
+	}
+	
+	public static boolean areWordGuessesAllowed()
+	{
+		boolean guess = true;
+		if (wordGuess == 1)
+		{
+			guess = false;
+		}
+		return guess;
+	}
+	
+	private static void setDisguisedWord()
+	{
+		for (int i = 0; i < secretWord.length(); i ++)
+		{
+			if (secretWord.charAt(i) == ' ')
+			{
+				disguisedWord [i] = ' ';
+			}
+			else
+			{
+				disguisedWord [i] = '?';
+			}
+		}
+	}
+	private static void setMissedMarkers() 
+	{
+		for (int i = 0; i < MAX_MISSES_ALLOWED; i++)
+		{
+			missedMarkers [i] = 'O';
+		}
+		
+	}
+	
+	
+}

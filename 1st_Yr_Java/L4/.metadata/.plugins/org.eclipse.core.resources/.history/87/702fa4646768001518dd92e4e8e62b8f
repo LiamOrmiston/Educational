@@ -1,0 +1,29 @@
+/* -----------------------------------------------------------------------------
+ *
+ * File Name: SummationOfFives.java
+ * Author: Liam Ormiston Ljormiston@ku.edu
+ * Assignment: EECS-168/169 Lab 03
+ * Description: This program will compute the sum of multiples of the number the user
+ * chooses. It will go until the end value the user also chooses.
+ * Date: 10/01/15
+ *
+ ---------------------------------------------------------------------------- */
+import java.util.Scanner;
+public class SummationOfFives 
+{	public static void main(String[]args)
+	{	int startValue = 0;
+		int endValue = 0;
+		int i = 0;
+		int j = 0;
+		Scanner myScan = new Scanner(System.in);
+		System.out.println("Please input a multiple larger than 1: ");
+		startValue = myScan.nextInt();
+		System.out.println("Please input a positive integer as the end value: ");
+		endValue = myScan.nextInt();
+	while (startValue < endValue)
+		{j = i + startValue;
+		i = j;	
+		startValue += i;}
+		System.out.println("The summation is: " + (i));
+	}
+}

@@ -1,0 +1,29 @@
+import java.util.Scanner;
+public class Lab6 
+{
+	public static void main(String[]args)
+	{
+		int size = 0;
+		int sum = 0;
+		int max = 0;
+		int min = 0;
+		int ave = 0;
+		int [ ] arr = null;
+		Scanner myScan = new Scanner(System.in);
+		System.out.print("Input an array size: ");
+		size = myScan.nextInt();
+		arr = new int[size];
+		System.out.println("Now please enter "+ size +" numbers");
+		for (int i = 0; i < arr.length; i++)
+		{	int j = 0;
+			do 
+			{
+				System.out.print("Please input a number: ");
+				j = myScan.nextInt();
+			}
+			while (j<=0);
+			arr [i] = j;
+		}
+		
+	}
+}

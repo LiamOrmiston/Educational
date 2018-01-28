@@ -1,0 +1,42 @@
+/* File Name: BananaStand.java
+* Author: Liam Ormiston
+* KUID: 2767240
+* Email Address: Ljormiston@ku.edu 
+* Homework Assignment Number: Homework1
+* Description: User will pick the type and quantity of banana and where they want it shipped and the program
+* will calculate the cost.
+* Last Changed: 9-27-15
+*/
+import java.util.Scanner;
+public class BananaStand {
+	public static void main(String[]args)
+	{	String Type = "";
+		String Color = "";
+		char typeChar = '\0';
+		char colorChar = '\0';
+		double Quantity = 0;
+		Scanner Choice = new Scanner(System.in);
+		System.out.println("Welcome to the Banana Stand!");
+		System.out.println("----------------------------");
+		System.out.println("Select type of banana");
+		System.out.println("Regular (r/R) (no markup)");
+		System.out.println("Organic (o/O) (20% markup)");
+		System.out.println("Saturated with Gamma Rays (g/G) (50% mark up)");
+		System.out.print("Input your choice: "); 
+		System.out.print(Type = Choice.nextLine());
+		typeChar = Type.charAt(0);
+		System.out.println("----------------------------");
+		System.out.println("Select color of banana");
+		System.out.println("Yellow (y/Y) (no discount)");
+		System.out.println("Green (g/G) (10% discount)");
+		System.out.println("Mixed (m/M) (5% discount)");
+		System.out.print("Input your choice: "); 
+		System.out.print(Color = Choice.nextLine());
+		colorChar = Color.charAt(0);
+		System.out.println("----------------------------");
+		System.out.print("How many bananas do you want?: "); 
+		System.out.print(Quantity = Choice.nextDouble());
+		System.out.print("Total cost for "+ Quantity);
+		System.out.printf("banana(s) is: $%,.2f%", Quantity);
+	}
+}

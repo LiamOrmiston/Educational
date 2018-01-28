@@ -1,0 +1,91 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.Scanner;
+public class Letter_Counter 
+{
+	public static void main(String[]args)
+	{
+		String Inputfilename = "";
+		
+		FileReader myFileReader = null;
+		BufferedReader myBufferedReader = null;
+		FileWriter myFileWriter = null;
+		BufferedWriter myBufferedWriter = null;
+		Scanner myScan = new Scanner(System.in);
+		
+		System.out.println("Input a file name: ");
+		Inputfilename = myScan.nextLine();
+		char c = ' ';
+		int [] arr = new int [58];
+		try
+		{
+			myFileReader = new FileReader (Inputfilename);
+			myBufferedReader = new BufferedReader(myFileReader);
+			String line;
+			line = myBufferedReader.readLine();
+			for (int i = 0; i < arr.length; i++)
+			{
+				c = line.charAt(i);
+				if ((int) c > 64 && (int) c < 91 && (int) c > 96 && (int) c < 122)
+				{
+					arr[(int) c - (int) 'A'] = arr[(int) c - (int) 'A'] +1 ;
+				}
+				else
+				{
+					
+				}
+			}
+			while (line != null)
+			{
+				line = myBufferedReader.readLine();
+			}
+			
+			myBufferedReader.close();
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		System.out.println("Input an out file name: ");
+		String Outputfilename = myScan.nextLine();
+
+		try
+		{
+			myFileWriter = new FileWriter(Outputfilename);
+			myBufferedWriter = new BufferedWriter(myFileWriter);
+			
+			myBufferedWriter.write("Hello Java"/*arr[i]*/);
+			for(int i = 0; i < arr.length; i++)
+			{
+				
+			}
+			
+		}
+		catch (Exception e)
+		{
+			System.err.println("Error: "+e.getMessage());
+		}
+		try
+		{
+			myFileReader = new FileReader(Outputfilename);
+			myBufferedReader = new BufferedReader(myFileReader);
+			String line;
+			line = myBufferedReader.readLine();
+			while (line != null)
+			{
+				System.out.println(line);
+				line = myBufferedReader.readLine();
+			}
+			
+			myBufferedReader.close();
+			
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+
+}

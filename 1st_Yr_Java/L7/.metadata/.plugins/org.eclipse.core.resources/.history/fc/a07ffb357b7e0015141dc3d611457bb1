@@ -1,0 +1,83 @@
+/* -----------------------------------------------------------------------------
+ *
+ * File Name: Lab07.java
+ * Author: Liam Ormiston Ljormiston@ku.edu
+ * Assignment: EECS-168/169 Lab7
+ * Description: 
+ * Date: 10/29/15
+ *
+ ---------------------------------------------------------------------------- */
+import java.util.Scanner;
+public class Lab07 
+{
+	public static void main(String[]args)
+	{
+		int size = 0;
+		int newSize = 0;
+		double [ ] arr = null;
+		double [ ] newArr = null;
+		Scanner myScan = new Scanner(System.in);
+		do
+		{
+			System.out.print("Input an array size: ");
+			size = myScan.nextInt();
+		}
+		while (size <=0);
+		arr = new double [size];
+		System.out.println("Now please enter "+ size +" numbers");
+		for (int i = 0; i < arr.length; i++)
+		{	
+			System.out.print("Input a number into your array: ");
+			arr [i] = myScan.nextDouble();
+		}
+		printArray(arr);
+		System.out.println("");
+		System.out.println("");
+		do
+		{
+			System.out.print("Input a new size: ");
+			newSize = myScan.nextInt();
+		}
+		while (newSize < size);
+		newArr = arrayResize(arr,newSize);
+		printArray(newArr);
+	}
+	public static void printArray (double print [ ])
+	{
+		System.out.println("Here are all the numbers in your array:");
+		for (int i = 0; i < print.length; i++)
+		{
+			if (print.length == 1)
+				System.out.println("["+print [i]+"]");
+			else if (i == 0)
+			{
+				System.out.print("["+print [i]+", ");
+			}
+			else if (i == print.length - 1)
+			{
+				System.out.print(print [i]+"]");
+			}
+			else if (i > 0 && i < print.length -1)
+			{
+				System.out.print(print [i]+", ");
+			}
+		}
+	}
+	public static double[] arrayResize(double [] oldArray, int newSize)
+	{
+		Scanner myScan = new Scanner(System.in);
+		double [ ] newArray = null;
+		newArray = new double [newSize];
+		for (int i = 0; i < oldArray.length; i++)
+		{
+			newArray[i] = oldArray [i];
+		}
+		System.out.println("You need to add "+(newArray.length - oldArray.length)+" values");
+		for(int i = oldArray.length; i < newArray.length; i++)
+		{
+			System.out.print("Input a number to add to your array: ");
+			newArray [i] = myScan.nextDouble();
+		}
+		return (newArray);
+	}
+}

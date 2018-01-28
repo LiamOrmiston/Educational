@@ -1,0 +1,25 @@
+5
+arrival John 10
+arrival Blake 30
+arrival Steve 40
+arrival Howard 20
+arrival Austin 50
+arrival Taylor 80
+arrival Liam 60
+arrival Brad 100
+preview
+serve
+preview
+serve
+preview
+serve
+preview
+serve
+preview
+serve
+preview
+serve
+preview
+serve
+serve
+serve

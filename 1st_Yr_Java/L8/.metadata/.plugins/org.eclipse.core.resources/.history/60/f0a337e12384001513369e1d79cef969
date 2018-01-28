@@ -1,0 +1,27 @@
+
+public class OldMacDonald 
+{
+	private String type;
+	private String sound;
+	public OldMacDonald()
+	{
+		type = null;
+		sound = null;
+	}
+	public void set_type(String animal)
+	{
+		type = animal;
+	}
+	public void set_sound(String sound)
+	{
+		this.sound = sound;
+	}
+	public String get_type()
+	{
+		return (type);
+	}
+	public String get_sound()
+	{
+		return (sound);
+	}
+}

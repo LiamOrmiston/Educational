@@ -1,0 +1,24 @@
+import java.util.Scanner;
+public class NumberGuessingGame 
+{	public static void main(String[]args)
+	{int answer = 73;
+	int guess = 0;
+	Scanner myScan = new Scanner(System.in);
+	System.out.println("Welcome to the number guessing game.");
+	System.out.println("Guess a number: ");
+	guess = myScan.nextInt();
+		while (guess != answer)
+		{	if (guess > answer)
+			{	System.out.println("Sorry, your guess is too high.");
+				System.out.println("Guess a number: ");
+				guess = myScan.nextInt();}
+			else
+			{	System.out.println("Sorry, your guess is too low.");
+				System.out.println("Guess a number: ");
+				guess = myScan.nextInt();	}
+		}
+		System.out.println("You win!");
+	}
+}
+
+

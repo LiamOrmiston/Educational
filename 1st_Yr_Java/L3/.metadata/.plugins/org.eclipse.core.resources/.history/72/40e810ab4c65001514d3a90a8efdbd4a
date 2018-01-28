@@ -1,0 +1,35 @@
+/* File Name: BananaStand.java
+* Author: Liam Ormiston
+* KUID: 2767240
+* Email Address: Ljormiston@ku.edu 
+* Homework Assignment Number: Homework1
+* Description: User will pick the type and quanity of banana and where they want it shipped and the program
+* will calculate the cost.
+* Last Changed: 9-27-15
+*/
+import java.util.Scanner;
+public class BananaStand {
+	public static void main(String[]args)
+	{	String Type = "";
+		String Color = "";
+		int Quanity = 0;
+		Scanner Choice = new Scanner(System.in);
+		System.out.println("Welcome to the Banana Stand!");
+		System.out.println("----------------------------");
+		System.out.println("Select type of banana");
+		System.out.println("Regular (r/R) (no markup)");
+		System.out.println("Organic (o/O) (20% markup)");
+		System.out.println("Saturated with Gamma Rays (g/G) (50% mark up)");
+		System.out.println("Input your choice: "); Type = Choice.nextLine();
+		System.out.println("----------------------------");
+		System.out.println("Select color of banana");
+		System.out.println("Yellow (y/Y) (no discount)");
+		System.out.println("Green (g/G) (10% discount)");
+		System.out.println("Mixed (m/M) (5% discount)");
+		System.out.println("Input your choice: "); Color = Choice.nextLine();
+		System.out.println("----------------------------");
+		System.out.println("How many bananas do you want?: "); Quanity = Choice.nextInt();
+		System.out.println("Total cost for "+Quanity+" banana(s) before markup or discounts: %.2f"+Quanity * .03);
+	}
+	
+}

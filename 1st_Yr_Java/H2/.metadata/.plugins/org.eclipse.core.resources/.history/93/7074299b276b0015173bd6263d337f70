@@ -1,0 +1,51 @@
+import java.util.Scanner;
+public class SquareMatrix 
+{	public static void main(String[]args)
+{
+	int choice = 0;
+	Scanner myScan = new Scanner(System.in);
+	System.out.println("Enter the Size of the Square Matrix:");
+	choice = myScan.nextInt();
+	System.out.println("Square Matrix:");
+	for (int i = 0; i < choice; i++)
+	{
+		if (i > 0)
+		{
+			for (int x = 1; x <= choice; x++)
+			{
+				System.out.print((choice*i + x)+" ");
+			}
+		}
+		else
+		{
+		for (int j = 0; j< choice; j++)
+		{
+
+			System.out.print((j+1)+" ");
+		}
+		}
+		System.out.println("");
+	}
+	System.out.println("Transpose:");
+	for (int i = 0; i < choice; i++)
+	{
+		for (int j = 0; j< choice; j++)
+		{
+			if (j > 1)
+			{
+				for (int x = 1; x <= choice; x++)
+				{
+					System.out.print((choice*j + x)+" ");
+				}
+			}
+			else
+			{
+				System.out.print((j+1)+" ");
+			}
+		}
+		System.out.println("");
+		}
+
+	}
+}
+

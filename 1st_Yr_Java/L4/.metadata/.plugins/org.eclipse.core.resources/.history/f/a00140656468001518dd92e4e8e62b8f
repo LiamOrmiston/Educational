@@ -1,0 +1,17 @@
+import java.util.Scanner;
+public class SummationOfFives 
+{	public static void main(String[]args)
+	{	int startValue = 0;
+		int endValue = 0;
+		int i = 5;
+		int j = 0;
+		Scanner myScan = new Scanner(System.in);
+		System.out.println("Please input a multiple larger than 1: ");
+		startValue = myScan.nextInt();
+		System.out.println("Please input a positive integer as the end value: ");
+		endValue = myScan.nextInt();
+	while (startValue < endValue)
+	{j = i + startValue;		}
+		System.out.println("The summation is: "+j);
+	}
+}

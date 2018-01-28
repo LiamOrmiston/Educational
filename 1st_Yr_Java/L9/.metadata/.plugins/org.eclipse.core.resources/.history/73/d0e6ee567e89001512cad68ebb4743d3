@@ -1,0 +1,59 @@
+
+public class ArrayHelper 
+{
+	public void print2DArray(int [][] array)
+	{
+		for(int i = 0; i < array.length; i++)
+		{
+			for (int j = 0; j < array[i].length; j++)
+			{
+				if (j == array[i].length - 1)
+				{
+					System.out.println(array[i][j]);
+				}
+				System.out.println(array[i][j]+", ");
+			}
+			System.out.println("");
+		}
+	}
+	public int arraySum(int [] array)
+	{
+		int sum = 0;
+		for (int i = 0; i < array.length; i++)
+		{
+			sum = sum + array[i];
+		}
+		return sum;
+	}
+	public double arrayAvg(int [] array)
+	{
+		int ave = 0;
+		for (int i = 0; i < array.length; i++)
+		{
+			ave = ave + array[i];
+		}
+		ave = ave / array.length;
+		return ave;
+	}
+
+	public int arraySum2D(int [][] array)
+	{
+		int sum = 0;
+		for(int i = 0; i < array.length; i++)
+		{
+			for (int j = 0; j < array[i].length; j++)
+			{
+				sum = sum + array[i][j];
+			}
+		}
+		return sum;
+	}
+	/*public double arrayAvg2D(int [][] array)
+	{
+		
+	}
+	public int arrayMax2D(int [][] array)
+	{
+		
+	}*/
+}

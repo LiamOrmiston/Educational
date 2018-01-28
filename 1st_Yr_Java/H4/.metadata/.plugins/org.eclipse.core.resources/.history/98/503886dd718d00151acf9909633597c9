@@ -1,0 +1,41 @@
+
+public class Pokemon 
+{
+	private int hp;
+	private int attack;
+	private int defense;
+	private String name;
+	private Dice d20;
+	private Dice d6;
+	
+	public Pokemon()
+	{
+		hp = 0;
+		attack = 0;
+		defense = 0;
+		name = "";
+		d20 = new Dice(20);
+		d6 = new Dice(6);
+	}
+	public boolean attack(Pokemon opponent)
+	{
+		int attackBonus = 0;
+		int defenseBonus = 0;
+		attackBonus = d20.roll();
+		defenseBonus = d20.roll();
+		int attack = 0;
+		if ((this.attack + defense) > (opponent.defense + defenseBonus))
+		{
+			int roll1 = 0;
+			int roll2 = 0;
+			int roll3 = 0;
+			roll1 = d6.roll();
+			roll2 = d6.roll();
+			roll3 = d6.roll();
+			attack = roll1 + roll2 + roll3;
+			opponent.hp = opponent.hp - attack;
+		}
+		return (opponent.hp == 0);
+		
+	}
+}

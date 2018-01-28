@@ -1,0 +1,37 @@
+import java.util.Scanner;
+public class MyCircleTest 
+{
+	public static void main(String[] args) 
+	{
+// Declare a new circle called myCircle
+// Declare any other variables you need (e.g. Scanner, double)
+		
+		MyCircle myCircle = new MyCircle();
+		Scanner myScan = new Scanner(System.in);
+		double radius = 0.0;
+		
+//Get a radius from the user
+		
+       System.out.print("Please input a radius: ");
+       radius = myScan.nextDouble();
+       myCircle.setRadius(radius);   
+       
+//Display a message to the screen that says "My circle has a radius of <put the radius here>"
+       
+       System.out.println("My circle has a radius of "+myCircle.getRadius());
+       
+//Use the method area() from myCircle to print the area 
+       
+       System.out.println(myCircle.area());
+       
+//Use the method circumference() from myCircle to print the circumference
+       
+       System.out.println(myCircle.circumference());
+       
+//Using only a method call to diameter()  to print the diameter
+       
+       System.out.println(myCircle.diameter());
+	}
+
+
+}

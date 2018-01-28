@@ -1,0 +1,35 @@
+/* -----------------------------------------------------------------------------
+ *
+ * File Name: SumOfDigits.java
+ * Author: Liam Ormiston Ljormiston@ku.edu
+ * Assignment: EECS-168/169 Lab5
+ * Description: User enters in a number and the program tells the user whether it is prime or not.
+ * Date: 10/08/15
+ *
+ ---------------------------------------------------------------------------- */
+import java.util.Scanner;
+public class SumOfDigits 
+{
+	public static void main(String[]args)
+	{
+		int choice = 0;
+		int sum = 0;
+		Scanner myScan = new Scanner(System.in);
+		System.out.println("Please enter a No: ");
+		choice = myScan.nextInt();
+		sum = addDigits(choice);
+		System.out.println("The sum of the digits is: "+sum);
+	}
+	public static int addDigits(int x)
+	{
+		int i = 0;
+		int j = 0;
+		while (i != x)
+		{
+			i = x % 10;
+			j = i + j;
+			x = x/10;
+		}
+		return(j);
+	}
+}
