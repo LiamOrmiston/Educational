@@ -57,6 +57,7 @@ bool LinkedList<T>::insert(T value) {
 		m_length++;
 	}
 	else if(find(value)) {
+		std::cout << "Entered number exists in the list." << std::endl;
 		return false;
 	}
 	else {

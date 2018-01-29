@@ -44,6 +44,8 @@ void Execute::run() {
 				case 4:
 					choice_4();
 					break;
+				case 5:
+					break;
 				default:
 					std::cout << "Invalid input. Please try again" << std::endl;
 			}
@@ -57,6 +59,7 @@ void Execute::choice_1() {
 	std::cin >> input;
 	try{
 		choice = std::stoi(input);
+		L.insert(choice);
 	}
 	catch(const std::invalid_argument e) {
 		std::cout << "invalid input." << std::endl;
@@ -64,7 +67,6 @@ void Execute::choice_1() {
 	catch(const std::out_of_range e) {
 		std::cout << "invalid input." << std::endl;
 	}
-	L.insert(choice);
 }
 
 void Execute::choice_2() {
@@ -72,6 +74,7 @@ void Execute::choice_2() {
 	std::cin >> input;
 	try{
 		choice = std::stoi(input);
+		L.erase(choice);
 	}
 	catch(const std::invalid_argument e) {
 		std::cout << "invalid input." << std::endl;
@@ -79,25 +82,24 @@ void Execute::choice_2() {
 	catch(const std::out_of_range e) {
 		std::cout << "invalid input." << std::endl;
 	}
-	L.erase(choice);
 }
 void Execute::choice_3() {
 	std::cout << "Enter a number to be found:" << std::endl;
 	std::cin >> input;
 	try{
 		choice = std::stoi(input);
+		if (L.find(choice)) {
+			std::cout << "Entered number exists in the list." << std::endl;
+		}
+		else {
+			std::cout << "Entered number does not exist in the list." << std::endl;
+		}
 	}
 	catch(const std::invalid_argument e) {
 		std::cout << "invalid input." << std::endl;
 	}
 	catch(const std::out_of_range e) {
 		std::cout << "invalid input." << std::endl;
-	}
-	if (L.find(choice)) {
-		std::cout << "Entered number exists in the list." << std::endl;
-	}
-	else {
-		std::cout << "Entered number does not exist in the list." << std::endl;
 	}
 }
 void Execute::choice_4() {
