@@ -37,57 +37,72 @@ bool LinkedList<T>::isEmpty() const {
 	}
 }
 
-//TODO: recursive implementation
 template <typename T>
 void LinkedList<T>::recur_insert(Node<T>* node, T value) {
 	if(node->getNext() != nullptr) {
-		std::cout << "attempting to recurs" << std::endl;
 		recur_insert(node->getNext(), value);
 	}
 	else {
-		std::cout << "attempting to set value in recurs func" << std::endl;
 		Node<T>* temp = new Node<T>();
-		std::cout << "creating temp Node" << std::endl;
 		temp->setValue(value);
-		std::cout << "setting node to temp" << std::endl;
 		node -> setNext(temp);
 	}
 }
+
 template <typename T>
 bool LinkedList<T>::insert(T value) {
 	if(isEmpty()) {
-		std::cout <<"list is empty" <<std::endl;
 		m_front = new Node<T>();
 		m_front -> setValue(value);
 		m_length++;
 	}
-	// else if(find(value)) {
-	// 	return false;
-	// }
+	else if(find(value)) {
+		return false;
+	}
 	else {
-		std::cout << "going inside recurs func" << std::endl;
 		Node<T>* temp_front = new Node<T>();
 		temp_front = m_front;
 		recur_insert(temp_front, value);
 		}
-		std::cout << "success" << std::endl;
 		m_length++;
 		return true;
 	}
+template <typename T>
+bool LinkedList<T>::recur_erase(Node<T>* node, Node<T>* last, T value) {
+	if(last->getValue() == value) {
+		m_front = node;
+		delete last;
+	}
+	else if (node->getValue() != value) {
+		recur_erase(node->getNext(), node, value);
+	}
+	else {
+		Node<T>* temp = node->getNext();
+		delete node;
+		last->setNext(temp);
+	}
+	return true;
+}
 
-//TODO: recursive implementation
 template <typename T>
 bool LinkedList<T>::erase(T value) {
+	if(!find(value)){
+		std::cout << "Entered number is not in the list." << std::endl;
+		return false;
+	}
+	else {
+		return (recur_erase(m_front->getNext(), m_front, value));
+	}
+	return false;
 }
 template <typename T>
 void LinkedList<T>::print() {
-	std::cout <<"inside print and printing m_front"<<std::endl;
-	std::cout << m_front->getValue() << std::endl;
 	Node<T>* temp = m_front;
-	std::cout <<"created temp"<<std::endl;
 	std::cout << "List: ";
-	for(int i=0; i<m_length; temp = temp->getNext()) {
+	while(temp != nullptr) {
 		std::cout << temp->getValue();
+		std::cout << " ";
+		temp = temp->getNext();
 	}
 	std::cout << std::endl;
 }
@@ -97,16 +112,13 @@ bool LinkedList<T>::find(T value) {
 		return false;
 	}
 	else {
-		Node<T>* temp = nullptr;
-		temp = m_front;
-		for(int i=0; i<m_length; i++) {
+		Node<T>* temp = m_front;
+		while(temp != nullptr) {
 			if(temp->getValue() == value) {
-				std::cout << "inside find method if" << std::endl;
 				return true;
 			}
 			else {
 				temp = temp->getNext();
-				std::cout << "inside find method else" << std::endl;
 			}
 		}
 		return false;

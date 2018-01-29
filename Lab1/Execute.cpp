@@ -5,16 +5,12 @@
  */
 #include "Execute.h"
 Execute::Execute() {
-	std::cout << "opening file" << std::endl;
 	file.open("data.txt");
 	while (file.good()) {
-		std::cout << "inserting ";
 		file >> value;
 		std::cout << value << std::endl;
 		L.insert(value);
-		// L.print();
 	}
-	std::cout << "closing file" << std::endl;
 	file.close();
 }
 void Execute::run() {
@@ -54,21 +50,25 @@ void Execute::run() {
 void Execute::choice_1() {
 	std::cout << "Enter a number to be inserted into the list:" << std::endl;
 	std::cin >> value;
-	// if (L.find(value)) {
-	// 	std::cout << "Number already exists in the list" << std::endl;
-	// }
-	// else {
-	// 	L.insert(value);
-	// }
 	L.insert(value);
 }
 
 void Execute::choice_2() {
+	std::cout << "Enter a number to be deleted from the list:" << std::endl;
+	std::cin >> value;
+	L.erase(value);
 }
 void Execute::choice_3() {
+	std::cout << "Enter a number to be found:" << std::endl;
+	std::cin >> value;
+	if (L.find(value)) {
+		std::cout << "Entered number exists in the list." << std::endl;
+	}
+	else {
+		std::cout << "Entered number does not exist in the list." << std::endl;
+	}
 }
 void Execute::choice_4() {
-	std::cout << "calling print" << std::endl;
   L.print();
 }
 void Execute::choice_5() {

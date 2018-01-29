@@ -19,7 +19,7 @@ public:
   void print();
   bool find(T value);
   void recur_insert(Node<T>* node, T value);
-
+  bool recur_erase(Node<T>* node, Node<T>* last, T value);
 private:
   Node<T>* m_front;
   int m_length;
