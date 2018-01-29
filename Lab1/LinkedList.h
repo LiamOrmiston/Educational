@@ -18,8 +18,11 @@ public:
   bool erase(T value);
   void print();
   bool find(T value);
+  void recur_insert(Node<T>* node, T value);
+
 private:
   Node<T>* m_front;
   int m_length;
 };
+#include "LinkedList.hpp"
 #endif

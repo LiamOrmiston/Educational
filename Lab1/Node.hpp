@@ -14,7 +14,7 @@ template <typename T>
 Node<T>::Node()
 {
   m_next = nullptr;
-  m_value = "";
+  m_value = 0;
 }
 
 //Setters

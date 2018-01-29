@@ -22,8 +22,8 @@ public:
 private:
 	std::ifstream file;
 	std::string input;
-	int user;
 	int value;
+	int choice;
 	LinkedList<int> L;
 };
 #endif

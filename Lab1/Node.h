@@ -17,9 +17,10 @@ public:
   T getValue();
   Node<T>* getNext();
   void setValue(T value);
-  void setNext(Node<T> next);
+  void setNext(Node<T>* next);
 private:
   T m_value;
   Node<T>* m_next;
 };
+#include "Node.hpp"
 #endif
