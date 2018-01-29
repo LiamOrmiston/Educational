@@ -87,7 +87,7 @@ bool LinkedList<T>::recur_erase(Node<T>* node, Node<T>* last, T value) {
 template <typename T>
 bool LinkedList<T>::erase(T value) {
 	if(!find(value)){
-		std::cout << "Entered number is not in the list." << std::endl;
+		std::cout << "Entered number does not exist in the list." << std::endl;
 		return false;
 	}
 	else {

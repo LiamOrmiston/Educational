@@ -18,7 +18,6 @@ public:
 	void choice_2();
 	void choice_3();
 	void choice_4();
-	void choice_5();
 private:
 	std::ifstream file;
 	std::string input;
