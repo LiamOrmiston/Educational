@@ -49,11 +49,8 @@ void LinkedList<T>::recur_insert(Node<T>* node, T value) {
 		Node<T>* temp = new Node<T>();
 		std::cout << "creating temp Node" << std::endl;
 		temp->setValue(value);
-		std::cout << "setting temp to value" << std::endl;
-		node = temp;
 		std::cout << "setting node to temp" << std::endl;
-		// temp = nullptr;
-		// std::cout << "temp set to nullptr" << std::endl;
+		node -> setNext(temp);
 	}
 }
 template <typename T>
@@ -84,8 +81,8 @@ bool LinkedList<T>::erase(T value) {
 }
 template <typename T>
 void LinkedList<T>::print() {
-	// std::cout <<"inside print and printing m_front"<<std::endl;
-	// std::cout << m_front->getValue() << std::endl;
+	std::cout <<"inside print and printing m_front"<<std::endl;
+	std::cout << m_front->getValue() << std::endl;
 	Node<T>* temp = m_front;
 	std::cout <<"created temp"<<std::endl;
 	std::cout << "List: ";
