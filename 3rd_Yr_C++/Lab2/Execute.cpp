@@ -6,10 +6,8 @@
 #include "Execute.h"
 Execute::Execute() {
 	file.open("data.txt");
-	while (file.good()) {
-		file >> value;
-		L.insert(value);
-	}
+	file >> value;
+	Hash(value) m_Hash;
 	file.close();
 }
 void Execute::run() {
