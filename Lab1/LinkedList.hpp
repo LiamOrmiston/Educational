@@ -9,12 +9,13 @@
 #include <fstream>
 #include "LinkedList.h"
 
+// constructor
 template <typename T>
 LinkedList<T>::LinkedList() {
 	m_front = nullptr;
 	m_length = 0;
 }
-
+// deconstructor
 template <typename T>
 LinkedList<T>::~LinkedList() {
 	Node<T>* current = m_front;
@@ -26,7 +27,7 @@ LinkedList<T>::~LinkedList() {
 	}
 	m_front = nullptr;
 }
-
+// Checks to see if the linkedlist is already empty or not
 template <typename T>
 bool LinkedList<T>::isEmpty() const {
 	if(m_front == nullptr) {
@@ -36,7 +37,7 @@ bool LinkedList<T>::isEmpty() const {
 		return false;
 	}
 }
-
+// Recurisve helper function for insert() method
 template <typename T>
 void LinkedList<T>::recur_insert(Node<T>* node, T value) {
 	if(node->getNext() != nullptr) {
@@ -49,6 +50,7 @@ void LinkedList<T>::recur_insert(Node<T>* node, T value) {
 	}
 }
 
+// Insert value into linkedlist
 template <typename T>
 bool LinkedList<T>::insert(T value) {
 	if(isEmpty()) {
@@ -68,6 +70,7 @@ bool LinkedList<T>::insert(T value) {
 		m_length++;
 		return true;
 	}
+// Recurisve helper function for erase() function
 template <typename T>
 bool LinkedList<T>::recur_erase(Node<T>* node, Node<T>* last, T value) {
 	if(last->getValue() == value) {
@@ -84,7 +87,7 @@ bool LinkedList<T>::recur_erase(Node<T>* node, Node<T>* last, T value) {
 	}
 	return true;
 }
-
+// Delete value from the linkedlist
 template <typename T>
 bool LinkedList<T>::erase(T value) {
 	if(!find(value)){
@@ -97,6 +100,7 @@ bool LinkedList<T>::erase(T value) {
 	return false;
 }
 template <typename T>
+// Prints all variables in the linkedlist
 void LinkedList<T>::print() {
 	Node<T>* temp = m_front;
 	std::cout << "List: ";
@@ -107,6 +111,7 @@ void LinkedList<T>::print() {
 	}
 	std::cout << std::endl;
 }
+// Finds a variable in the linkedlist
 template <typename T>
 bool LinkedList<T>::find(T value) {
 	if(isEmpty()) {
