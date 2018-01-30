@@ -4,6 +4,7 @@
  * Driver file
  */
 #include "Execute.h"
+// Open file and create linkedlist
 Execute::Execute() {
 	file.open("data.txt");
 	while (file.good()) {
@@ -12,6 +13,7 @@ Execute::Execute() {
 	}
 	file.close();
 }
+// main menu for program
 void Execute::run() {
 	while (choice != 5) {
 		std::cout << "--------------------------------" << std::endl;
@@ -52,8 +54,10 @@ void Execute::run() {
 		}
 	}
 	std::cout << "Exiting the program..." << std::endl;
+	// deconstructor call
 	L.~LinkedList();
 }
+// Insert driver
 void Execute::choice_1() {
 	std::cout << "Enter a number to be inserted into the list:" << std::endl;
 	std::cin >> input;
@@ -68,7 +72,7 @@ void Execute::choice_1() {
 		std::cout << "invalid input." << std::endl;
 	}
 }
-
+// Delete driver
 void Execute::choice_2() {
 	std::cout << "Enter a number to be deleted from the list:" << std::endl;
 	std::cin >> input;
@@ -83,6 +87,7 @@ void Execute::choice_2() {
 		std::cout << "invalid input." << std::endl;
 	}
 }
+// Find driver
 void Execute::choice_3() {
 	std::cout << "Enter a number to be found:" << std::endl;
 	std::cin >> input;
@@ -102,6 +107,7 @@ void Execute::choice_3() {
 		std::cout << "invalid input." << std::endl;
 	}
 }
+// Print driver
 void Execute::choice_4() {
   L.print();
 }
