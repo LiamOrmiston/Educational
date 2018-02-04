@@ -1,9 +1,9 @@
 /*
-Node.h
-Liam Ormiston
-1-29-18
-Header file for the Node class
-*/
+ * Node.h
+ * Liam Ormiston
+ * 2-5-18
+ * Header file for the Node class
+ */
 #ifndef NODE_H
 #define NODE_H
 

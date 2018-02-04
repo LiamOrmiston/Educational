@@ -1,7 +1,8 @@
-/* Execute.h
+/*
+ * Execute.h
  * Liam Ormiston
- * 1-29-18
- * Driver file
+ * 2-5-18
+ * Driver header file
  */
 #ifndef EXECUTE_H
 #define EXECUTE_H
@@ -9,6 +10,7 @@
 #include <iostream>
 #include <fstream>
 #include "LinkedList.h"
+#include "Hash.h"
 
 class Execute {
 public:
@@ -23,6 +25,7 @@ private:
 	std::string input;
 	int value;
 	int choice;
+	Hash<int>* H;
 	LinkedList<int> L;
 };
 #endif

@@ -1,8 +1,8 @@
 /*
-Node.hpp
-Liam Ormiston
-1-29-18
-File for the Node class
+ * Node.hpp
+ * Liam Ormiston
+ * 2-5-18
+ * File for the Node class
 */
 #include <iostream>
 #include <fstream>

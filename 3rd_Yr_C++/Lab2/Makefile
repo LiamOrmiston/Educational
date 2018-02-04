@@ -4,7 +4,5 @@ main.o: main.cpp Execute.h Node.h LinkedList.h Hash.h
 	g++ -std=c++11 -g -Wall -c main.cpp
 Execute.o: Execute.cpp Execute.h
 	g++ -std=c++11 -g -Wall -c Execute.cpp
-Hash.o: Hash.cpp Hash.h
-	g++ -std=c++11 -g -Wall -c Hash.cpp
 clean:
 	rm *.o Lab2

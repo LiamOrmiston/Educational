@@ -1,14 +1,21 @@
-/* Execute.cpp
+/*
+ * Execute.cpp
  * Liam Ormiston
- * 1-29-18
- * Driver file
+ * 2-5-18
+ * Driver file for Hash methods
  */
 #include "Execute.h"
+
 Execute::Execute() {
 	file.open("data.txt");
 	file >> value;
-	Hash(value) m_Hash;
+	H = new Hash<int>(value);
+	while (file.good()) {
+		file >> value;
+		H->hash_insert(value);
+	}
 	file.close();
+	H->hash_print();
 }
 void Execute::run() {
 	while (choice != 5) {
@@ -50,14 +57,14 @@ void Execute::run() {
 		}
 	}
 	std::cout << "Exiting the program..." << std::endl;
-	L.~LinkedList();
+	H->~Hash();
 }
 void Execute::choice_1() {
-	std::cout << "Enter a number to be inserted into the list:" << std::endl;
+	std::cout << "Enter a number to be inserted:" << std::endl;
 	std::cin >> input;
 	try{
 		choice = std::stoi(input);
-		L.insert(choice);
+		H->hash_insert(choice);
 	}
 	catch(const std::invalid_argument e) {
 		std::cout << "invalid input." << std::endl;
@@ -68,11 +75,11 @@ void Execute::choice_1() {
 }
 
 void Execute::choice_2() {
-	std::cout << "Enter a number to be deleted from the list:" << std::endl;
+	std::cout << "Enter a number to delete:" << std::endl;
 	std::cin >> input;
 	try{
 		choice = std::stoi(input);
-		L.erase(choice);
+		H->hash_delete(choice);
 	}
 	catch(const std::invalid_argument e) {
 		std::cout << "invalid input." << std::endl;
@@ -86,11 +93,11 @@ void Execute::choice_3() {
 	std::cin >> input;
 	try{
 		choice = std::stoi(input);
-		if (L.find(choice)) {
-			std::cout << "Entered number exists in the list." << std::endl;
+		if (H->hash_find(choice)) {
+			std::cout << choice << " was found in the hash table" << std::endl;
 		}
 		else {
-			std::cout << "Entered number does not exist in the list." << std::endl;
+			std::cout << choice << " couldn't be found in the hash table" << std::endl;
 		}
 	}
 	catch(const std::invalid_argument e) {
@@ -101,5 +108,5 @@ void Execute::choice_3() {
 	}
 }
 void Execute::choice_4() {
-  L.print();
+	H->hash_print();
 }
