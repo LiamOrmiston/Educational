@@ -15,7 +15,6 @@ Execute::Execute() {
 		H->hash_insert(value);
 	}
 	file.close();
-	H->hash_print();
 }
 void Execute::run() {
 	while (choice != 5) {
@@ -64,7 +63,12 @@ void Execute::choice_1() {
 	std::cin >> input;
 	try{
 		choice = std::stoi(input);
-		H->hash_insert(choice);
+		if(H->hash_insert(choice)) {
+			std::cout << choice << " was added to the hash table" << std::endl;
+		}
+		else {	
+		std::cout << choice << " exists already, it couldn’t be added to the hash table" << std::endl;
+		}
 	}
 	catch(const std::invalid_argument e) {
 		std::cout << "invalid input." << std::endl;
@@ -79,7 +83,9 @@ void Execute::choice_2() {
 	std::cin >> input;
 	try{
 		choice = std::stoi(input);
-		H->hash_delete(choice);
+		if(H->hash_delete(choice)) {
+			std::cout << choice << " was deleted from the hash table" << std::endl;
+		}
 	}
 	catch(const std::invalid_argument e) {
 		std::cout << "invalid input." << std::endl;

@@ -54,7 +54,6 @@ bool LinkedList<T>::insert(T value) {
 	// checks to see if the value is already in the list
 	else if(find(value)) {
 		// if so, let user know and end function call
-		std::cout << value << " exists already, it couldn’t be added to the hash table" << std::endl;
 		return false;
 	}
 	// adds the value to the front value
@@ -64,7 +63,6 @@ bool LinkedList<T>::insert(T value) {
 		temp_front -> setNext(m_front);
 		m_front = temp_front;
 		}
-		std::cout << value << " was added to the hash table" << std::endl;
 		m_length++;
 		return true;
 	}
@@ -91,7 +89,6 @@ bool LinkedList<T>::recur_erase(Node<T>* node, Node<T>* last, T value) {
 		delete node;
 		// repair list
 		last->setNext(temp);
-		std::cout << value << " was deleted from the hash table" << std::endl;
 	}
 	return true;
 }
