@@ -16,7 +16,10 @@ Node<T>::Node()
   m_next = nullptr;
   m_value = 0;
 }
-
+template <typename T>
+Node<T>::~Node() {
+	m_next = nullptr;
+}
 //Setters
 template <typename T>
 void Node<T>::setValue(T value) {

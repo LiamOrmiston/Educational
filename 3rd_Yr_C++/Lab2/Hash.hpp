@@ -22,10 +22,10 @@ template<typename T>
 Hash<T>::~Hash() {
   // destroys each linkedlist in every bucket
   for (int i=0; i<size; i++) {
-    m_Hash[i]->~LinkedList();
+    delete m_Hash[i];
   }
   // destroys the now empty hashtable
-  delete m_Hash;
+  delete[] m_Hash;
 }
 // insertion method
 template <typename T>

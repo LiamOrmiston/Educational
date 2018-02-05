@@ -5,8 +5,10 @@
  * Driver file for Hash methods
  */
 #include "Execute.h"
+#include <stdexcept>
 
 Execute::Execute() {
+	choice = 0;
 	file.open("data.txt");
 	file >> value;
 	H = new Hash<int>(value);
@@ -15,6 +17,9 @@ Execute::Execute() {
 		H->hash_insert(value);
 	}
 	file.close();
+}
+Execute::~Execute() {
+	delete H;
 }
 void Execute::run() {
 	while (choice != 5) {
@@ -56,7 +61,6 @@ void Execute::run() {
 		}
 	}
 	std::cout << "Exiting the program..." << std::endl;
-	H->~Hash();
 }
 void Execute::choice_1() {
 	std::cout << "Enter a number to be inserted:" << std::endl;

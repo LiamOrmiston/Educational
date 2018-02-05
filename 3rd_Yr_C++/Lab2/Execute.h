@@ -15,6 +15,7 @@
 class Execute {
 public:
 	Execute();
+	~Execute();
 	void run();
 	void choice_1();
 	void choice_2();

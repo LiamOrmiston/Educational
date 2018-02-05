@@ -21,10 +21,11 @@ template <typename T>
 LinkedList<T>::~LinkedList() {
 	// creates node pointer to keep track of the current value in the list
 	Node<T>* current = m_front;
+	Node<T>* next = nullptr;
 	// walk the list and destroy every value
 	while( current != nullptr )
 	{
-		Node<T>* next = current -> getNext();
+		next = current->getNext();
 		delete current;
 		current = next;
 	}

@@ -14,6 +14,7 @@ template <typename T>
 class Node {
 public:
   Node();
+  ~Node();
   T getValue();
   Node<T>* getNext();
   void setValue(T value);
