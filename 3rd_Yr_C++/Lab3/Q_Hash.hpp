@@ -30,7 +30,9 @@ template <typename T>
 bool QHash<T>::qhash_insert(T value) {
 	bool inserted = false;
 	int i = 0;
+	// checks if value already exists
 	if(!(qhash_find(value))) {
+		// figures out what bucket to place the value in
 		while ((inserted == false) && (i != k_max)) {
 			if(m_QHash[h_i(value, i)]->isEmpty()) {
 				inserted = true;
@@ -44,6 +46,7 @@ bool QHash<T>::qhash_insert(T value) {
 	}
 	return inserted;
 }
+// hash function
 template <typename T>
 int QHash<T>::h_i(int x, int i) {
 	return ((x+(i*i))%m);
@@ -95,6 +98,7 @@ void QHash<T>::qhash_print() {
 	}
 	std::cout <<"\n";
 }
+// get load factor method
 template <typename T>
 float QHash<T>::getLF() {
 	return ((n*1.00)/(m*1.00));
