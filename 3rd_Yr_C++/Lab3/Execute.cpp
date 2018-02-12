@@ -6,17 +6,20 @@
  */
 #include "Execute.h"
 #include <stdexcept>
-#include <iomainip>
 
-Execute::Execute() {
+Execute::Execute(std::string filename) {
 	choice = 0;
-	file.open("data.txt");
+	file.open(filename);
 	QH = new QHash<int>();
 	DH = new DHash<int>();
 	while (file.good()) {
 		file >> value;
-		QH->qhash_insert(value);
-		DH->dhash_insert(value);
+		if (!QH->qhash_find(value)) {
+			QH->qhash_insert(value);
+		}	
+		if (!DH->dhash_find(value)) {
+			DH->dhash_insert(value);
+		}
 	}
 	file.close();
 }
@@ -75,17 +78,17 @@ void Execute::choice_1() {
 	std::cout << "Enter a number to be inserted:" << std::endl;
 	std::cin >> input;
 	try{
-		choice = std::stoi(input);
-		if(QH->qhash_insert(choice)) {}
+		value = std::stoi(input);
+		if(QH->qhash_insert(value)) {}
 		else {	
-			std::cout <<"failed to insert "<< choice << " into hash table with quadratic probing" << std::endl; 
+			std::cout <<"failed to insert "<< value << " into hash table with quadratic probing" << std::endl; 
 		}
-		if(DH->dhash_insert(choice)) {}
+		if(DH->dhash_insert(value)) {}
 		else {	
-			std::cout <<"failed to insert "<< choice << " into hash table with double hashing" << std::endl; 
+			std::cout <<"failed to insert "<< value << " into hash table with double hashing" << std::endl; 
 		}
-	std::cout.percision(3) << "Load factor of hash table with quadratic probing " << QH->getLF() << std::endl;
-	std::cout.percision(3) << "Load factor of hash table with double hashing " << DH->getLF() << std::endl;
+		printf("Load factor of hash table with quadratic probing is %.2f\n", QH->getLF());
+		printf("Load factor of hash table with double hashing is %.2f\n", DH->getLF());
 	}
 	catch(const std::invalid_argument e) {
 		std::cout << "invalid input." << std::endl;
@@ -99,19 +102,21 @@ void Execute::choice_2() {
 	std::cout << "Enter a number to delete:" << std::endl;
 	std::cin >> input;
 	try{
-		choice = std::stoi(input);
-		if(QH->qhash_delete(choice)) {
-			std::cout << choice << " was deleted from the qhash table" << std::endl;
+		value = std::stoi(input);
+		if(QH->qhash_delete(value)) {
+			std::cout << "Successfully deleted "<< value << " from the hash table with quadratic probing" << std::endl;
 		}
 		else {	
-			std::cout << choice << " doesn't exist, it couldn’t be deleted from the qhash table" << std::endl;
+			std::cout << value << " doesn't exist in the hash table with quadratic probing" << std::endl;
 		}
-		if(DH->dhash_delete(choice)) {
-			std::cout << choice << " was deleted from the dhash table" << std::endl;
+		if(DH->dhash_delete(value)) {
+			std::cout << "Successfully deleted "<< value << " from the hash table with double hashing" << std::endl;
 		}
 		else {	
-			std::cout << choice << " doesn't exist, it couldn’t be deleted from the dhash table" << std::endl;
+			std::cout << value << " doesn't exist in the hash table with double hashing" << std::endl;
 		}
+		printf("Load factor of hash table with quadratic probing is %.2f\n", QH->getLF());
+		printf("Load factor of hash table with double hashing is %.2f\n", DH->getLF());
 	}
 	catch(const std::invalid_argument e) {
 		std::cout << "invalid input." << std::endl;
@@ -124,18 +129,18 @@ void Execute::choice_3() {
 	std::cout << "Enter a number to be found:" << std::endl;
 	std::cin >> input;
 	try{
-		choice = std::stoi(input);
-		if (QH->qhash_find(choice)) {
-			std::cout << choice << " was found in the qhash table" << std::endl;
+		value = std::stoi(input);
+		if (QH->qhash_find(value)) {
+			std::cout << value << " exists in the hash table with quadratic probing" << std::endl;
 		}
 		else {
-			std::cout << choice << " couldn't be found in the qhash table" << std::endl;
+			std::cout << value << " does not exist in the hash table with quadratic probing" << std::endl;
 		}
-		if (DH->dhash_find(choice)) {
-			std::cout << choice << " was found in the dhash table" << std::endl;
+		if (DH->dhash_find(value)) {
+			std::cout << value << " exists in the hash table with double hashing" << std::endl;
 		}
 		else {
-			std::cout << choice << " couldn't be found in the dhash table" << std::endl;
+			std::cout << value << " does not exist in the hash table with double hashing" << std::endl;
 		}
 	}
 	catch(const std::invalid_argument e) {

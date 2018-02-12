@@ -19,6 +19,7 @@ class LinkedList {
 		void print();
 		bool find(T value);
 		bool recur_erase(Node<T>* node, Node<T>* last, T value);
+		int getValue();
 	private:
 		Node<T>* m_front;
 		int m_length;

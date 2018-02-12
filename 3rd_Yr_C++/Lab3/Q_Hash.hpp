@@ -30,14 +30,16 @@ template <typename T>
 bool QHash<T>::qhash_insert(T value) {
 	bool inserted = false;
 	int i = 0;
-	while ((inserted == false) && (i != k_max)) {
-		if(m_QHash[h_i(value, i)]->isEmpty()) {
-			inserted = true;
-			n++; // number of elements
-			return (m_QHash[h_i(value, i)]->insert(value));
-		}
-		else {
-			i++;
+	if(!(qhash_find(value))) {
+		while ((inserted == false) && (i != k_max)) {
+			if(m_QHash[h_i(value, i)]->isEmpty()) {
+				inserted = true;
+				n++; // number of elements
+				return (m_QHash[h_i(value, i)]->insert(value));
+			}
+			else {
+				i++;
+			}
 		}
 	}
 	return inserted;
@@ -49,18 +51,34 @@ int QHash<T>::h_i(int x, int i) {
 // delete method
 template <typename T>
 bool QHash<T>::qhash_delete(T value) {
-	// figures out what bucket the value is in
-	mod_num = value%7;
-	// calls linkedlist erase to delete the value at the given bucket
-	return (m_QHash[mod_num]->erase(value));
+	bool deleted = false;
+	int i = 0;
+	while ((deleted == false) && (i != k_max)) {
+		if(m_QHash[h_i(value, i)]->find(value)) {
+			deleted = true;
+			n--; // number of elements
+			return (m_QHash[h_i(value, i)]->erase(value));
+		}
+		else {
+			i++;
+		}
+	}
+	return deleted;
 }
 // find method
 template <typename T>
 bool QHash<T>::qhash_find(T value) {
-	// figures out which bucket the value should be in
-	mod_num = value%7;
-	// calls linkedlist find method on the given bucket
-	return (m_QHash[mod_num]->find(value));
+	bool found = false;
+	int i = 0;
+	while ((found == false) && (i != k_max)) {
+		if(m_QHash[h_i(value, i)]->find(value)) {
+			found = true;
+		}
+		else {
+			i++;
+		}
+	}
+	return found;
 }
 // print method
 template <typename T>

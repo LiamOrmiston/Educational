@@ -147,3 +147,9 @@ bool LinkedList<T>::find(T value) {
 		return false;
 	}
 }
+
+template <typename T>
+int LinkedList<T>::getValue() {
+	return m_front->getValue();
+}
+

@@ -15,7 +15,7 @@
 
 class Execute {
 	public:
-		Execute();
+		Execute(std::string filename);
 		~Execute();
 		void run();
 		void choice_1();

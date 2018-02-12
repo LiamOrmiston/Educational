@@ -31,15 +31,17 @@ bool DHash<T>::dhash_insert(T value) {
 	// figures out what bucket to place the value in
 	bool inserted = false;
 	int k = 0;
-	while (inserted == false && k != k_max) {
-		if(m_DHash[h_k(value, k)]->isEmpty()) {	
-			inserted = true;
-			n++;
-			return (m_DHash[h_k(value, k)]->insert(value));
+	if(!(dhash_find(value))) {
+		while (inserted == false && k != k_max) {
+			if(m_DHash[h_k(value, k)]->isEmpty()) {	
+				inserted = true;
+				n++;
+				return (m_DHash[h_k(value, k)]->insert(value));
+			}
+			else {
+				k++;
+			}	
 		}
-		else {
-			k++;
-		}	
 	}
 	return (inserted);
 }
@@ -58,18 +60,34 @@ int DHash<T>::h_plus(int x) {
 // delete method
 template <typename T>
 bool DHash<T>::dhash_delete(T value) {
-	// figures out what bucket the value is in
-	mod_num = value%7;
-	// calls linkedlist erase to delete the value at the given bucket
-	return (m_DHash[mod_num]->erase(value));
+	bool deleted = false;
+	int k = 0;
+	while (deleted == false && k != k_max) {
+		if(m_DHash[h_k(value, k)]->find(value)) {	
+			deleted = true;
+			n--;
+			return (m_DHash[h_k(value, k)]->erase(value));
+		}
+		else {
+			k++;
+		}	
+	}
+	return (deleted);
 }
 // find method
 template <typename T>
 bool DHash<T>::dhash_find(T value) {
-	// figures out which bucket the value should be in
-	mod_num = value%7;
-	// calls linkedlist find method on the given bucket
-	return (m_DHash[mod_num]->find(value));
+	bool found = false;
+	int k = 0;
+	while (found == false && k != k_max) {
+		if(m_DHash[h_k(value, k)]->find(value)) {	
+			found = true;
+		}
+		else {
+			k++;
+		}	
+	}
+	return (found);
 }
 // print method
 template <typename T>
@@ -87,6 +105,6 @@ void DHash<T>::dhash_print() {
 	std::cout <<"\n";
 }
 template <typename T>
-long DHash<T>::getLF() {
+float DHash<T>::getLF() {
 	return ((n*1.00)/(m*1.00));
 }

@@ -23,13 +23,13 @@ class DHash {
 		bool dhash_delete(T value);
 		bool dhash_find(T value);
 		void dhash_print();
-		long getLF();
+		float getLF();
 	private:
 		int value;
-		int m = 11;
-		int n;
-		int p = 5;
-		int k_max = 4;
+		int m = 53;
+		int n = 0;
+		int p = 13;
+		int k_max = 10;
 		int mod_num;
 		LinkedList<int>** m_DHash;
 };

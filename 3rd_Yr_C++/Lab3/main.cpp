@@ -7,7 +7,7 @@
 #include "Execute.h"
 
 int main(int argc, char const *argv[]) {
-	Execute exec;
+	Execute exec(argv[1]);
 	exec.run();
 	return 0;
 };

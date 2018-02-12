@@ -23,9 +23,9 @@ class QHash {
 		void qhash_print();
 		float getLF();
 	private:
-		int m = 11;
-		int n;
-		int k_max = 4;
+		int m = 53;
+		int n = 0;
+		int k_max = 10;
 		int value;
 		int mod_num;
 		LinkedList<int>** m_QHash;
