@@ -1,0 +1,20 @@
+Lab 3 Write Up - Hash Functions
+
+  Quadratic Probing:
+    With this method, you check if the bucket returned by the hash function is full.
+    If it is, then you will check a bucket that is 1 spot away. Then 4 spots.
+    Then 9 spots, and so on for bucket = x^2.
+
+  Double Hashing:
+    The difference here is that instead of trying to find the next available spot,
+    a second hash function is deployed and then added to the first result to find
+    a new bucket.
+
+  Observations:
+    With Quadratic Probing, there seems to be potential to skip over buckets that
+    could be empty without ever accessing them. With Double Hashing, however,
+    given enough time, the program would look through every bucket. Therefore,
+    Double Hashing seems like the better option since you wouldn't have as much
+    clustering and able to handle higher load factors.
+
+-Liam Ormiston
