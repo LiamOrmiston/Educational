@@ -38,11 +38,11 @@ TwoThreeNode<T>::TwoThreeNode(const T& minMidValue, const T& minRightValue, TwoT
 
 // interior node constructor
 template<typename T>
-TwoThreeNode<T>::TwoThreeNode(const T& minMidValue, const T& minRightValue, TwoThreeNode<T>* midPtr, TwoThreeNode<T>* rightPtr, TwoThreeNode<T>* parentPtr) {
+TwoThreeNode<T>::TwoThreeNode(const T& minMidValue, const T& minRightValue, TwoThreeNode<T>* leftPtr, TwoThreeNode<T>* midPtr, TwoThreeNode<T>* rightPtr, TwoThreeNode<T>* parentPtr) {
   setValue(-1);
   setMinMid(minMidValue);
   setMinRight(minRightValue);
-  setLeftChildPtr(nullptr);
+  setLeftChildPtr(leftPtr);
   setMidChildPtr(midPtr);
   setRightChildPtr(rightPtr);
   setParentPtr(parentPtr);
@@ -51,7 +51,7 @@ TwoThreeNode<T>::TwoThreeNode(const T& minMidValue, const T& minRightValue, TwoT
 
 template<typename T>
 TwoThreeNode<T>::~TwoThreeNode() {
-  // not sure what a destructor looks like... 
+  // not sure what a destructor looks like...
 }
 
 template<typename T>
