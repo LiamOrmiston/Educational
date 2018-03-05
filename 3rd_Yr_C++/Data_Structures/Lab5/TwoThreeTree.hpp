@@ -69,22 +69,65 @@ bool TwoThreeTree<T>::insert(const T& newEntry) {
         rootPtr->setMinMid(newEntry);
         rootPtr->setMidChildPtr(new_node);
       }
-      // new value is larger than the right subtree min value
-      else {
+      // new value is larger than the right subtree
+      else if (newEntry > rootPtr->getMinRight()) {
         // set left child as mid child, set mid child as right child, set right child as new node
         // set min mid as new mid value, set min right as new right value
-        rootPtr->setLeftChildPtr(rootPtr->getMidChildPtr());
-        rootPtr->setMidChildPtr(rootPtr->getRightChildPtr());
+        TwoThreeNode<T>* temp_mid = rootPtr->getMidChildPtr();
+        TwoThreeNode<T>* temp_right = rootPtr->getRightChildPtr();
+        rootPtr->setMidChildPtr(nullptr);
+        rootPtr->setRightChildPtr(nullptr);
+        rootPtr->setLeftChildPtr(temp_mid);
+        rootPtr->setMidChildPtr(temp_right);
         rootPtr->setRightChildPtr(new_node);
-        rootPtr->setMinMid((rootPtr->getMidChildPtr())->getValue());
-        rootPtr->setMinRight((rootPtr->getRightChildPtr())->getValue());
+        rootPtr->setMinMid(temp_mid->getValue());
+        rootPtr->setMinRight(temp_right->getValue());
+      }
+      // new value equals existing value
+      else {
+        return false;
       }
     }
+    // insert when there is no right subtree
     else {
-      // TODO: insert if the interior node already has 3 children
+      // new value is smaller than the left subtree
+      // need to replace leftchild with new node, replace mid with left, and set right as mid
+      if(newEntry < (rootPtr->getLeftChildPtr())->getValue()) {
+        TwoThreeNode<T>* temp_left = rootPtr->getLeftChildPtr();
+        TwoThreeNode<T>* temp_mid = rootPtr->getMidChildPtr();
+        rootPtr->setLeftChildPtr(nullptr);
+        rootPtr->setMidChildPtr(nullptr);
+        rootPtr->setLeftChildPtr(new_node);
+        rootPtr->setMidChildPtr(temp_left);
+        rootPtr->setRightChildPtr(temp_mid);
+        rootPtr->setMinMid(temp_left->getValue());
+        rootPtr->setMinRight(temp_mid->getValue());
+      }
+      // new value is larger than left but smaller than mid
+      // replace mid with new node and set right as old mid
+      // reset all min values
+      else if (newEntry < rootPtr->getMinMid()) {
+        TwoThreeNode<T>* temp_mid = rootPtr->getMidChildPtr();
+        rootPtr->setMidChildPtr(nullptr);
+        rootPtr->setMidChildPtr(new_node);
+        rootPtr->setRightChildPtr(temp_mid);
+        rootPtr->setMinMid(newEntry);
+        rootPtr->setMinRight(temp_mid->getValue());
+      }
+      // new value larger than minimum of the middle sub tree,
+      else if(newEntry > rootPtr->getMinMid()) {
+        // we don't need to do anything fancy, just insert new node to empty right child pointer
+        rootPtr->setRightChildPtr(new_node);
+        rootPtr->setMinRight(newEntry);
+      }
+      // new value equals existing value
+      else {
+        return false;
+      }
     }
   }
   else {
+    // root has 3 children
     rootPtr = (insertInorder(rootPtr, new_node));
   }
 	return true;
@@ -113,10 +156,10 @@ TwoThreeNode<T>* TwoThreeTree<T>::insertInorder(TwoThreeNode<T>* subTreePtr, Two
 template<typename T>
 bool TwoThreeTree<T>::deleteMin_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* parentPtr) {
   if(subTreePtr->getIsLeaf()) {
-    std::cout << subTreePtr->getValue() << " has been deleted by deleted\n";
     if(parentPtr->isTwo() && parentPtr->getLeftChildPtr() == nullptr) {
       // sets interior node to a leaf node.
       TwoThreeNode<T>* temp_leaf = parentPtr->getRightChildPtr();
+      std::cout << subTreePtr->getValue() << " has been deleted by deleted\n";
       parentPtr->setIsLeaf(true);
       parentPtr->setValue(temp_leaf->getValue());
       parentPtr->setMinMid(-1);
@@ -127,6 +170,7 @@ bool TwoThreeTree<T>::deleteMin_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode
     }
     else if (parentPtr->isTwo() && parentPtr->getLeftChildPtr() != nullptr){
       // sets interior node to a leaf node.
+      std::cout << subTreePtr->getValue() << " has been deleted by deleted\n";
       TwoThreeNode<T>* temp_leaf = parentPtr->getMidChildPtr();
       parentPtr->setIsLeaf(true);
       parentPtr->setValue(temp_leaf->getValue());
@@ -136,9 +180,11 @@ bool TwoThreeTree<T>::deleteMin_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode
       parentPtr->setRightChildPtr(nullptr);
       parentPtr->setLeftChildPtr(nullptr);
     }
-    // parent has 3 leaves
+    // delete min if parent has 3 leaves
     else {
-
+      std::cout << subTreePtr->getValue() << " has been deleted by deleted\n";
+      subTreePtr->setValue(-1);
+      parentPtr->setLeftChildPtr(nullptr);
     }
   }
   return true;
@@ -167,9 +213,9 @@ bool TwoThreeTree<T>::deleteMin() {
 template<typename T>
 bool TwoThreeTree<T>::deleteMax_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* parentPtr) {
   if(subTreePtr->getIsLeaf()) {
-    std::cout << subTreePtr->getValue() << " has been deleted by deleted\n";
     if(parentPtr->isTwo() && parentPtr->getRightChildPtr() == nullptr) {
       // sets interior node to a leaf node.
+      std::cout << subTreePtr->getValue() << " has been deleted by deleted\n";
       TwoThreeNode<T>* temp_leaf = parentPtr->getLeftChildPtr();
       parentPtr->setIsLeaf(true);
       parentPtr->setValue(temp_leaf->getValue());
@@ -181,6 +227,7 @@ bool TwoThreeTree<T>::deleteMax_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode
     }
     else if (parentPtr->isTwo() && parentPtr->getRightChildPtr() != nullptr){
       // sets interior node to a leaf node.
+      std::cout << subTreePtr->getValue() << " has been deleted by deleted\n";
       TwoThreeNode<T>* temp_leaf = parentPtr->getMidChildPtr();
       parentPtr->setIsLeaf(true);
       parentPtr->setValue(temp_leaf->getValue());
@@ -192,7 +239,10 @@ bool TwoThreeTree<T>::deleteMax_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode
     }
     // parent has 3 leaves
     else {
-
+    // delete max if parent has 3 leaves
+      std::cout << subTreePtr->getValue() << " has been deleted by deleted\n";
+      subTreePtr->setValue(-1);
+      parentPtr->setRightChildPtr(nullptr);
     }
   }
   return true;
