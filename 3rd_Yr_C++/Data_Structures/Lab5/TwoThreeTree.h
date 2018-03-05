@@ -27,9 +27,8 @@ public:
   bool findMinHelper(TwoThreeNode<T>* subTreePtr);
   bool findMax();
   bool findMaxHelper(TwoThreeNode<T>* subTreePtr);
-
-  // TODO: implement find method
-
+  bool find(T value);
+  bool findHelper(TwoThreeNode<T>* subTreePtr, T value);
   void getEntry(const T& aKey);
 
    // Traversals

@@ -418,6 +418,76 @@ bool TwoThreeTree<T>::findMaxHelper(TwoThreeNode<T>* subTreePtr) {
 }
 
 template<typename T>
+bool TwoThreeTree<T>::find(T value) {
+  if(rootPtr == nullptr) {
+    return false;
+  }
+  else if(rootPtr->getIsLeaf()) {
+    if(rootPtr->getValue() == value) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  else {
+    // value is smaller than min of mid subtree, go down left subtree
+    if(value < rootPtr->getMinMid()) {
+      if (rootPtr->getLeftChildPtr() != nullptr) {
+        return findHelper(rootPtr->getLeftChildPtr(), value);
+      }
+      // there is no left subtree, value doesn't exist
+      else {
+        return false;
+      }
+    }
+    // value is smaller than min of right subtree, go down mid subtree
+    else if (value < rootPtr->getMinRight() || value == rootPtr->getMinMid()) {
+      return findHelper(rootPtr->getMidChildPtr(), value);
+    }
+    // value is greater than min of right subtree, go down right subtree
+    else {
+      if (rootPtr->getRightChildPtr() != nullptr) {
+        return findHelper(rootPtr->getRightChildPtr(), value);
+      }
+      // there is no right subtree, value doesn't exist
+      else {
+        return false;
+      }
+    }
+  }
+}
+
+template<typename T>
+bool TwoThreeTree<T>::findHelper(TwoThreeNode<T>* subTreePtr, T value) {
+  if (subTreePtr->getIsLeaf()) {
+    if (subTreePtr->getValue() == value) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  // value is smaller than min of mid subtree, go down left subtree
+  else if(value < subTreePtr->getMinMid()) {
+    if (subTreePtr->getLeftChildPtr() != nullptr) {
+      return findHelper(subTreePtr->getLeftChildPtr(), value);
+    }
+    else {
+      return false;
+    }
+  }
+  // value is smaller than min of right subtree, go down mid subtree
+  else if (value < subTreePtr->getMinRight()) {
+    return findHelper(subTreePtr->getMidChildPtr(), value);
+  }
+  // value is greater than min of right subtree, go down right subtree
+  else {
+    return findHelper(subTreePtr->getRightChildPtr(), value);
+  }
+}
+
+template<typename T>
 void TwoThreeTree<T>::getEntry(const T& aKey) {
   TwoThreeNode<T>* temp = findNode(rootPtr, aKey);
   if(temp == nullptr) {

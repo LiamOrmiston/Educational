@@ -120,7 +120,23 @@ void Execute::choice_5() {
 }
 // find
 void Execute::choice_6() {
-
+	std::cout << "Enter a number to find:" << std::endl;
+	std::cin >> input;
+	try{
+		value = std::stoi(input);
+		if(!TTT->find(value)) {
+			std::cout << value << " was not found in the tree\n";
+		}
+		else {
+			std::cout << value << " was found in the tree\n";
+		}
+	}
+	catch(const std::invalid_argument e) {
+		std::cout << "invalid input." << std::endl;
+	}
+	catch(const std::out_of_range e) {
+		std::cout << "invalid input." << std::endl;
+	}
 }
 // Delete
 void Execute::choice_7() {
