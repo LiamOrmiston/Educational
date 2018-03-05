@@ -52,6 +52,38 @@ bool TwoThreeTree<T>::insert(const T& newEntry) {
       return false;
     }
   }
+  else if(rootPtr->isTwo()) {
+    //interior node with no left subtree, therefore minMid and minRight have a value
+    if(rootPtr->getRightChildPtr() != nullptr) {
+      // new value is smaller than the minimum of the middle subtree
+      if(newEntry < rootPtr->getMinMid()) {
+        // we don't need to do anything fancy, just insert new node to empty left child pointer
+        rootPtr->setLeftChildPtr(new_node);
+      }
+      // new value larger than minimum of the middle sub tree,
+      // but smaller than the minimum of the right sub tree
+      else if(newEntry < rootPtr->getMinRight()) {
+        // need to replace minimum middle subtree and set left subtree to the value
+        // that the minimum middle subtree had and set the minMid value as new value
+        rootPtr->setLeftChildPtr(rootPtr->getMidChildPtr());
+        rootPtr->setMinMid(newEntry);
+        rootPtr->setMidChildPtr(new_node);
+      }
+      // new value is larger than the right subtree min value
+      else {
+        // set left child as mid child, set mid child as right child, set right child as new node
+        // set min mid as new mid value, set min right as new right value
+        rootPtr->setLeftChildPtr(rootPtr->getMidChildPtr());
+        rootPtr->setMidChildPtr(rootPtr->getRightChildPtr());
+        rootPtr->setRightChildPtr(new_node);
+        rootPtr->setMinMid((rootPtr->getMidChildPtr())->getValue());
+        rootPtr->setMinRight((rootPtr->getRightChildPtr())->getValue());
+      }
+    }
+    else {
+      // TODO: insert if the interior node already has 3 children
+    }
+  }
   else {
     rootPtr = (insertInorder(rootPtr, new_node));
   }
