@@ -248,25 +248,6 @@ bool TwoThreeTree<T>::deleteMax_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode
   return true;
 }
 
-
-//     if(subTreePtr->getLeftChildPtr() != nullptr) {
-//       parentPtr->setRightChildPtr(subTreePtr->getLeftChildPtr());
-//       std::cout << subTreePtr->getValue() << " has been deleted\n";
-//       delete subTreePtr;
-//
-//     }
-//     else {
-//       std::cout << subTreePtr->getValue() << " has been deleted\n";
-//       parentPtr->setRightChildPtr(nullptr);
-//       delete subTreePtr;
-//     }
-//     return true;
-//   }
-//   else {
-//     return deleteMax_helper(subTreePtr->getRightChildPtr(), subTreePtr);
-//   }
-// }
-
 template<typename T>
 bool TwoThreeTree<T>::deleteMax() {
   if (rootPtr == nullptr) {
@@ -290,59 +271,83 @@ bool TwoThreeTree<T>::deleteMax() {
 
 template<typename T>
 bool TwoThreeTree<T>::deleteVal_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* parentPtr, const T& value) {
-  if(subTreePtr->getValue() == value) {
-    if(subTreePtr->getRightChildPtr() == nullptr && subTreePtr->getLeftChildPtr() != nullptr) {
-      return deleteMax_helper(subTreePtr, parentPtr);
-    }
-    else if(subTreePtr->getLeftChildPtr() == nullptr && subTreePtr->getRightChildPtr() != nullptr) {
-      return deleteMin_helper(subTreePtr, parentPtr);
-    }
-    else if(subTreePtr->getLeftChildPtr() != nullptr && subTreePtr->getRightChildPtr() != nullptr) {
-      subTreePtr->setValue(rightMin(subTreePtr->getRightChildPtr()));
-      return deleteMin_helper(subTreePtr->getRightChildPtr(), subTreePtr);
+  if (subTreePtr->getIsLeaf()) {
+    if (subTreePtr->getValue() == value) {
+      if (parentPtr->getLeftChildPtr() == subTreePtr) {
+        return deleteMin_helper(subTreePtr, parentPtr);
+      }
+      else {
+        return deleteMax_helper(subTreePtr, parentPtr);
+      }
     }
     else {
-      return deleteMin_helper(subTreePtr, parentPtr);
+      return false;
     }
   }
-  else if (subTreePtr->getValue() > value) {
-    return deleteVal_helper(subTreePtr->getLeftChildPtr(), subTreePtr, value);
+  // value is smaller than min of mid subtree, go down left subtree
+  else if(value < subTreePtr->getMinMid()) {
+    if (subTreePtr->getLeftChildPtr() != nullptr) {
+      return deleteVal_helper(subTreePtr->getLeftChildPtr(), subTreePtr, value);
+    }
+    // there is no left subtree, value doesn't exist
+    else {
+      return false;
+    }
   }
-  else if (subTreePtr->getValue() < value) {
-    return deleteVal_helper(subTreePtr->getRightChildPtr(), subTreePtr, value);
+  // value is smaller than min of right subtree, go down mid subtree
+  else if (value < subTreePtr->getMinRight()) {
+    return deleteVal_helper(subTreePtr->getMidChildPtr(), subTreePtr, value);
   }
+  // value is greater than min of right subtree, go down right subtree
   else {
-    return false;
+    if (subTreePtr->getRightChildPtr() != nullptr) {
+      return deleteVal_helper(subTreePtr->getRightChildPtr(), subTreePtr, value);
+    }
+    // there is no right subtree, value doesn't exist
+    else {
+      return false;
+    }
   }
 }
 template<typename T>
 bool TwoThreeTree<T>::deleteVal(const T& value) {
-  if(rootPtr->getValue() == value) {
-    if(rootPtr->getRightChildPtr() == nullptr && rootPtr->getLeftChildPtr() != nullptr) {
+  if(rootPtr->getIsLeaf()) {
+    if(rootPtr->getValue() == value) {
       return deleteMax();
     }
-    else if(rootPtr->getLeftChildPtr() == nullptr && rootPtr->getRightChildPtr() != nullptr) {
-      return deleteMin();
-    }
-    else if(rootPtr->getLeftChildPtr() != nullptr && rootPtr->getRightChildPtr() != nullptr) {
-      rootPtr->setValue(rightMin(rootPtr->getRightChildPtr()));
-      return deleteMin_helper(rootPtr->getRightChildPtr(), rootPtr);
-    }
     else {
-      return deleteMin();
+      return false;
     }
-  }
-  else if (rootPtr->getValue() > value) {
-    return deleteVal_helper(rootPtr->getLeftChildPtr(), rootPtr, value);
-  }
-  else if (rootPtr->getValue() < value) {
-    return deleteVal_helper(rootPtr->getRightChildPtr(), rootPtr, value);
   }
   else {
-    return false;
+    // value is smaller than min of mid subtree, go down left subtree
+    if(value < rootPtr->getMinMid()) {
+      if (rootPtr->getLeftChildPtr() != nullptr) {
+        return deleteVal_helper(rootPtr->getLeftChildPtr(), rootPtr, value);
+      }
+      // there is no left subtree, value doesn't exist
+      else {
+        return false;
+      }
+    }
+    // value is smaller than min of right subtree, go down mid subtree
+    else if (value < rootPtr->getMinRight() || value == rootPtr->getMinMid()) {
+      return deleteVal_helper(rootPtr->getMidChildPtr(), rootPtr, value);
+    }
+    // value is greater than min of right subtree, go down right subtree
+    else {
+      if (rootPtr->getRightChildPtr() != nullptr) {
+        return deleteVal_helper(rootPtr->getRightChildPtr(), rootPtr, value);
+      }
+      // there is no right subtree, value doesn't exist
+      else {
+        return false;
+      }
+    }
   }
 }
 
+// TODO: Not sure if I need this function
 template<typename T>
 T TwoThreeTree<T>::rightMin(TwoThreeNode<T>* subTreePtr) {
   if(subTreePtr->getLeftChildPtr() != nullptr) {
@@ -473,6 +478,7 @@ bool TwoThreeTree<T>::findHelper(TwoThreeNode<T>* subTreePtr, T value) {
     if (subTreePtr->getLeftChildPtr() != nullptr) {
       return findHelper(subTreePtr->getLeftChildPtr(), value);
     }
+    // there is no left subtree, value doesn't exist
     else {
       return false;
     }
@@ -483,7 +489,13 @@ bool TwoThreeTree<T>::findHelper(TwoThreeNode<T>* subTreePtr, T value) {
   }
   // value is greater than min of right subtree, go down right subtree
   else {
-    return findHelper(subTreePtr->getRightChildPtr(), value);
+    if (subTreePtr->getRightChildPtr() != nullptr) {
+      return findHelper(subTreePtr->getRightChildPtr(), value);
+    }
+    // there is no right subtree, value doesn't exist
+    else {
+      return false;
+    }
   }
 }
 
@@ -499,7 +511,6 @@ void TwoThreeTree<T>::getEntry(const T& aKey) {
 }
 
 // level order print methods
-
 template<typename T>
 void TwoThreeTree<T>::levelHelper(TwoThreeNode<T>* subTreePtr) {
   if (subTreePtr->getIsLeaf()) {
