@@ -6,8 +6,14 @@ class TwoThreeNode {
 public:
    TwoThreeNode();
    ~TwoThreeNode();
+   // leaf constructor
    TwoThreeNode(const T& value);
-   // TwoThreeNode(const T& value, TwoThreeNode<T>* leftPtr, TwoThreeNode<T>* midPtr, TwoThreeNode<T>* rightPtr);
+   // root interior constructor
+   TwoThreeNode(const T& minMidValue, const T& minRightValue, TwoThreeNode<T>* midPtr, TwoThreeNode<T>* rightPtr);
+   // interior constructor
+   TwoThreeNode(const T& minMidValue, const T& minRightValue, TwoThreeNode<T>* midPtr, TwoThreeNode<T>* rightPtr, TwoThreeNode<T>* parentPtr);
+   // returns if the node has two or three children
+   bool isTwo();
 
    // Getters
    T getValue() const;

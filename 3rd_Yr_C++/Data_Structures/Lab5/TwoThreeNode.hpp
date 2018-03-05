@@ -23,20 +23,48 @@ TwoThreeNode<T>::TwoThreeNode(const T& aValue){
   setIsLeaf(true);
 }
 
-// 3 child constructor
-// template<typename T>
-// TwoThreeNode<T>::TwoThreeNode(const T& aValue, TwoThreeNode<T>* leftPtr, TwoThreeNode<T>* midPtrm, TwoThreeNode<T>* rightPtr) {
-//   setValue(aValue);
-//   setLeftChildPtr(leftPtr);
-//   setMidChildPtr(midPtr);
-//   setRightChildPtr(rightPtr);
-// }
+// interior node constructor for root
+template<typename T>
+TwoThreeNode<T>::TwoThreeNode(const T& minMidValue, const T& minRightValue, TwoThreeNode<T>* midPtr, TwoThreeNode<T>* rightPtr) {
+  setValue(-1);
+  setMinMid(minMidValue);
+  setMinRight(minRightValue);
+  setLeftChildPtr(nullptr);
+  setMidChildPtr(midPtr);
+  setRightChildPtr(rightPtr);
+  setParentPtr(nullptr);
+  setIsLeaf(false);
+}
+
+// interior node constructor
+template<typename T>
+TwoThreeNode<T>::TwoThreeNode(const T& minMidValue, const T& minRightValue, TwoThreeNode<T>* midPtr, TwoThreeNode<T>* rightPtr, TwoThreeNode<T>* parentPtr) {
+  setValue(-1);
+  setMinMid(minMidValue);
+  setMinRight(minRightValue);
+  setLeftChildPtr(nullptr);
+  setMidChildPtr(midPtr);
+  setRightChildPtr(rightPtr);
+  setParentPtr(parentPtr);
+  setIsLeaf(false);
+}
 
 template<typename T>
 TwoThreeNode<T>::~TwoThreeNode() {
-  leftChildPtr = nullptr;
-  midChildPtr = nullptr;
-  rightChildPtr = nullptr;
+  // not sure what a destructor looks like... 
+}
+
+template<typename T>
+bool TwoThreeNode<T>::isTwo() {
+  if(getIsLeaf()) {
+    return false;
+  }
+  else if(getLeftChildPtr() && getMidChildPtr() && getRightChildPtr()) {
+    return false;
+  }
+  else {
+    return true;
+  }
 }
 
 // Setters
