@@ -1,16 +1,16 @@
 #include <iostream>
-#include "BinarySearchTree.h"
+#include "TwoThreeTree.h"
 #include <fstream>
 
 // Constructor
 template<typename T>
-BinarySearchTree<T>::BinarySearchTree() {
+TwoThreeTree<T>::TwoThreeTree() {
   rootPtr = nullptr;
 }
 
 // Destructor
 template<typename T>
-BinarySearchTree<T>::~BinarySearchTree() {
+TwoThreeTree<T>::~TwoThreeTree() {
   if (rootPtr != nullptr) {
     this->destroyTree(rootPtr); // Call inherited method
   }
@@ -18,14 +18,14 @@ BinarySearchTree<T>::~BinarySearchTree() {
 
 // Insert
 template<typename T>
-bool BinarySearchTree<T>::add(const T& newEntry) {
-  BinaryNode<T>* new_node = new BinaryNode<T>(newEntry);
+bool TwoThreeTree<T>::insert(const T& newEntry) {
+  TwoThreeNode<T>* new_node = new TwoThreeNode<T>(newEntry);
   rootPtr = (insertInorder(rootPtr, new_node));
 	return true;
 }
 
 template<typename T>
-bool BinarySearchTree<T>::deleteMin_helper(BinaryNode<T>* subTreePtr, BinaryNode<T>* parentPtr) {
+bool TwoThreeTree<T>::deleteMin_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* parentPtr) {
   if(subTreePtr->getLeftChildPtr() == nullptr) {
     if(subTreePtr->getRightChildPtr() != nullptr) {
       parentPtr->setLeftChildPtr(subTreePtr->getRightChildPtr());
@@ -45,7 +45,7 @@ bool BinarySearchTree<T>::deleteMin_helper(BinaryNode<T>* subTreePtr, BinaryNode
   }
 }
 template<typename T>
-bool BinarySearchTree<T>::deleteMin() {
+bool TwoThreeTree<T>::deleteMin() {
   if(rootPtr == nullptr) {
     return false;
   }
@@ -57,7 +57,7 @@ bool BinarySearchTree<T>::deleteMin() {
       return true;
     }
     else {
-      BinaryNode<T>* temp = rootPtr->getRightChildPtr();
+      TwoThreeNode<T>* temp = rootPtr->getRightChildPtr();
       std::cout << rootPtr->getValue() << " has been deleted by deleted\n";
       delete rootPtr;
       rootPtr = temp;
@@ -70,7 +70,7 @@ bool BinarySearchTree<T>::deleteMin() {
 }
 
 template<typename T>
-bool BinarySearchTree<T>::deleteMax_helper(BinaryNode<T>* subTreePtr, BinaryNode<T>* parentPtr) {
+bool TwoThreeTree<T>::deleteMax_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* parentPtr) {
   if(subTreePtr->getRightChildPtr() == nullptr) {
     if(subTreePtr->getLeftChildPtr() != nullptr) {
       parentPtr->setRightChildPtr(subTreePtr->getLeftChildPtr());
@@ -90,7 +90,7 @@ bool BinarySearchTree<T>::deleteMax_helper(BinaryNode<T>* subTreePtr, BinaryNode
   }
 }
 template<typename T>
-bool BinarySearchTree<T>::deleteMax() {
+bool TwoThreeTree<T>::deleteMax() {
   if (rootPtr == nullptr) {
     return false;
   }
@@ -102,7 +102,7 @@ bool BinarySearchTree<T>::deleteMax() {
       return true;
     }
     else {
-      BinaryNode<T>* temp = rootPtr->getLeftChildPtr();
+      TwoThreeNode<T>* temp = rootPtr->getLeftChildPtr();
       std::cout << rootPtr->getValue() << " has been deleted\n";
       delete rootPtr;
       rootPtr = temp;
@@ -115,7 +115,7 @@ bool BinarySearchTree<T>::deleteMax() {
 }
 
 template<typename T>
-bool BinarySearchTree<T>::deleteVal_helper(BinaryNode<T>* subTreePtr, BinaryNode<T>* parentPtr, const T& value) {
+bool TwoThreeTree<T>::deleteVal_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* parentPtr, const T& value) {
   if(subTreePtr->getValue() == value) {
     if(subTreePtr->getRightChildPtr() == nullptr && subTreePtr->getLeftChildPtr() != nullptr) {
       return deleteMax_helper(subTreePtr, parentPtr);
@@ -142,7 +142,7 @@ bool BinarySearchTree<T>::deleteVal_helper(BinaryNode<T>* subTreePtr, BinaryNode
   }
 }
 template<typename T>
-bool BinarySearchTree<T>::deleteVal(const T& value) {
+bool TwoThreeTree<T>::deleteVal(const T& value) {
   if(rootPtr->getValue() == value) {
     if(rootPtr->getRightChildPtr() == nullptr && rootPtr->getLeftChildPtr() != nullptr) {
       return deleteMax();
@@ -170,7 +170,7 @@ bool BinarySearchTree<T>::deleteVal(const T& value) {
 }
 
 template<typename T>
-T BinarySearchTree<T>::rightMin(BinaryNode<T>* subTreePtr) {
+T TwoThreeTree<T>::rightMin(TwoThreeNode<T>* subTreePtr) {
   if(subTreePtr->getLeftChildPtr() != nullptr) {
     return rightMin(subTreePtr->getLeftChildPtr());
   }
@@ -182,7 +182,7 @@ T BinarySearchTree<T>::rightMin(BinaryNode<T>* subTreePtr) {
 
 // find methods
 template<typename T>
-bool BinarySearchTree<T>::findMin() {
+bool TwoThreeTree<T>::findMin() {
   if(rootPtr == nullptr) {
     return false;
   }
@@ -195,7 +195,7 @@ bool BinarySearchTree<T>::findMin() {
   }
 }
 template<typename T>
-bool BinarySearchTree<T>::findMinHelper(BinaryNode<T>* subTreePtr) {
+bool TwoThreeTree<T>::findMinHelper(TwoThreeNode<T>* subTreePtr) {
   while (subTreePtr->getLeftChildPtr() != nullptr) {
     subTreePtr = subTreePtr->getLeftChildPtr();
   }
@@ -204,7 +204,7 @@ bool BinarySearchTree<T>::findMinHelper(BinaryNode<T>* subTreePtr) {
 }
 
 template<typename T>
-bool BinarySearchTree<T>::findMax() {
+bool TwoThreeTree<T>::findMax() {
   if(rootPtr == nullptr) {
     return false;
   }
@@ -217,7 +217,7 @@ bool BinarySearchTree<T>::findMax() {
   }
 }
 template<typename T>
-bool BinarySearchTree<T>::findMaxHelper(BinaryNode<T>* subTreePtr) {
+bool TwoThreeTree<T>::findMaxHelper(TwoThreeNode<T>* subTreePtr) {
   while (subTreePtr->getRightChildPtr() != nullptr) {
     subTreePtr = subTreePtr->getRightChildPtr();
   }
@@ -226,8 +226,8 @@ bool BinarySearchTree<T>::findMaxHelper(BinaryNode<T>* subTreePtr) {
 }
 
 template<typename T>
-void BinarySearchTree<T>::getEntry(const T& aKey) {
-  BinaryNode<T>* temp = findNode(rootPtr, aKey);
+void TwoThreeTree<T>::getEntry(const T& aKey) {
+  TwoThreeNode<T>* temp = findNode(rootPtr, aKey);
   if(temp == nullptr) {
     std::cout << "That value was not found" << std::endl;
   }
@@ -236,80 +236,42 @@ void BinarySearchTree<T>::getEntry(const T& aKey) {
   }
 }
 
-//Pre, In, Post print methods
+// level order print methods
+
 template<typename T>
-void BinarySearchTree<T>::preHelper(BinaryNode<T>* subTreePtr) {
-
-  std::cout << subTreePtr->getValue() << " ";
-
+void TwoThreeTree<T>::levelHelper(TwoThreeNode<T>* subTreePtr) {
   if(subTreePtr->getLeftChildPtr() != nullptr) {
-    preHelper(subTreePtr->getLeftChildPtr());
-  }
-  if(subTreePtr->getRightChildPtr() != nullptr) {
-    preHelper(subTreePtr->getRightChildPtr());
-  }
-}
-template<typename T>
-void BinarySearchTree<T>::pre() {
-  if (rootPtr == nullptr) {
-    std::cout << "Tree is empty";
-  }
-  else {
-    preHelper(rootPtr);
-  }
-}
-
-template<typename T>
-void BinarySearchTree<T>::inHelper(BinaryNode<T>* subTreePtr) {
-  if(subTreePtr->getLeftChildPtr() != nullptr) {
-    inHelper(subTreePtr->getLeftChildPtr());
+    levelHelper(subTreePtr->getLeftChildPtr());
   }
 
   std::cout << subTreePtr->getValue() << " ";
 
   if(subTreePtr->getRightChildPtr() != nullptr) {
-    inHelper(subTreePtr->getRightChildPtr());
+    levelHelper(subTreePtr->getRightChildPtr());
   }
 }
 
 template<typename T>
-void BinarySearchTree<T>::in() {
+void TwoThreeTree<T>::level() {
   if (rootPtr == nullptr) {
     std::cout << "Tree is empty";
   }
   else {
-    inHelper(rootPtr);
+    levelHelper(rootPtr);
   }
 }
 
 template<typename T>
-void BinarySearchTree<T>::postHelper(BinaryNode<T>* subTreePtr) {
-  if(subTreePtr->getLeftChildPtr() != nullptr) {
-    postHelper(subTreePtr->getLeftChildPtr());
-  }
-  if(subTreePtr->getRightChildPtr() != nullptr) {
-    postHelper(subTreePtr->getRightChildPtr());
-  }
-
-  std::cout << subTreePtr->getValue() << " ";
-}
-
-template<typename T>
-void BinarySearchTree<T>::post() {
-  if (rootPtr == nullptr) {
-    std::cout << "Tree is empty";
-  }
-  else {
-    postHelper(rootPtr);
-  }
-}
-
-template<typename T>
-void BinarySearchTree<T>::destroyTree(BinaryNode<T>* subTreePtr)
+void TwoThreeTree<T>::destroyTree(TwoThreeNode<T>* subTreePtr)
 {
   //recurse left subtree
   if(subTreePtr->getLeftChildPtr() != nullptr) {
     destroyTree(subTreePtr->getLeftChildPtr());
+  }
+
+  //recure middle subtree
+  if(subTreePtr->getMidChildPtr() != nullptr) {
+    destroyTree(subTreePtr->getMidChildPtr());
   }
 
   //recurse right subtree
@@ -322,16 +284,16 @@ void BinarySearchTree<T>::destroyTree(BinaryNode<T>* subTreePtr)
 }
 
 template<typename T>
-BinaryNode<T>* BinarySearchTree<T>::insertInorder(BinaryNode<T>* subTreePtr, BinaryNode<T>* newNodePtr) {
+TwoThreeNode<T>* TwoThreeTree<T>::insertInorder(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* newNodePtr) {
   if(subTreePtr == nullptr) {
     return(newNodePtr);
   }
   else if(subTreePtr->getValue() > newNodePtr->getValue()) {
-    BinaryNode<T>* temp = insertInorder(subTreePtr->getLeftChildPtr(), newNodePtr);
+    TwoThreeNode<T>* temp = insertInorder(subTreePtr->getLeftChildPtr(), newNodePtr);
     subTreePtr -> setLeftChildPtr(temp);
   }
   else {
-    BinaryNode<T>* temp = insertInorder(subTreePtr->getRightChildPtr(), newNodePtr);
+    TwoThreeNode<T>* temp = insertInorder(subTreePtr->getRightChildPtr(), newNodePtr);
     subTreePtr -> setRightChildPtr(temp);
   }
   return(subTreePtr);

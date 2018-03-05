@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include "BinarySearchTree.h"
+#include "TwoThreeTree.h"
 
 class Execute {
 	public:
@@ -18,13 +18,12 @@ class Execute {
 		void choice_6();
 		void choice_7();
 		void choice_8();
-		void choice_9();
-		
+
 	private:
 		std::ifstream file;
 		std::string input;
 		int value;
 		int choice;
-		BinarySearchTree<int>* BST;
+		TwoThreeTree<int>* TTT;
 };
 #endif
