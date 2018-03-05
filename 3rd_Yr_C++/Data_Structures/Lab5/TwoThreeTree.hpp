@@ -159,7 +159,7 @@ bool TwoThreeTree<T>::deleteMin_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode
     if(parentPtr->isTwo() && parentPtr->getLeftChildPtr() == nullptr) {
       // sets interior node to a leaf node.
       TwoThreeNode<T>* temp_leaf = parentPtr->getRightChildPtr();
-      std::cout << subTreePtr->getValue() << " has been deleted by deleted\n";
+      std::cout << subTreePtr->getValue() << " has been deleted\n";
       parentPtr->setIsLeaf(true);
       parentPtr->setValue(temp_leaf->getValue());
       parentPtr->setMinMid(-1);
@@ -170,7 +170,7 @@ bool TwoThreeTree<T>::deleteMin_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode
     }
     else if (parentPtr->isTwo() && parentPtr->getLeftChildPtr() != nullptr){
       // sets interior node to a leaf node.
-      std::cout << subTreePtr->getValue() << " has been deleted by deleted\n";
+      std::cout << subTreePtr->getValue() << " has been deleted\n";
       TwoThreeNode<T>* temp_leaf = parentPtr->getMidChildPtr();
       parentPtr->setIsLeaf(true);
       parentPtr->setValue(temp_leaf->getValue());
@@ -182,7 +182,7 @@ bool TwoThreeTree<T>::deleteMin_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode
     }
     // delete min if parent has 3 leaves
     else {
-      std::cout << subTreePtr->getValue() << " has been deleted by deleted\n";
+      std::cout << subTreePtr->getValue() << " has been deleted\n";
       subTreePtr->setValue(-1);
       parentPtr->setLeftChildPtr(nullptr);
     }
@@ -215,7 +215,7 @@ bool TwoThreeTree<T>::deleteMax_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode
   if(subTreePtr->getIsLeaf()) {
     if(parentPtr->isTwo() && parentPtr->getRightChildPtr() == nullptr) {
       // sets interior node to a leaf node.
-      std::cout << subTreePtr->getValue() << " has been deleted by deleted\n";
+      std::cout << subTreePtr->getValue() << " has been deleted\n";
       TwoThreeNode<T>* temp_leaf = parentPtr->getLeftChildPtr();
       parentPtr->setIsLeaf(true);
       parentPtr->setValue(temp_leaf->getValue());
@@ -227,7 +227,7 @@ bool TwoThreeTree<T>::deleteMax_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode
     }
     else if (parentPtr->isTwo() && parentPtr->getRightChildPtr() != nullptr){
       // sets interior node to a leaf node.
-      std::cout << subTreePtr->getValue() << " has been deleted by deleted\n";
+      std::cout << subTreePtr->getValue() << " has been deleted\n";
       TwoThreeNode<T>* temp_leaf = parentPtr->getMidChildPtr();
       parentPtr->setIsLeaf(true);
       parentPtr->setValue(temp_leaf->getValue());
@@ -240,7 +240,7 @@ bool TwoThreeTree<T>::deleteMax_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode
     // parent has 3 leaves
     else {
     // delete max if parent has 3 leaves
-      std::cout << subTreePtr->getValue() << " has been deleted by deleted\n";
+      std::cout << subTreePtr->getValue() << " has been deleted\n";
       subTreePtr->setValue(-1);
       parentPtr->setRightChildPtr(nullptr);
     }
@@ -251,12 +251,12 @@ bool TwoThreeTree<T>::deleteMax_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode
 
 //     if(subTreePtr->getLeftChildPtr() != nullptr) {
 //       parentPtr->setRightChildPtr(subTreePtr->getLeftChildPtr());
-//       std::cout << subTreePtr->getValue() << " has been deleted by deleted\n";
+//       std::cout << subTreePtr->getValue() << " has been deleted\n";
 //       delete subTreePtr;
 //
 //     }
 //     else {
-//       std::cout << subTreePtr->getValue() << " has been deleted by deleted\n";
+//       std::cout << subTreePtr->getValue() << " has been deleted\n";
 //       parentPtr->setRightChildPtr(nullptr);
 //       delete subTreePtr;
 //     }
@@ -357,21 +357,31 @@ T TwoThreeTree<T>::rightMin(TwoThreeNode<T>* subTreePtr) {
 // find methods
 template<typename T>
 bool TwoThreeTree<T>::findMin() {
+  // tree is empty
   if(rootPtr == nullptr) {
     return false;
   }
-  else if (rootPtr->getLeftChildPtr() == nullptr) {
+  // root is only value
+  else if (rootPtr->getIsLeaf()) {
     std::cout << rootPtr->getValue() << " is the min value\n";
     return true;
   }
-  else {
+  // root has a left child
+  else if (rootPtr->getLeftChildPtr()){
     return findMinHelper(rootPtr->getLeftChildPtr());
+  }
+  // root does not have a left child, therefore has a middle child
+  else {
+    return findMinHelper(rootPtr->getRightChildPtr());
   }
 }
 template<typename T>
 bool TwoThreeTree<T>::findMinHelper(TwoThreeNode<T>* subTreePtr) {
   while (subTreePtr->getLeftChildPtr() != nullptr) {
     subTreePtr = subTreePtr->getLeftChildPtr();
+  }
+  while (subTreePtr->getMidChildPtr() != nullptr) {
+    subTreePtr = subTreePtr->getMidChildPtr();
   }
   std::cout << subTreePtr->getValue() << " is the min value\n";
   return true;
@@ -382,18 +392,26 @@ bool TwoThreeTree<T>::findMax() {
   if(rootPtr == nullptr) {
     return false;
   }
-  else if (rootPtr->getRightChildPtr() == nullptr) {
+  else if (rootPtr->getIsLeaf()) {
     std::cout << rootPtr->getValue() << " is the max value\n";
     return true;
   }
-  else {
+  // root has right child
+  else if (rootPtr->getRightChildPtr()){
     return findMaxHelper(rootPtr->getRightChildPtr());
+  }
+  // root does not have right child therefore has mid child
+  else {
+    return findMaxHelper(rootPtr->getMidChildPtr());
   }
 }
 template<typename T>
 bool TwoThreeTree<T>::findMaxHelper(TwoThreeNode<T>* subTreePtr) {
   while (subTreePtr->getRightChildPtr() != nullptr) {
     subTreePtr = subTreePtr->getRightChildPtr();
+  }
+  while (subTreePtr->getMidChildPtr() != nullptr) {
+    subTreePtr = subTreePtr->getMidChildPtr();
   }
   std::cout << subTreePtr->getValue() << " is the max value\n";
   return true;

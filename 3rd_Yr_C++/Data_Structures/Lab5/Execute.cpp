@@ -20,10 +20,10 @@ void Execute::run() {
 		std::cout << "1- Insert \n";
 		std::cout << "2- DeleteMin \n";
 		std::cout << "3- DeleteMax \n";
-		std::cout << "4- Delete \n";
-	  std::cout << "5- FindMin \n";
-		std::cout << "6- FindMax \n";
-		std::cout << "7- Find \n";
+		std::cout << "4- FindMin \n";
+	  std::cout << "5- FindMax \n";
+		std::cout << "6- Find \n";
+		std::cout << "7- Delete \n";
 		std::cout << "8- Level order \n";
 		std::cout << "9- Exit \n";
 		std::cout << "" << std::endl;
@@ -106,11 +106,13 @@ void Execute::choice_3() {
 		std::cout << "Tree is empty\n";
 	};
 }
+// find min value in tree
 void Execute::choice_4() {
 	if(!TTT->findMin()) {
 		std::cout << "Tree is empty\n";
 	}
 }
+//find max value in tree
 void Execute::choice_5() {
 	if(!TTT->findMax()) {
 		std::cout << "Tree is empty\n";
