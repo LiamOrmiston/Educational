@@ -8,10 +8,12 @@ public:
    ~TwoThreeNode();
    // leaf constructor
    TwoThreeNode(const T& value);
+   // leaf constructor with parentPtr
+   TwoThreeNode(const T& aValue, TwoThreeNode<T>* parentPtr);
    // root interior constructor
    TwoThreeNode(const T& minMidValue, const T& minRightValue, TwoThreeNode<T>* midPtr, TwoThreeNode<T>* rightPtr);
-   // interior constructor
-   TwoThreeNode(const T& minMidValue, const T& minRightValue, TwoThreeNode<T>* leftPtr, TwoThreeNode<T>* midPtr, TwoThreeNode<T>* rightPtr, TwoThreeNode<T>* parentPtr);
+   // convert existing leaf into an interior node
+   void convertToInterior(const T& minMidValue, const T& minRightValue, TwoThreeNode<T>* leftPtr, TwoThreeNode<T>* midPtr, TwoThreeNode<T>* rightPtr, TwoThreeNode<T>* parentPtr);
    // returns if the node has two or three children
    bool isTwo();
 

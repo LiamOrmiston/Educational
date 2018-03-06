@@ -22,6 +22,18 @@ TwoThreeNode<T>::TwoThreeNode(const T& aValue){
   setParentPtr(nullptr);
   setIsLeaf(true);
 }
+// leaf constructor with parentPtr
+template<typename T>
+TwoThreeNode<T>::TwoThreeNode(const T& aValue, TwoThreeNode<T>* parentPtr){
+  setValue(aValue);
+  setMinMid(-1);
+  setMinRight(-1);
+  setLeftChildPtr(nullptr);
+  setMidChildPtr(nullptr);
+  setRightChildPtr(nullptr);
+  setParentPtr(parentPtr);
+  setIsLeaf(true);
+}
 
 // interior node constructor for root
 template<typename T>
@@ -36,9 +48,9 @@ TwoThreeNode<T>::TwoThreeNode(const T& minMidValue, const T& minRightValue, TwoT
   setIsLeaf(false);
 }
 
-// interior node constructor
+// convert leaf to interior node
 template<typename T>
-TwoThreeNode<T>::TwoThreeNode(const T& minMidValue, const T& minRightValue, TwoThreeNode<T>* leftPtr, TwoThreeNode<T>* midPtr, TwoThreeNode<T>* rightPtr, TwoThreeNode<T>* parentPtr) {
+void TwoThreeNode<T>::convertToInterior(const T& minMidValue, const T& minRightValue, TwoThreeNode<T>* leftPtr, TwoThreeNode<T>* midPtr, TwoThreeNode<T>* rightPtr, TwoThreeNode<T>* parentPtr) {
   setValue(-1);
   setMinMid(minMidValue);
   setMinRight(minRightValue);

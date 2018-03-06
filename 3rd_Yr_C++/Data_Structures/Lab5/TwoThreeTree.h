@@ -44,7 +44,7 @@ private:
 
    // Recursively finds where the given node should be placed and
    // inserts it as a leaf at that point.
-   TwoThreeNode<T>* insertInorder(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* newNodePtr);
+   TwoThreeNode<T>* insertInorder(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* newNodePtr, T newEntry);
 
    // Returns a pointer to the node containing the given value,
    // or nullptr if not found.

@@ -26,26 +26,17 @@ bool TwoThreeTree<T>::insert(const T& newEntry) {
   else if(rootPtr->getIsLeaf()){
     if(rootPtr->getValue() < newEntry) {
       // creates new leaf nodes
-      TwoThreeNode<T>* new_mid_node = new TwoThreeNode<T>(rootPtr->getValue());
-      TwoThreeNode<T>* new_right_node = new TwoThreeNode<T>(newEntry);
-      // creates new interior node
-      TwoThreeNode<T>* new_intr_node = new TwoThreeNode<T>(rootPtr->getValue(), newEntry, nullptr, new_mid_node, new_right_node, nullptr);
-
-      // deletes leaf node rootPtr was set to
-      delete rootPtr;
-      // sets rootPtr to interior node
-      rootPtr = new_intr_node;
+      TwoThreeNode<T>* new_mid_node = new TwoThreeNode<T>(rootPtr->getValue(), rootPtr);
+      TwoThreeNode<T>* new_right_node = new TwoThreeNode<T>(newEntry, rootPtr);
+      // creates new interior node from existing leaf node
+      rootPtr->convertToInterior(rootPtr->getValue(), newEntry, nullptr, new_mid_node, new_right_node, nullptr);
     }
     else if(rootPtr->getValue() > newEntry) {
       // creates new leaf nodes
       TwoThreeNode<T>* new_left_node = new TwoThreeNode<T>(newEntry);
       TwoThreeNode<T>* new_mid_node = new TwoThreeNode<T>(rootPtr->getValue());
-      // creates new interior node
-      TwoThreeNode<T>* new_intr_node = new TwoThreeNode<T>(rootPtr->getValue(), newEntry, new_left_node, new_mid_node, nullptr, nullptr);
-      // deletes leaf node rootPtr was set to
-      delete rootPtr;
-      // sets rootPtr to interior node
-      rootPtr = new_intr_node;
+      // creates new interior node from existing leaf node
+      rootPtr->convertToInterior(rootPtr->getValue(), newEntry, new_left_node, new_mid_node, nullptr, nullptr);
     }
     else {
       // means that user tried to insert a number that already exists
@@ -128,18 +119,37 @@ bool TwoThreeTree<T>::insert(const T& newEntry) {
   }
   else {
     // root has 3 children
-    rootPtr = (insertInorder(rootPtr, new_node));
+    rootPtr = (insertInorder(rootPtr, new_node, newEntry));
   }
 	return true;
 }
 
 template<typename T>
-TwoThreeNode<T>* TwoThreeTree<T>::insertInorder(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* newNodePtr) {
+TwoThreeNode<T>* TwoThreeTree<T>::insertInorder(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* newNodePtr, T newEntry) {
   if(subTreePtr == nullptr) {
     return(newNodePtr);
   }
   else if(subTreePtr->getIsLeaf()) {
-
+    if(subTreePtr->getValue() < newEntry) {
+      // creates new leaf nodes, setting parent to the current node about to be turned into an interior node.
+      TwoThreeNode<T>* new_mid_node = new TwoThreeNode<T>(subTreePtr->getValue(), subTreePtr);
+      TwoThreeNode<T>* new_right_node = new TwoThreeNode<T>(newNodePtr->getValue(), subTreePtr);
+      // creates an interior node from existing leaf node
+      subTreePtr->convertToInterior(subTreePtr->getValue(), newEntry, nullptr, new_mid_node, new_right_node, subTreePtr->getParentPtr());
+      //TODO: return?
+    }
+    else if(subTreePtr->getValue() > newEntry) {
+      // creates new leaf nodes
+      TwoThreeNode<T>* new_left_node = new TwoThreeNode<T>(newEntry);
+      TwoThreeNode<T>* new_mid_node = new TwoThreeNode<T>(rootPtr->getValue());
+      // creates new interior node
+      subTreePtr->convertToInterior(subTreePtr->getValue(), newEntry, new_left_node, new_mid_node, nullptr, subTreePtr->getParentPtr());
+      //TODO: return?
+    }
+    else {
+      // means that user tried to insert a number that already exists
+      // TODO: return?
+    }
   }
 
   // else if(subTreePtr->getValue() > newNodePtr->getValue()) {
@@ -421,7 +431,7 @@ bool TwoThreeTree<T>::findMin() {
   }
   // root does not have a left child, therefore has a middle child
   else {
-    return findMinHelper(rootPtr->getRightChildPtr());
+    return findMinHelper(rootPtr->getMidChildPtr());
   }
 }
 template<typename T>
@@ -584,8 +594,7 @@ void TwoThreeTree<T>::level() {
 }
 
 template<typename T>
-void TwoThreeTree<T>::destroyTree(TwoThreeNode<T>* subTreePtr)
-{
+void TwoThreeTree<T>::destroyTree(TwoThreeNode<T>* subTreePtr) {
   //recurse left subtree
   if(subTreePtr->getLeftChildPtr() != nullptr) {
     destroyTree(subTreePtr->getLeftChildPtr());
