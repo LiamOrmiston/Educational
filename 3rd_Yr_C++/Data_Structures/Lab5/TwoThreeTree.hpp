@@ -268,13 +268,57 @@ bool TwoThreeTree<T>::deleteMax() {
     return deleteMax_helper(rootPtr->getMidChildPtr(), rootPtr);
   }
 }
-
+template<typename T>
+bool TwoThreeTree<T>::deleteMid(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* parentPtr) {
+  if(subTreePtr->getIsLeaf()) {
+    if(parentPtr->isTwo() && parentPtr->getRightChildPtr() == nullptr) {
+      // sets interior node to a leaf node.
+      std::cout << subTreePtr->getValue() << " has been deleted\n";
+      TwoThreeNode<T>* temp_leaf = parentPtr->getLeftChildPtr();
+      parentPtr->setIsLeaf(true);
+      parentPtr->setValue(temp_leaf->getValue());
+      parentPtr->setMinMid(-1);
+      parentPtr->setMinRight(-1);
+      parentPtr->setLeftChildPtr(nullptr);
+      parentPtr->setMidChildPtr(nullptr);
+      parentPtr->setRightChildPtr(nullptr);
+    }
+    else if (parentPtr->isTwo() && parentPtr->getRightChildPtr() != nullptr){
+      // sets interior node to a leaf node.
+      std::cout << subTreePtr->getValue() << " has been deleted\n";
+      TwoThreeNode<T>* temp_leaf = parentPtr->getRightChildPtr();
+      parentPtr->setIsLeaf(true);
+      parentPtr->setValue(temp_leaf->getValue());
+      parentPtr->setMinMid(-1);
+      parentPtr->setMinRight(-1);
+      parentPtr->setLeftChildPtr(nullptr);
+      parentPtr->setRightChildPtr(nullptr);
+      parentPtr->setMidChildPtr(nullptr);
+    }
+    // parent has 3 leaves
+    else {
+    // delete middle leaf if parent has 3 leaves
+    // set right leaf as middle leaf and minMid value as the rightMin values
+    // set rightMin value to -1
+      std::cout << subTreePtr->getValue() << " has been deleted in deletemid else part\n";
+      TwoThreeNode<T>* temp_leaf = parentPtr->getLeftChildPtr();
+      parentPtr->setMidChildPtr(nullptr);
+      parentPtr->setLeftChildPtr(nullptr);
+      parentPtr->setMidChildPtr(temp_leaf);
+      parentPtr->setMinMid(temp_leaf->getValue());
+    }
+  }
+  return true;
+}
 template<typename T>
 bool TwoThreeTree<T>::deleteVal_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* parentPtr, const T& value) {
   if (subTreePtr->getIsLeaf()) {
     if (subTreePtr->getValue() == value) {
       if (parentPtr->getLeftChildPtr() == subTreePtr) {
         return deleteMin_helper(subTreePtr, parentPtr);
+      }
+      else if (parentPtr->getMidChildPtr() == subTreePtr) {
+        return deleteMid(subTreePtr, parentPtr);
       }
       else {
         return deleteMax_helper(subTreePtr, parentPtr);

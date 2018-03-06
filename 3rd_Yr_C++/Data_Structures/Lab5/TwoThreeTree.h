@@ -16,6 +16,7 @@ public:
   bool deleteMin_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* parentPtr);
   bool deleteMax();
   bool deleteMax_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* parentPtr);
+  bool deleteMid(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* parentPtr);
   bool deleteVal(const T& value);
   bool deleteVal_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* parentPtr, const T& value);
   T rightMin(TwoThreeNode<T>* subTreePtr);
