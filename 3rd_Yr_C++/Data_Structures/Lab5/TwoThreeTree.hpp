@@ -139,28 +139,27 @@ TwoThreeNode<T>* TwoThreeTree<T>::insertInorder(TwoThreeNode<T>* subTreePtr, Two
       // newNodePtr->setParentPtr(subTreePtr);
       TwoThreeNode<T>* new_mid_node = new TwoThreeNode<T>(subTreePtr->getValue(), subTreePtr);
       // creates an interior node from existing leaf node
-      TwoThreeNode<T>* new_left_leaf = new TwoThreeNode<T>(subTreePtr->getParentPtr()->getLeftChildPtr()->getValue(), subTreePtr);
-      TwoThreeNode<T>* new_mid_leaf = new TwoThreeNode<T>(subTreePtr->getParentPtr()->getMidChildPtr()->getValue(), subTreePtr);
+      TwoThreeNode<T>* old_left_leaf = new TwoThreeNode<T>(subTreePtr->getParentPtr()->getLeftChildPtr()->getValue(), subTreePtr);
+      TwoThreeNode<T>* old_mid_leaf = new TwoThreeNode<T>(subTreePtr->getParentPtr()->getMidChildPtr()->getValue(), subTreePtr);
       subTreePtr->convertToInterior(subTreePtr->getValue(), newEntry, nullptr, new_mid_node, newNodePtr);
       // TODO: this was the issue. I passed in another node
-      new_mid_leaf->convertToInterior(new_left_leaf->getValue(), new_mid_leaf->getValue(), nullptr, new_left_leaf, new_mid_leaf);
-      new_left_leaf->getParentPtr()->setLeftChildPtr(nullptr);
-      // subTreePtr->getParentPtr()->setMinMid(subTreePtr->getParentPtr()->getMidChildPtr()->getMinMid());
+      subTreePtr->getParentPtr()->getMidChildPtr()->convertToInterior(old_left_leaf->getValue(), old_mid_leaf->getValue(), nullptr, old_left_leaf, old_mid_leaf);
+      subTreePtr->getParentPtr()->setMinMid(old_left_leaf->getValue());
+      subTreePtr->getParentPtr()->setLeftChildPtr(nullptr);
     }
     // subTreePtr = left child
     else if(subTreePtr->getValue() > newEntry) {
       // creates new leaf nodes
       // newNodePtr->setParentPtr(subTreePtr);
       TwoThreeNode<T>* new_mid_node = new TwoThreeNode<T>(subTreePtr->getValue(), subTreePtr);
-      TwoThreeNode<T>* new_right_leaf = new TwoThreeNode<T>(subTreePtr->getParentPtr()->getRightChildPtr()->getValue(), subTreePtr);
-      TwoThreeNode<T>* new_mid_leaf = new TwoThreeNode<T>(subTreePtr->getParentPtr()->getMidChildPtr()->getValue(), subTreePtr);
+      TwoThreeNode<T>* old_right_leaf = new TwoThreeNode<T>(subTreePtr->getParentPtr()->getRightChildPtr()->getValue(), subTreePtr);
+      TwoThreeNode<T>* old_mid_leaf = new TwoThreeNode<T>(subTreePtr->getParentPtr()->getMidChildPtr()->getValue(), subTreePtr);
       // creates new interior node
       subTreePtr->convertToInterior(subTreePtr->getValue(), newEntry, newNodePtr, new_mid_node, nullptr);
       // TODO: this was the issue. I passed in another node
-      new_mid_leaf->convertToInterior(new_mid_leaf->getValue(),new_right_leaf->getValue(), nullptr, new_mid_leaf, new_right_leaf);
-      new_right_leaf->getParentPtr()->setRightChildPtr(nullptr);
-      // TODO: should I be setting this to -1. Should I be setting something to nullptr?
-      // subTreePtr->getParentPtr()->setMinRight(-1);
+      subTreePtr->getParentPtr()->getMidChildPtr()->convertToInterior(old_mid_leaf->getValue(),old_right_leaf->getValue(), nullptr, old_mid_leaf, old_right_leaf);
+      subTreePtr->getParentPtr()->setMinRight(-1);
+      subTreePtr->getParentPtr()->setRightChildPtr(nullptr);
 
     }
     else {
@@ -225,7 +224,7 @@ bool TwoThreeTree<T>::deleteMin_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode
     // delete min if parent has 3 leaves
     else {
       std::cout << subTreePtr->getValue() << " has been deleted\n";
-      subTreePtr->setValue(-1);
+      // subTreePtr->setValue(-1);
       parentPtr->setLeftChildPtr(nullptr);
     }
   }
@@ -283,7 +282,7 @@ bool TwoThreeTree<T>::deleteMax_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode
     else {
     // delete max if parent has 3 leaves
       std::cout << subTreePtr->getValue() << " has been deleted\n";
-      subTreePtr->setValue(-1);
+      // subTreePtr->setValue(-1);
       parentPtr->setRightChildPtr(nullptr);
     }
   }
@@ -315,6 +314,7 @@ bool TwoThreeTree<T>::deleteMid(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* pa
   if(subTreePtr->getIsLeaf()) {
     if(parentPtr->isTwo() && parentPtr->getRightChildPtr() == nullptr) {
       // sets interior node to a leaf node.
+	std::cout << "deleted from the if block\n";
       std::cout << subTreePtr->getValue() << " has been deleted\n";
       TwoThreeNode<T>* temp_leaf = parentPtr->getLeftChildPtr();
       parentPtr->setIsLeaf(true);
@@ -327,6 +327,7 @@ bool TwoThreeTree<T>::deleteMid(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* pa
     }
     else if (parentPtr->isTwo() && parentPtr->getRightChildPtr() != nullptr){
       // sets interior node to a leaf node.
+	std::cout << "deleted from the else if block\n";
       std::cout << subTreePtr->getValue() << " has been deleted\n";
       TwoThreeNode<T>* temp_leaf = parentPtr->getRightChildPtr();
       parentPtr->setIsLeaf(true);
@@ -357,12 +358,15 @@ bool TwoThreeTree<T>::deleteVal_helper(TwoThreeNode<T>* subTreePtr, TwoThreeNode
   if (subTreePtr->getIsLeaf()) {
     if (subTreePtr->getValue() == value) {
       if (parentPtr->getLeftChildPtr() == subTreePtr) {
+	std::cout << "delete min was called\n";
         return deleteMin_helper(subTreePtr, parentPtr);
       }
       else if (parentPtr->getMidChildPtr() == subTreePtr) {
+	std::cout << "delete mid was called\n";
         return deleteMid(subTreePtr, parentPtr);
       }
       else {
+	std::cout << "delete max was called\n";
         return deleteMax_helper(subTreePtr, parentPtr);
       }
     }
@@ -604,12 +608,18 @@ void TwoThreeTree<T>::levelHelper(TwoThreeNode<T>* subTreePtr) {
   }
   else {
     if(subTreePtr->getLeftChildPtr() != nullptr) {
+      std::cout << "min mid: " << subTreePtr->getMinMid() << " min right: " << subTreePtr->getMinRight() << "\n";
+      std::cout << "go left\n";
       levelHelper(subTreePtr->getLeftChildPtr());
     }
     if(subTreePtr->getMidChildPtr() != nullptr) {
+      std::cout << "min mid: " << subTreePtr->getMinMid() << " min right: " << subTreePtr->getMinRight() << "\n";
+      std::cout << "go mid\n";
       levelHelper(subTreePtr->getMidChildPtr());
     }
     if(subTreePtr->getRightChildPtr() != nullptr) {
+      std::cout << "min mid: " << subTreePtr->getMinMid() << " min right: " << subTreePtr->getMinRight() << "\n";
+      std::cout << "go right\n";
       levelHelper(subTreePtr->getRightChildPtr());
     }
   }
