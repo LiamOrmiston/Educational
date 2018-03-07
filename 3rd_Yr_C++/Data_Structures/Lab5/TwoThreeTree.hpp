@@ -133,26 +133,32 @@ TwoThreeNode<T>* TwoThreeTree<T>::insertInorder(TwoThreeNode<T>* subTreePtr, Two
   else if(subTreePtr->getIsLeaf()) {
     // TODO: Check what child it is (left, mid, or right) and split accordingly
     // TODO: What if values are inbetween children, not on the outside of
+    // subTreePtr = right child
     if(subTreePtr->getValue() < newEntry) {
       // creates new leaf nodes, setting parent to the current node about to be turned into an interior node.
       // newNodePtr->setParentPtr(subTreePtr);
       TwoThreeNode<T>* new_mid_node = new TwoThreeNode<T>(subTreePtr->getValue(), subTreePtr);
       // creates an interior node from existing leaf node
-      TwoThreeNode<T>* temp_left = subTreePtr->getParentPtr()->getLeftChildPtr();
-      TwoThreeNode<T>* temp_mid = subTreePtr->getParentPtr()->getMidChildPtr();
+      TwoThreeNode<T>* new_left_leaf = new TwoThreeNode<T>(subTreePtr->getParentPtr()->getLeftChildPtr()->getValue(), subTreePtr);
+      TwoThreeNode<T>* new_mid_leaf = new TwoThreeNode<T>(subTreePtr->getParentPtr()->getMidChildPtr()->getValue(), subTreePtr);
       subTreePtr->convertToInterior(subTreePtr->getValue(), newEntry, nullptr, new_mid_node, newNodePtr);
-      // TODO: this is the issue
-      subTreePtr->convertToInterior(temp_left->getValue(), temp_mid->getValue(), nullptr, temp_left, temp_mid);
+      // TODO: this was the issue. I passed in another node
+      new_mid_leaf->convertToInterior(new_left_leaf->getValue(), new_mid_leaf->getValue(), nullptr, new_left_leaf, new_mid_leaf);
+      new_left_leaf->getParentPtr()->setLeftChildPtr(nullptr);
       // subTreePtr->getParentPtr()->setMinMid(subTreePtr->getParentPtr()->getMidChildPtr()->getMinMid());
     }
+    // subTreePtr = left child
     else if(subTreePtr->getValue() > newEntry) {
       // creates new leaf nodes
       // newNodePtr->setParentPtr(subTreePtr);
       TwoThreeNode<T>* new_mid_node = new TwoThreeNode<T>(subTreePtr->getValue(), subTreePtr);
+      TwoThreeNode<T>* new_right_leaf = new TwoThreeNode<T>(subTreePtr->getParentPtr()->getRightChildPtr()->getValue(), subTreePtr);
+      TwoThreeNode<T>* new_mid_leaf = new TwoThreeNode<T>(subTreePtr->getParentPtr()->getMidChildPtr()->getValue(), subTreePtr);
       // creates new interior node
       subTreePtr->convertToInterior(subTreePtr->getValue(), newEntry, newNodePtr, new_mid_node, nullptr);
-      // TODO: This is the problem
-      // subTreePtr->convertToInterior(subTreePtr->getParentPtr()->getMidChildPtr()->getValue(), subTreePtr->getParentPtr()->getRightChildPtr()->getValue(), nullptr, subTreePtr->getParentPtr()->getMidChildPtr(), subTreePtr->getParentPtr()->getRightChildPtr());
+      // TODO: this was the issue. I passed in another node
+      new_mid_leaf->convertToInterior(new_mid_leaf->getValue(),new_right_leaf->getValue(), nullptr, new_mid_leaf, new_right_leaf);
+      new_right_leaf->getParentPtr()->setRightChildPtr(nullptr);
       // TODO: should I be setting this to -1. Should I be setting something to nullptr?
       // subTreePtr->getParentPtr()->setMinRight(-1);
 
