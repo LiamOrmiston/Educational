@@ -13,7 +13,7 @@ public:
    // root interior constructor
    TwoThreeNode(const T& minMidValue, const T& minRightValue, TwoThreeNode<T>* midPtr, TwoThreeNode<T>* rightPtr);
    // convert existing leaf into an interior node
-   void convertToInterior(const T& minMidValue, const T& minRightValue, TwoThreeNode<T>* leftPtr, TwoThreeNode<T>* midPtr, TwoThreeNode<T>* rightPtr, TwoThreeNode<T>* parentPtr);
+   void convertToInterior(const T& minMidValue, const T& minRightValue, TwoThreeNode<T>* leftPtr, TwoThreeNode<T>* midPtr, TwoThreeNode<T>* rightPtr);
    // returns if the node has two or three children
    bool isTwo();
 

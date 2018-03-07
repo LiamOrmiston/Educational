@@ -19,8 +19,9 @@ TwoThreeTree<T>::~TwoThreeTree() {
 // Insert
 template<typename T>
 bool TwoThreeTree<T>::insert(const T& newEntry) {
-  TwoThreeNode<T>* new_node = new TwoThreeNode<T>(newEntry);
+  TwoThreeNode<T>* new_node = new TwoThreeNode<T>(newEntry, rootPtr);
   if (rootPtr == nullptr) {
+    new_node->setParentPtr(nullptr);
     rootPtr = new_node;
   }
   else if(rootPtr->getIsLeaf()){
@@ -29,14 +30,14 @@ bool TwoThreeTree<T>::insert(const T& newEntry) {
       TwoThreeNode<T>* new_mid_node = new TwoThreeNode<T>(rootPtr->getValue(), rootPtr);
       TwoThreeNode<T>* new_right_node = new TwoThreeNode<T>(newEntry, rootPtr);
       // creates new interior node from existing leaf node
-      rootPtr->convertToInterior(rootPtr->getValue(), newEntry, nullptr, new_mid_node, new_right_node, nullptr);
+      rootPtr->convertToInterior(rootPtr->getValue(), newEntry, nullptr, new_mid_node, new_right_node);
     }
     else if(rootPtr->getValue() > newEntry) {
       // creates new leaf nodes
-      TwoThreeNode<T>* new_left_node = new TwoThreeNode<T>(newEntry);
-      TwoThreeNode<T>* new_mid_node = new TwoThreeNode<T>(rootPtr->getValue());
+      TwoThreeNode<T>* new_left_node = new TwoThreeNode<T>(newEntry, rootPtr);
+      TwoThreeNode<T>* new_mid_node = new TwoThreeNode<T>(rootPtr->getValue(), rootPtr);
       // creates new interior node from existing leaf node
-      rootPtr->convertToInterior(rootPtr->getValue(), newEntry, new_left_node, new_mid_node, nullptr, nullptr);
+      rootPtr->convertToInterior(rootPtr->getValue(), newEntry, new_left_node, new_mid_node, nullptr);
     }
     else {
       // means that user tried to insert a number that already exists
@@ -119,47 +120,72 @@ bool TwoThreeTree<T>::insert(const T& newEntry) {
   }
   else {
     // root has 3 children
-    rootPtr = (insertInorder(rootPtr, new_node, newEntry));
+    return (insertInorder(rootPtr, new_node, newEntry));
   }
 	return true;
 }
-
+// 13 12 15 7 2 4 9 22
 template<typename T>
 TwoThreeNode<T>* TwoThreeTree<T>::insertInorder(TwoThreeNode<T>* subTreePtr, TwoThreeNode<T>* newNodePtr, T newEntry) {
   if(subTreePtr == nullptr) {
     return(newNodePtr);
   }
   else if(subTreePtr->getIsLeaf()) {
+    // TODO: Check what child it is (left, mid, or right) and split accordingly
+    // TODO: What if values are inbetween children, not on the outside of
     if(subTreePtr->getValue() < newEntry) {
       // creates new leaf nodes, setting parent to the current node about to be turned into an interior node.
+      // newNodePtr->setParentPtr(subTreePtr);
       TwoThreeNode<T>* new_mid_node = new TwoThreeNode<T>(subTreePtr->getValue(), subTreePtr);
-      TwoThreeNode<T>* new_right_node = new TwoThreeNode<T>(newNodePtr->getValue(), subTreePtr);
       // creates an interior node from existing leaf node
-      subTreePtr->convertToInterior(subTreePtr->getValue(), newEntry, nullptr, new_mid_node, new_right_node, subTreePtr->getParentPtr());
-      //TODO: return?
+      TwoThreeNode<T>* temp_left = subTreePtr->getParentPtr()->getLeftChildPtr();
+      TwoThreeNode<T>* temp_mid = subTreePtr->getParentPtr()->getMidChildPtr();
+      subTreePtr->convertToInterior(subTreePtr->getValue(), newEntry, nullptr, new_mid_node, newNodePtr);
+      // TODO: this is the issue
+      subTreePtr->convertToInterior(temp_left->getValue(), temp_mid->getValue(), nullptr, temp_left, temp_mid);
+      // subTreePtr->getParentPtr()->setMinMid(subTreePtr->getParentPtr()->getMidChildPtr()->getMinMid());
     }
     else if(subTreePtr->getValue() > newEntry) {
       // creates new leaf nodes
-      TwoThreeNode<T>* new_left_node = new TwoThreeNode<T>(newEntry);
-      TwoThreeNode<T>* new_mid_node = new TwoThreeNode<T>(rootPtr->getValue());
+      // newNodePtr->setParentPtr(subTreePtr);
+      TwoThreeNode<T>* new_mid_node = new TwoThreeNode<T>(subTreePtr->getValue(), subTreePtr);
       // creates new interior node
-      subTreePtr->convertToInterior(subTreePtr->getValue(), newEntry, new_left_node, new_mid_node, nullptr, subTreePtr->getParentPtr());
-      //TODO: return?
+      subTreePtr->convertToInterior(subTreePtr->getValue(), newEntry, newNodePtr, new_mid_node, nullptr);
+      // TODO: This is the problem
+      // subTreePtr->convertToInterior(subTreePtr->getParentPtr()->getMidChildPtr()->getValue(), subTreePtr->getParentPtr()->getRightChildPtr()->getValue(), nullptr, subTreePtr->getParentPtr()->getMidChildPtr(), subTreePtr->getParentPtr()->getRightChildPtr());
+      // TODO: should I be setting this to -1. Should I be setting something to nullptr?
+      // subTreePtr->getParentPtr()->setMinRight(-1);
+
     }
     else {
       // means that user tried to insert a number that already exists
       // TODO: return?
     }
   }
-
-  // else if(subTreePtr->getValue() > newNodePtr->getValue()) {
-  //   TwoThreeNode<T>* temp = insertInorder(subTreePtr->getLeftChildPtr(), newNodePtr);
-  //   subTreePtr -> setLeftChildPtr(temp);
-  // }
-  // else {
-  //   TwoThreeNode<T>* temp = insertInorder(subTreePtr->getRightChildPtr(), newNodePtr);
-  //   subTreePtr -> setRightChildPtr(temp);
-  // }
+  // not at a leaf, continue searching
+  else {
+    if(newEntry > subTreePtr->getMinRight()) {
+      if(subTreePtr->getRightChildPtr() == nullptr) {
+        subTreePtr->setRightChildPtr(newNodePtr);
+        // newNodePtr->setParentPtr(subTreePtr);
+      }
+      else {
+        return insertInorder(subTreePtr->getRightChildPtr(), newNodePtr, newEntry);
+      }
+    }
+    else if(newEntry > subTreePtr->getMinMid()) {
+      return insertInorder(subTreePtr->getMidChildPtr(), newNodePtr, newEntry);
+    }
+    else if(newEntry < subTreePtr->getMinMid() && newEntry != findMin()) {
+      if(subTreePtr->getLeftChildPtr() == nullptr) {
+        subTreePtr->setLeftChildPtr(newNodePtr);
+      // newNodePtr->setParentPtr(subTreePtr);
+      }
+      else {
+        return insertInorder(subTreePtr->getLeftChildPtr(), newNodePtr, newEntry);
+      }
+    }
+  }
   return(subTreePtr);
 }
 

@@ -50,14 +50,14 @@ TwoThreeNode<T>::TwoThreeNode(const T& minMidValue, const T& minRightValue, TwoT
 
 // convert leaf to interior node
 template<typename T>
-void TwoThreeNode<T>::convertToInterior(const T& minMidValue, const T& minRightValue, TwoThreeNode<T>* leftPtr, TwoThreeNode<T>* midPtr, TwoThreeNode<T>* rightPtr, TwoThreeNode<T>* parentPtr) {
+void TwoThreeNode<T>::convertToInterior(const T& minMidValue, const T& minRightValue, TwoThreeNode<T>* leftPtr, TwoThreeNode<T>* midPtr, TwoThreeNode<T>* rightPtr) {
   setValue(-1);
   setMinMid(minMidValue);
   setMinRight(minRightValue);
   setLeftChildPtr(leftPtr);
   setMidChildPtr(midPtr);
   setRightChildPtr(rightPtr);
-  setParentPtr(parentPtr);
+  // setParentPtr(parentPtr);
   setIsLeaf(false);
 }
 
