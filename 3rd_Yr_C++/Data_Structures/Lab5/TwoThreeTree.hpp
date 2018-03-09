@@ -44,8 +44,8 @@ bool TwoThreeTree<T>::insert(const T& newEntry) {
       return false;
     }
   }
-  else if(rootPtr->isTwo()) {
-    //interior node with no left subtree, therefore minMid and minRight have a value
+  else if(rootPtr->isTwo() && rootPtr->getMidChildPtr()->getIsLeaf()) {
+    // root interior node with no left subtree, therefore minMid and minRight have a value
     if(rootPtr->getRightChildPtr() != nullptr) {
       // new value is smaller than the minimum of the middle subtree
       if(newEntry < rootPtr->getMinMid()) {
@@ -118,8 +118,11 @@ bool TwoThreeTree<T>::insert(const T& newEntry) {
       }
     }
   }
+  // TODO: else if () { might need this if there is 2 interior nodes each with 3 children...
+
+  // }
   else {
-    // root has 3 children
+    // root has 3 children or interior nodes
     return (insertInorder(rootPtr, new_node, newEntry));
   }
 	return true;
