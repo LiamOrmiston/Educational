@@ -1,0 +1,59 @@
+Lab Write Up:
+
+1-	Organization of experimental profiling.
+  I broke down my experimental profiling into separate functions in order to help
+  organize my tests. I found that it was easiest to create a function for each test
+  and then one function that will orchestrate the tests. Therefore, for each hash table
+  I had 4 functions. This helped my code feel more organized and modular.
+
+2-	Input data generating using random number generator.
+  For generating random numbers, I utilized the <cstdlib.h> to call rand() % (5*m)+1
+  in order to create a number that is between 1 and 5m. To ensure that I have a different
+  seed for each time I call rand(), I used srand(time(NULL)). This creates a new
+  random seed to each time that I call rand().
+
+3-	CPU time recording in C++.
+  In order to keep track of how much time a process takes, I needed to include
+  <time.h> library. From here I can create a new clock_t to create a timer to keep
+  track of the CPU clock cycles. Then when I need to start my newly created timer
+  I run clock(), which grabs the CPU's clock time. Then when I want to stop the
+  timer, I just grab the clock time again using clock(), but now I subtract the
+  value I had earlier with the value I just got to see the overall time elapsed.
+  So I had clock_t t;, t = clock(), t = t - clock();
+
+4-	Data recording and analysis.
+  Keeping track of the data was very difficult for this lab as the write up is
+  fairly ambiguous on certain things. For each test I needed to run it 5 times
+  and take the summation of every run and divide by 5. This would give me the
+  average of the test. I then did this for the 5 different given sizes. It seemed
+  like the lab writeup wanted me to do this whole progress 5 times and take the
+  average again. But upon doing this, I would end up with a program that took more
+  than 5 min to complete. This seemed too much and with the ambiguous writeup, I
+  assumed that it just wanted me to find the average of each test and not the
+  average's average.
+
+5-	Performance comparison, observations and summary.
+  My initial observations noted that the find function for each hash table was
+  very fast. This makes sense because a hash table's find should be Big O(1).
+  The slowest test was Not Found. At first I was confused why this was but after
+  pondering this occurrence, I realized that in order for a value to not be found,
+  it needed to reach the kmax every time, which in this case was 20. A hash table
+  with size of 1,000,003 and inserting 100,000 values, the likelihood of a value
+  not being inserted is very low, so it would rarely ever reach the kmax value.
+  I noticed that open hash table not found test was faster than I expected. It
+  should be slower since a linkedlist chain could be really long. However, I believe
+  my open hash was faster because my linkedlist chains were smaller than the kmax
+  value for double and quadratic hash tables. An open hash table with size 1,000,003
+  and contains 500,000 values could theoretically have all 500,000 within 1 bucket.
+  But in the same way it could also theoretically only have 1 value in 500,000 buckets.
+  So the not found would only check once and return false. Where as the double and
+  quadratic checks 20 times for every not found value.
+  Double and Quadratic had very similar times for all the tests.
+
+6-	Conclusion.
+  In conclusion, Hash tables are a very efficient data structure if you need to
+  determine whether a value exists in the table or not. Searching for a value
+  that does not exist will take awhile, but can be improved with a smaller kmax.
+  Open Hash tables are fast to build and insert but has the potential to be very
+  inefficient if a lot of values end up in the same bucket. But it could also be
+  very efficient if every value ended up in its own bucket.
