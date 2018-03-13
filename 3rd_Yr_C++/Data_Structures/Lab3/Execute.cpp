@@ -16,7 +16,7 @@ Execute::Execute(std::string filename) {
 		file >> value;
 		if (!QH->qhash_find(value)) {
 			QH->qhash_insert(value);
-		}	
+		}
 		if (!DH->dhash_find(value)) {
 			DH->dhash_insert(value);
 		}
@@ -80,12 +80,12 @@ void Execute::choice_1() {
 	try{
 		value = std::stoi(input);
 		if(QH->qhash_insert(value)) {}
-		else {	
-			std::cout <<"failed to insert "<< value << " into hash table with quadratic probing" << std::endl; 
+		else {
+			std::cout <<"failed to insert "<< value << " into hash table with quadratic probing" << std::endl;
 		}
 		if(DH->dhash_insert(value)) {}
-		else {	
-			std::cout <<"failed to insert "<< value << " into hash table with double hashing" << std::endl; 
+		else {
+			std::cout <<"failed to insert "<< value << " into hash table with double hashing" << std::endl;
 		}
 		printf("Load factor of hash table with quadratic probing is %.2f\n", QH->getLF());
 		printf("Load factor of hash table with double hashing is %.2f\n", DH->getLF());
@@ -106,13 +106,13 @@ void Execute::choice_2() {
 		if(QH->qhash_delete(value)) {
 			std::cout << "Successfully deleted "<< value << " from the hash table with quadratic probing" << std::endl;
 		}
-		else {	
+		else {
 			std::cout << value << " doesn't exist in the hash table with quadratic probing" << std::endl;
 		}
 		if(DH->dhash_delete(value)) {
 			std::cout << "Successfully deleted "<< value << " from the hash table with double hashing" << std::endl;
 		}
-		else {	
+		else {
 			std::cout << value << " doesn't exist in the hash table with double hashing" << std::endl;
 		}
 		printf("Load factor of hash table with quadratic probing is %.2f\n", QH->getLF());
