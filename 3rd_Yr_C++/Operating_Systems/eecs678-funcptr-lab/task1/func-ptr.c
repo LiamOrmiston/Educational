@@ -6,11 +6,11 @@
 #include "process.h"
 #include "util.h"
 
-#define DEBUG 1			//change this to 1 to enable verbose output
+#define DEBUG 0			//change this to 1 to enable verbose output
 
 /**
  * Signature for an function pointer that can compare
- * You need to cast the input into its actual 
+ * You need to cast the input into its actual
  * type and then compare them according to your
  * custom logic
  */
@@ -18,7 +18,7 @@ typedef int (*Comparer) (const void *a, const void *b);
 
 /**
  * compares 2 processes
- * You can assume: 
+ * You can assume:
  * - Process ids will be unique
  * - No 2 processes will have same arrival time
  */
@@ -27,11 +27,12 @@ int my_comparer(const void *this, const void *that)
 	//TODO: IMPLEMENT ME!
 	Process p_this = *(Process *)this;
 	Process p_that = *(Process *)that;
-	// if this.priority > that.priority return this-that
-	// else if that.priority > this.priority return that-this
-	// else { if this.arrival_time > that.arrival_time return this-that
-	// else { else return that-this
-	return (p_this.arrival_time - p_that.arrival_time);
+	if (p_this.priority != p_that.priority) {
+		return p_that.priority - p_this.priority;
+	}
+	else {
+		return p_this.arrival_time - p_that.arrival_time;
+	}
 }
 
 int main(int argc, char *argv[])
