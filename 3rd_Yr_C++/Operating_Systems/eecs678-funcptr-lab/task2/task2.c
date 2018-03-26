@@ -17,7 +17,7 @@ int main (void)
 
 	printf("Operand 'a' : ");
 	scanf("%d", &a);
-	printf(" | Operand 'b' : ");
+	printf("Operand 'b' : ");
 	scanf("%d", &b);
 	puts("Specify the operation to perform (0 : add | 1 : subtract | 2 : Multiply | 3 : divide): ");
 	scanf("%d", &function);
