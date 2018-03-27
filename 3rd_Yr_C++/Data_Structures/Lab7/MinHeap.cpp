@@ -23,7 +23,7 @@
       int child = i;
       // is the child is smaller than it's parent?
       while (min_arr[child] < min_arr[parent]) {
-        std::cout << "swapping " << min_arr[child] << " with " << min_arr[parent] << '\n';
+        // std::cout << "swapping " << min_arr[child] << " with " << min_arr[parent] << '\n';
         // swap parent with child
         int temp = min_arr[child];
         min_arr[child] = min_arr[parent];
@@ -49,34 +49,27 @@
     if (last_index>0) {
       int parent = 0;
       min_arr[parent] = -1;
+      int smallest_child = 0;
+      bool at_leaf = false;
       // traverses all the children of a set parent to find smallest child
-      while (min_arr[parent] == -1) {
-        int smallest_child = min_arr[5*parent+1];
-        for (int i = 1; i <= 5; i++) {
-          if(min_arr[smallest_child] > min_arr[5*parent+i]) {
-            smallest_child = 5*parent+i;
-          }
-        }
-        // if smallest child is a leaf then replace parent and replace child with
-        // the next index until the last index. (shift everything over)
-
-        // replace
-        std::cout << min_arr[smallest_child] << " is the smallest child. Swapping..." << '\n';
-        min_arr[parent] = min_arr[smallest_child];
-
-        // first child is a leaf
-        if (min_arr[5*parent+1] == -1) {
-          std::cout << "parent is a leaf" << '\n';
+      while (!at_leaf) {
+        smallest_child = 5*parent+1;
+        if (smallest_child > last_index) {
           // shift all the values where the smallest value got deleted
-          for (int i = smallest_child; i < last_index; i++) {
-            min_arr[smallest_child] = min_arr[smallest_child+1];
-          }
+          min_arr[parent] = min_arr[last_index];
           last_index--;
+          at_leaf = true;
         }
         else {
-          std::cout << "parent is not a leaf" << '\n';
+          // find smallest child
+          for (int i = 1; i <= 5; i++) {
+            if(min_arr[smallest_child] > min_arr[5*parent+i]) {
+              smallest_child = 5*parent+i;
+            }
+          }
+          // replace parent with smallest child
+          min_arr[parent] = min_arr[smallest_child];
           parent = smallest_child;
-          std::cout << "next parent index is " << parent << '\n';
           min_arr[parent] = -1;
         }
       }
