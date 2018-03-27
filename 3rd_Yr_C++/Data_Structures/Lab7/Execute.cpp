@@ -9,10 +9,10 @@
 #include <stdexcept>
 
 Execute::Execute() {
-  // initalize minHeap with values from data.txt
+	my_min = new MinHeap();
 }
 Execute::~Execute() {
-  // delete minHeap;
+  // delete MinHeap;
 }
 
 void Execute::run() {
@@ -73,7 +73,13 @@ void Execute::run() {
 	std::cout << "Exiting the program..." << std::endl;
 }
 void Execute::choice_1() {
-try{
+	std::cout << "Enter a number to be inserted:" << std::endl;
+	std::cin >> input;
+	std::cout <<"\n";
+
+	try{
+		value = std::stoi(input);
+		my_min->insert(value);
 	}
 	catch(const std::invalid_argument e) {
 		std::cout << "invalid input." << std::endl;
@@ -84,10 +90,10 @@ try{
 }
 
 void Execute::choice_2() {
-
+	my_min->deleteMin();
 }
 void Execute::choice_3() {
-
+	my_min->findMin();
 }
 void Execute::choice_4() {
 
@@ -96,5 +102,5 @@ void Execute::choice_5() {
 
 }
 void Execute::choice_6() {
-
+	my_min->levelOrder();
 }

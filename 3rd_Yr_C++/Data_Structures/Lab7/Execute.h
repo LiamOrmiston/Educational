@@ -9,6 +9,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include "MinHeap.h"
 
 class Execute {
 	public:
@@ -26,6 +27,7 @@ class Execute {
     std::string input;
     int value;
     int choice;
-    // initalize minHeap;
+    // initalize MinHeap;
+		MinHeap* my_min;
   };
   #endif
