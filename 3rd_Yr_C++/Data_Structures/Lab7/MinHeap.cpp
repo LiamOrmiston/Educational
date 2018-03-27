@@ -56,6 +56,12 @@
   void MinHeap::levelOrder(){
     for (int i = 0; i <= last_index; i++) {
       std::cout << min_arr[i] << " ";
+      if (i==0 || i==5 || i==30 || i==155) {
+      std::cout << "\n";
+      }
+      else if (i%5 == 0 && i!=last_index) {
+      std::cout << "- ";
+      }
     }
     std::cout << "\n";
   }
