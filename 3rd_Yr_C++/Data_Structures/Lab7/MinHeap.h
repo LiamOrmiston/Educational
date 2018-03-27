@@ -16,7 +16,7 @@ public:
   void levelOrder();
 private:
   int value;
-	int min_arr[500];
+	int min_arr[500]{-1};
   int last_index;
   std::ifstream file;
 };
