@@ -1,4 +1,5 @@
 #include "MinHeap.h"
+#include <math.h>
 
   MinHeap::MinHeap(){
     // initalize MinHeap with values from data.txt
@@ -42,6 +43,23 @@
     }
   }
   void MinHeap::deleteMax(){
+    if (last_index > 0) {
+      int max_index = floor((last_index-1)/5) + 1;
+      for (int i = max_index+1; i < last_index; i++) {
+        if (min_arr[max_index] < min_arr[i]) {
+          max_index = i;
+        }
+      }
+      for (int i = max_index; i < last_index; i++) {
+        min_arr[i] = min_arr[i+1];
+      }
+      last_index--;
+      buildHeap();
+      levelOrder();
+    }
+    else {
+      std::cout << "Min heap is empty\n";
+    }
   }
   void MinHeap::findMin(){
     if (last_index > 0) {
@@ -51,7 +69,19 @@
       std::cout << "Min heap is empty\n";
     }
   }
-  bool MinHeap::findMax(){
+  void MinHeap::findMax(){
+    if (last_index > 0) {
+      int max_index = floor((last_index-1)/5) + 1;
+      for (int i = max_index+1; i < last_index; i++) {
+        if (min_arr[max_index] < min_arr[i]) {
+          max_index = i;
+        }
+      }
+      std::cout << "Max value: " << min_arr[max_index] << std::endl;
+    }
+    else {
+      std::cout << "Min heap is empty\n";
+    }
   }
   void MinHeap::levelOrder(){
     for (int i = 0; i <= last_index; i++) {

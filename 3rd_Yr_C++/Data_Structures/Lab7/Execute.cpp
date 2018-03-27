@@ -22,7 +22,7 @@ void Execute::run() {
 		std::cout << "1 - Insert" << std::endl;
 		std::cout << "2 - deleteMin" << std::endl;
     std::cout << "3 - findMin" << std::endl;
-		std::cout << "4 - finMax" << std::endl;
+		std::cout << "4 - findMax" << std::endl;
     std::cout << "5 - deleteMax" << std::endl;
     std::cout << "6 - levelOrder" << std::endl;
     std::cout << "7 - Exit" << std::endl;
@@ -96,10 +96,10 @@ void Execute::choice_3() {
 	my_min->findMin();
 }
 void Execute::choice_4() {
-
+ my_min->findMax();
 }
 void Execute::choice_5() {
-
+	my_min->deleteMax();
 }
 void Execute::choice_6() {
 	my_min->levelOrder();

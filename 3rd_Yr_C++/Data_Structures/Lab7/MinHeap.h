@@ -12,7 +12,7 @@ public:
   void deleteMin();
   void deleteMax();
   void findMin();
-  bool findMax();
+  void findMax();
   void levelOrder();
 private:
   int value;
