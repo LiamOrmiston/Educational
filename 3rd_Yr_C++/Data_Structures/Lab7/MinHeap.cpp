@@ -18,21 +18,51 @@
     // delete min_arr;
   }
   void MinHeap::buildHeap(){
+    // TODO: should go to last parent and then check all the children and work
+    // back until get to root
+    // last parent: min_arr[floor((last used index in array-1)/5)]
+    int smallest_child = last_index;
+    int last_parent = floor((last_index-1)/5);
+    int current_parent = last_parent;
+    int temp_parent = 0;
     for (int i = last_index; i > 0; i--) {
-      int parent = floor((i-1)/5);
-      int child = i;
-      // is the child is smaller than it's parent?
-      while (min_arr[child] < min_arr[parent]) {
-        // std::cout << "swapping " << min_arr[child] << " with " << min_arr[parent] << '\n';
-        // swap parent with child
-        int temp = min_arr[child];
-        min_arr[child] = min_arr[parent];
-        min_arr[parent] = temp;
-        child = parent;
-        parent = floor((parent-1)/5);
+      temp_parent = floor(((i-1)-1)/5);
+      if (temp_parent == current_parent && i != 1) {
+        if (min_arr[smallest_child] > min_arr[i-1]) {
+          std::cout << min_arr[smallest_child] << " is greater than " << min_arr[i-1] << " smallest child is now " << min_arr[i-1] << '\n';
+          smallest_child = i-1;
+        }
+      }
+      else {
+        std::cout << min_arr[i] << " is the last child of current parent: " << min_arr[current_parent] << '\n';
+        if (min_arr[current_parent] > min_arr[smallest_child]) {
+          std::cout << min_arr[smallest_child] << " is smaller than " << min_arr[current_parent] << '\n';
+          int temp = min_arr[current_parent];
+          min_arr[current_parent] = min_arr[smallest_child];
+          min_arr[smallest_child] = temp;
+          bool done = false;
+          while (!done && (5*smallest_child+1) < last_index) {
+            int new_smallest = 5*smallest_child+1;
+            for(int j = new_smallest; j < last_index && j <= 5*smallest_child+5; j++) {
+              if(min_arr[new_smallest] > min_arr[j]) {
+                new_smallest = j;
+              }
+            }
+            if (min_arr[new_smallest] < min_arr[smallest_child]) {
+              temp = min_arr[smallest_child];
+              min_arr[smallest_child] = min_arr[new_smallest];
+              min_arr[new_smallest] = temp;
+            }
+            smallest_child = new_smallest;
+          }
+
+        }
+        current_parent = temp_parent;
+        smallest_child = i-1;
+        std::cout << "smallest child is now " << min_arr[smallest_child] << '\n';
+        levelOrder();
       }
     }
-    // std::cout << "buildHeap() still needs to be implemented\n";
   }
   void MinHeap::insert(const int value){
     if (last_index<500) {
@@ -87,11 +117,8 @@
           max_index = i;
         }
       }
-      for (int i = max_index; i < last_index; i++) {
-        min_arr[i] = min_arr[i+1];
-      }
+      min_arr[max_index] = min_arr[last_index];
       last_index--;
-      buildHeap();
       levelOrder();
     }
     else {
