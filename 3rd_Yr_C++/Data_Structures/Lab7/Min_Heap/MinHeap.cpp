@@ -24,9 +24,6 @@
     // delete min_arr;
   }
   void MinHeap::buildHeap(){
-    // TODO: should go to last parent and then check all the children and work
-    // back until get to root
-    // last parent: min_arr[floor((last used index in array-1)/5)]
     int smallest_child = last_index;
     int last_parent = floor((last_index-1)/5);
     int current_parent = last_parent;
@@ -35,14 +32,11 @@
       temp_parent = floor(((i-1)-1)/5);
       if (temp_parent == current_parent && i != 1) {
         if (min_arr[smallest_child] > min_arr[i-1]) {
-          std::cout << min_arr[smallest_child] << " is greater than " << min_arr[i-1] << " smallest child is now " << min_arr[i-1] << '\n';
           smallest_child = i-1;
         }
       }
       else {
-        std::cout << min_arr[i] << " is the last child of current parent: " << min_arr[current_parent] << '\n';
         if (min_arr[current_parent] > min_arr[smallest_child]) {
-          std::cout << min_arr[smallest_child] << " is smaller than " << min_arr[current_parent] << '\n';
           int temp = min_arr[current_parent];
           min_arr[current_parent] = min_arr[smallest_child];
           min_arr[smallest_child] = temp;
@@ -65,7 +59,6 @@
         }
         current_parent = temp_parent;
         smallest_child = i-1;
-        std::cout << "smallest child is now " << min_arr[smallest_child] << '\n';
         levelOrder();
       }
     }

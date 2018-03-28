@@ -24,9 +24,6 @@
     // delete max_arr;
   }
   void MaxHeap::buildHeap(){
-    // TODO: should go to last parent and then check all the children and work
-    // back until get to root
-    // last parent: max_arr[floor((last used index in array-1)/5)]
     int largest_child = last_index;
     int last_parent = floor((last_index-1)/5);
     int current_parent = last_parent;
@@ -35,14 +32,11 @@
       temp_parent = floor(((i-1)-1)/5);
       if (temp_parent == current_parent && i != 1) {
         if (max_arr[largest_child] < max_arr[i-1]) {
-          std::cout << max_arr[largest_child] << " is smaller than " << max_arr[i-1] << " largest child is now " << max_arr[i-1] << '\n';
           largest_child = i-1;
         }
       }
       else {
-        std::cout << max_arr[i] << " is the last child of current parent: " << max_arr[current_parent] << '\n';
         if (max_arr[current_parent] < max_arr[largest_child]) {
-          std::cout << max_arr[largest_child] << " is greater than " << max_arr[current_parent] << '\n';
           int temp = max_arr[current_parent];
           max_arr[current_parent] = max_arr[largest_child];
           max_arr[largest_child] = temp;
@@ -65,7 +59,6 @@
         }
         current_parent = temp_parent;
         largest_child = i-1;
-        std::cout << "largest child is now " << max_arr[largest_child] << '\n';
         levelOrder();
       }
     }
