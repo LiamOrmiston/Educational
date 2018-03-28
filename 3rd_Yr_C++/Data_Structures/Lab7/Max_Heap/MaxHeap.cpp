@@ -21,45 +21,45 @@
     // TODO: should go to last parent and then check all the children and work
     // back until get to root
     // last parent: max_arr[floor((last used index in array-1)/5)]
-    int smallest_child = last_index;
+    int largest_child = last_index;
     int last_parent = floor((last_index-1)/5);
     int current_parent = last_parent;
     int temp_parent = 0;
     for (int i = last_index; i > 0; i--) {
       temp_parent = floor(((i-1)-1)/5);
       if (temp_parent == current_parent && i != 1) {
-        if (max_arr[smallest_child] > max_arr[i-1]) {
-          std::cout << max_arr[smallest_child] << " is greater than " << max_arr[i-1] << " smallest child is now " << max_arr[i-1] << '\n';
-          smallest_child = i-1;
+        if (max_arr[largest_child] < max_arr[i-1]) {
+          std::cout << max_arr[largest_child] << " is smaller than " << max_arr[i-1] << " largest child is now " << max_arr[i-1] << '\n';
+          largest_child = i-1;
         }
       }
       else {
         std::cout << max_arr[i] << " is the last child of current parent: " << max_arr[current_parent] << '\n';
-        if (max_arr[current_parent] > max_arr[smallest_child]) {
-          std::cout << max_arr[smallest_child] << " is smaller than " << max_arr[current_parent] << '\n';
+        if (max_arr[current_parent] < max_arr[largest_child]) {
+          std::cout << max_arr[largest_child] << " is greater than " << max_arr[current_parent] << '\n';
           int temp = max_arr[current_parent];
-          max_arr[current_parent] = max_arr[smallest_child];
-          max_arr[smallest_child] = temp;
+          max_arr[current_parent] = max_arr[largest_child];
+          max_arr[largest_child] = temp;
           bool done = false;
-          while (!done && (5*smallest_child+1) < last_index) {
-            int new_smallest = 5*smallest_child+1;
-            for(int j = new_smallest; j < last_index && j <= 5*smallest_child+5; j++) {
-              if(max_arr[new_smallest] > max_arr[j]) {
-                new_smallest = j;
+          while (!done && (5*largest_child+1) < last_index) {
+            int new_largest = 5*largest_child+1;
+            for(int j = new_largest; j < last_index && j <= 5*largest_child+5; j++) {
+              if(max_arr[new_largest] < max_arr[j]) {
+                new_largest = j;
               }
             }
-            if (max_arr[new_smallest] < max_arr[smallest_child]) {
-              temp = max_arr[smallest_child];
-              max_arr[smallest_child] = max_arr[new_smallest];
-              max_arr[new_smallest] = temp;
+            if (max_arr[new_largest] > max_arr[largest_child]) {
+              temp = max_arr[largest_child];
+              max_arr[largest_child] = max_arr[new_largest];
+              max_arr[new_largest] = temp;
             }
-            smallest_child = new_smallest;
+            largest_child = new_largest;
           }
 
         }
         current_parent = temp_parent;
-        smallest_child = i-1;
-        std::cout << "smallest child is now " << max_arr[smallest_child] << '\n';
+        largest_child = i-1;
+        std::cout << "largest child is now " << max_arr[largest_child] << '\n';
         levelOrder();
       }
     }
@@ -72,79 +72,79 @@
       levelOrder();
     }
     else {
-      std::cout << "Min heap is full. Cannot insert " << value << std::endl;
+      std::cout << "Max heap is full. Cannot insert " << value << std::endl;
     }
   }
-  void MaxHeap::deleteMin(){
+  void MaxHeap::deleteMax(){
     if (last_index>0) {
       int parent = 0;
       max_arr[parent] = -1;
-      int smallest_child = 0;
+      int largest_child = 0;
       bool at_leaf = false;
-      // traverses all the children of a set parent to find smallest child
+      // traverses all the children of a set parent to find largest child
       while (!at_leaf) {
-        smallest_child = 5*parent+1;
-        if (smallest_child > last_index) {
-          // shift all the values where the smallest value got deleted
+        largest_child = 5*parent+1;
+        if (largest_child > last_index) {
+          // shift all the values where the largest value got deleted
           max_arr[parent] = max_arr[last_index];
           last_index--;
           at_leaf = true;
         }
         else {
-          // find smallest child
+          // find largest child
           for (int i = 1; i <= 5; i++) {
-            if(max_arr[smallest_child] > max_arr[5*parent+i]) {
-              smallest_child = 5*parent+i;
+            if(max_arr[largest_child] < max_arr[5*parent+i]) {
+              largest_child = 5*parent+i;
             }
           }
-          // replace parent with smallest child
-          max_arr[parent] = max_arr[smallest_child];
-          parent = smallest_child;
+          // replace parent with largest child
+          max_arr[parent] = max_arr[largest_child];
+          parent = largest_child;
           max_arr[parent] = -1;
         }
       }
       levelOrder();
     }
     else {
-      std::cout << "Min heap is empty." << std::endl;
+      std::cout << "Max heap is empty." << std::endl;
     }
   }
-  void MaxHeap::deleteMax(){
+  void MaxHeap::deleteMin(){
     if (last_index > 0) {
-      int max_index = floor((last_index-1)/5) + 1;
-      for (int i = max_index+1; i < last_index; i++) {
-        if (max_arr[max_index] < max_arr[i]) {
-          max_index = i;
+      int min_index = floor((last_index-1)/5) + 1;
+      for (int i = min_index+1; i < last_index; i++) {
+        if (max_arr[min_index] > max_arr[i]) {
+          min_index = i;
         }
       }
-      max_arr[max_index] = max_arr[last_index];
+      max_arr[min_index] = max_arr[last_index];
       last_index--;
       levelOrder();
     }
     else {
-      std::cout << "Min heap is empty\n";
-    }
-  }
-  void MaxHeap::findMin(){
-    if (last_index > 0) {
-      std::cout << "Min value: " << max_arr[0] << std::endl;
-    }
-    else {
-      std::cout << "Min heap is empty\n";
+      std::cout << "Max heap is empty\n";
     }
   }
   void MaxHeap::findMax(){
     if (last_index > 0) {
-      int max_index = floor((last_index-1)/5) + 1;
-      for (int i = max_index+1; i < last_index; i++) {
-        if (max_arr[max_index] < max_arr[i]) {
-          max_index = i;
-        }
-      }
-      std::cout << "Max value: " << max_arr[max_index] << std::endl;
+      std::cout << "Max value: " << max_arr[0] << std::endl;
     }
     else {
-      std::cout << "Min heap is empty\n";
+      std::cout << "Max heap is empty\n";
+    }
+  }
+  void MaxHeap::findMin(){
+    if (last_index > 0) {
+      int min_index = floor((last_index-1)/5) + 1;
+      for (int i = min_index+1; i < last_index; i++) {
+        if (max_arr[min_index] > max_arr[i]) {
+          min_index = i;
+        }
+      }
+      std::cout << "Min value: " << max_arr[min_index] << std::endl;
+    }
+    else {
+      std::cout << "Max heap is empty\n";
     }
   }
   void MaxHeap::levelOrder(){
