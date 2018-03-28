@@ -17,7 +17,6 @@
       last_index = i;
       i++;
     }
-    levelOrder();
     buildHeap();
   }
   MaxHeap::~MaxHeap(){
@@ -59,7 +58,6 @@
         }
         current_parent = temp_parent;
         largest_child = i-1;
-        levelOrder();
       }
     }
   }
