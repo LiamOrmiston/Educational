@@ -1,3 +1,9 @@
+/*
+ * MaxHeap.cpp
+ * Liam Ormiston
+ * 3-27-18
+ * Max heap class
+ */
 #include "MaxHeap.h"
 #include <math.h>
 

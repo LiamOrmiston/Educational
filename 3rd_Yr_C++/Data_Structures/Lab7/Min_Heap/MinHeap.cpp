@@ -1,3 +1,9 @@
+/*
+ * MinHeap.cpp
+ * Liam Ormiston
+ * 3-27-18
+ * Min heap class
+ */
 #include "MinHeap.h"
 #include <math.h>
 

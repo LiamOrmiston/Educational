@@ -1,3 +1,9 @@
+/*
+ * MinHeap.h
+ * Liam Ormiston
+ * 3-27-18
+ * Min heap class header
+ */
 #ifndef MIN_HEAP
 #define MIN_HEAP
 #include <fstream>
