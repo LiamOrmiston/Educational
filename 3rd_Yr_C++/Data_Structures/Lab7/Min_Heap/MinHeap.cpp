@@ -73,7 +73,7 @@
     }
   }
   void MinHeap::deleteMin(){
-    if (last_index>0) {
+    if (last_index>=0) {
       int parent = 0;
       min_arr[parent] = -1;
       int smallest_child = 0;
@@ -89,7 +89,7 @@
         }
         else {
           // find smallest child
-          for (int i = 1; i <= 5; i++) {
+          for (int i = 1; i <= 5 && 5*parent+i <= last_index; i++) {
             if(min_arr[smallest_child] > min_arr[5*parent+i]) {
               smallest_child = 5*parent+i;
             }
@@ -107,7 +107,7 @@
     }
   }
   void MinHeap::deleteMax(){
-    if (last_index > 0) {
+    if (last_index >= 0) {
       int max_index = floor((last_index-1)/5) + 1;
       for (int i = max_index+1; i < last_index; i++) {
         if (min_arr[max_index] < min_arr[i]) {
@@ -123,7 +123,7 @@
     }
   }
   void MinHeap::findMin(){
-    if (last_index > 0) {
+    if (last_index >= 0) {
       std::cout << "Min value: " << min_arr[0] << std::endl;
     }
     else {
@@ -140,19 +140,27 @@
       }
       std::cout << "Max value: " << min_arr[max_index] << std::endl;
     }
+    else if(last_index == 0) {
+      std::cout << "Max value: " << min_arr[0] << std::endl;
+    }
     else {
       std::cout << "Min heap is empty\n";
     }
   }
   void MinHeap::levelOrder(){
-    for (int i = 0; i <= last_index; i++) {
-      std::cout << min_arr[i] << " ";
-      if (i==0 || i==5 || i==30 || i==155) {
-      std::cout << "\n";
-      }
-      else if (i%5 == 0 && i!=last_index) {
-      std::cout << "- ";
-      }
+    if(last_index < 0) {
+      std::cout << "Min heap is empty\n";
     }
-    std::cout << "\n";
+    else {
+      for (int i = 0; i <= last_index; i++) {
+        std::cout << min_arr[i] << " ";
+        if (i==0 || i==5 || i==30 || i==155) {
+        std::cout << "\n";
+        }
+        else if (i%5 == 0 && i!=last_index) {
+        std::cout << "- ";
+        }
+      }
+      std::cout << "\n";
+    }
   }
