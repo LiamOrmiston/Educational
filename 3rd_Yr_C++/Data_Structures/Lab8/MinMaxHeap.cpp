@@ -45,17 +45,10 @@
     }
   }
   void MinMaxHeap::swap_child(int index) {
-    std::cout << "swap with child" << '\n';
     if(isMinLevel(index)) {
-      std::cout << "current node is " << minmax_arr[index] << '\n';
-
-      std::cout << "on min level" << '\n';
       int min = index;
       int child1 = index*2;
       int child2 = index*2+1;
-      std::cout << "child1 is " << minmax_arr[child1] << '\n';
-      std::cout << "child2 is " << minmax_arr[child2] << '\n';
-
       if (minmax_arr[min] > minmax_arr[child1]) {
         min = child1;
       }
@@ -63,21 +56,15 @@
         min = child2;
       }
       if (index != min) {
-        std::cout << "swapping " << minmax_arr[index] << "with " << minmax_arr[min] << '\n';
         int temp = minmax_arr[index];
         minmax_arr[index] = minmax_arr[min];
         minmax_arr[min] = temp;
       }
     }
     else {
-      std::cout << "current node is " << minmax_arr[index] << '\n';
-
-      std::cout << "on max level" << '\n';
       int max = index;
       int child1 = index*2;
       int child2 = index*2+1;
-      std::cout << "child1 is " << minmax_arr[child1] << '\n';
-      std::cout << "child2 is " << minmax_arr[child2] << '\n';
       if (minmax_arr[max] < minmax_arr[child1]) {
         max = child1;
       }
@@ -85,7 +72,6 @@
         max = child2;
       }
       if (index != max) {
-        std::cout << "swapping " << minmax_arr[index] << "with " << minmax_arr[max] << '\n';
         int temp = minmax_arr[index];
         minmax_arr[index] = minmax_arr[max];
         minmax_arr[max] = temp;
@@ -93,9 +79,7 @@
     }
   }
   void MinMaxHeap::swap_gchild(int index) {
-    std::cout << "swap with gchild" << '\n';
     if(isMinLevel(index)) {
-      std::cout << "on min level" << '\n';
       int min = index;
       int g_child1 = index*4;
       int g_child2 = index*4+1;
@@ -115,15 +99,12 @@
         min = g_child4;
       }
       if (index != min) {
-        std::cout << "swapping " << minmax_arr[index] << "with " << minmax_arr[min] << '\n';
         int temp = minmax_arr[index];
         minmax_arr[index] = minmax_arr[min];
         minmax_arr[min] = temp;
       }
     }
     else {
-      std::cout << "on max level" << '\n';
-
       int max = index;
       int g_child1 = index*4;
       int g_child2 = index*4+1;
@@ -143,7 +124,6 @@
         max = g_child4;
       }
       if (index != max) {
-        std::cout << "swapping " << minmax_arr[index] << "with " << minmax_arr[max] << '\n';
         int temp = minmax_arr[index];
         minmax_arr[index] = minmax_arr[max];
         minmax_arr[max] = temp;
