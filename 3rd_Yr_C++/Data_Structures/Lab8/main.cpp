@@ -9,7 +9,10 @@
 #include <string.h>
 
 int main(int argc, char const *argv[]) {
-  if(strcmp(argv[1],"minmax")==0){
+  if(argc != 2) {
+    std::cout << "ERROR: Please execute either './Lab8 minmax' or './Lab8 maxmin'" << '\n';
+  }
+  else if(strcmp(argv[1],"minmax")==0){
     Execute exec;
     exec.run();
   }
@@ -18,7 +21,7 @@ int main(int argc, char const *argv[]) {
     exec.run();
   }
   else {
-    std::cout << "Please enter either 'minmax' or 'maxmin'" << '\n';
+    std::cout << "ERROR: Please execute either './Lab8 minmax' or './Lab8 maxmin'" << '\n';
   }
 return 0;
 };
