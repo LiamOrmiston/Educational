@@ -8,12 +8,18 @@
 #define MIN_MAX_HEAP
 #include <fstream>
 #include <iostream>
+#include <math.h>
 
 class MinMaxHeap {
 public:
   MinMaxHeap();
   ~MinMaxHeap();
   void buildHeap();
+  bool has_gchild(int index);
+  void swap(int index);
+  void swap_child(int index);
+  void swap_gchild(int index);
+  bool isMinLevel(int index);
   void insert(const int value);
   void deleteMin();
   void deleteMax();

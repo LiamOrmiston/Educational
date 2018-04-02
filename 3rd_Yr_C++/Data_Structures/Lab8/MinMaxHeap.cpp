@@ -5,7 +5,6 @@
  * Min heap class
  */
 #include "MinMaxHeap.h"
-#include <math.h>
 
   MinMaxHeap::MinMaxHeap(){
     // initalize MinMaxHeap with values from data.txt
@@ -23,42 +22,174 @@
     // delete minmax_arr;
   }
   void MinMaxHeap::buildHeap(){
-    int smallest_child = last_index;
-    int last_parent = floor((last_index-1)/5);
-    int current_parent = last_parent;
-    int temp_parent = 0;
-    for (int i = last_index; i > 1; i--) {
-      temp_parent = floor(((i-1)-1)/5);
-      if (temp_parent == current_parent && i != 1) {
-        if (minmax_arr[smallest_child] > minmax_arr[i-1]) {
-          smallest_child = i-1;
-        }
-      }
-      else {
-        if (minmax_arr[current_parent] > minmax_arr[smallest_child]) {
-          int temp = minmax_arr[current_parent];
-          minmax_arr[current_parent] = minmax_arr[smallest_child];
-          minmax_arr[smallest_child] = temp;
-          bool done = false;
-          while (!done && (5*smallest_child+1) < last_index) {
-            int new_smallest = 5*smallest_child+1;
-            for(int j = new_smallest; j < last_index && j <= 5*smallest_child+5; j++) {
-              if(minmax_arr[new_smallest] > minmax_arr[j]) {
-                new_smallest = j;
-              }
-            }
-            if (minmax_arr[new_smallest] < minmax_arr[smallest_child]) {
-              temp = minmax_arr[smallest_child];
-              minmax_arr[smallest_child] = minmax_arr[new_smallest];
-              minmax_arr[new_smallest] = temp;
-            }
-            smallest_child = new_smallest;
-          }
+    // int smallest_child = last_index;
+    // int current_parent = last_parent;
+    // int temp_parent = 0;
+    int last_parent = floor(last_index/2);
+    for (int i = last_parent; i > 0; i--) {
+      swap(i);
+      // temp_parent = floor(((i-1)-1)/5);
+      // if (temp_parent == current_parent && i != 1) {
+      //   if (minmax_arr[smallest_child] > minmax_arr[i-1]) {
+      //     smallest_child = i-1;
+      //   }
+      // }
+      // else {
+      //   if (minmax_arr[current_parent] > minmax_arr[smallest_child]) {
+      //     int temp = minmax_arr[current_parent];
+      //     minmax_arr[current_parent] = minmax_arr[smallest_child];
+      //     minmax_arr[smallest_child] = temp;
+      //     bool done = false;
+      //     while (!done && (5*smallest_child+1) < last_index) {
+      //       int new_smallest = 5*smallest_child+1;
+      //       for(int j = new_smallest; j < last_index && j <= 5*smallest_child+5; j++) {
+      //         if(minmax_arr[new_smallest] > minmax_arr[j]) {
+      //           new_smallest = j;
+      //         }
+      //       }
+      //       if (minmax_arr[new_smallest] < minmax_arr[smallest_child]) {
+      //         temp = minmax_arr[smallest_child];
+      //         minmax_arr[smallest_child] = minmax_arr[new_smallest];
+      //         minmax_arr[new_smallest] = temp;
+      //       }
+      //       smallest_child = new_smallest;
+      //     }
+      //
+      //   }
+      //   current_parent = temp_parent;
+      //   smallest_child = i-1;
+      // }
+    }
+  }
+  bool MinMaxHeap::has_gchild(int index) {
+    if(index*4 <= last_index) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  void MinMaxHeap::swap(int index) {
+    if(has_gchild(index)) {
+      swap_gchild(index);
+    }
+    else {
+      swap_child(index);
+    }
+  }
+  void MinMaxHeap::swap_child(int index) {
+    std::cout << "swap with child" << '\n';
+    if(isMinLevel(index)) {
+      std::cout << "current node is " << minmax_arr[index] << '\n';
 
-        }
-        current_parent = temp_parent;
-        smallest_child = i-1;
+      std::cout << "on min level" << '\n';
+      int min = index;
+      int child1 = index*2;
+      int child2 = index*2+1;
+      std::cout << "child1 is " << minmax_arr[child1] << '\n';
+      std::cout << "child2 is " << minmax_arr[child2] << '\n';
+
+      if (minmax_arr[min] > minmax_arr[child1]) {
+        min = child1;
       }
+      if (minmax_arr[min] > minmax_arr[child2] && child2 <= last_index) {
+        min = child2;
+      }
+      if (index != min) {
+        std::cout << "swapping " << minmax_arr[index] << "with " << minmax_arr[min] << '\n';
+        int temp = minmax_arr[index];
+        minmax_arr[index] = minmax_arr[min];
+        minmax_arr[min] = temp;
+      }
+    }
+    else {
+      std::cout << "current node is " << minmax_arr[index] << '\n';
+
+      std::cout << "on max level" << '\n';
+      int max = index;
+      int child1 = index*2;
+      int child2 = index*2+1;
+      std::cout << "child1 is " << minmax_arr[child1] << '\n';
+      std::cout << "child2 is " << minmax_arr[child2] << '\n';
+      if (minmax_arr[max] < minmax_arr[child1]) {
+        max = child1;
+      }
+      if (minmax_arr[max] < minmax_arr[child2] && child2 <= last_index) {
+        max = child2;
+      }
+      if (index != max) {
+        std::cout << "swapping " << minmax_arr[index] << "with " << minmax_arr[max] << '\n';
+        int temp = minmax_arr[index];
+        minmax_arr[index] = minmax_arr[max];
+        minmax_arr[max] = temp;
+      }
+    }
+  }
+  void MinMaxHeap::swap_gchild(int index) {
+    std::cout << "swap with gchild" << '\n';
+    if(isMinLevel(index)) {
+      std::cout << "on min level" << '\n';
+      int min = index;
+      int g_child1 = index*4;
+      int g_child2 = index*4+1;
+      int g_child3 = index*4+2;
+      int g_child4 = index*4+3;
+
+      if (minmax_arr[min] > minmax_arr[g_child1]) {
+        min = g_child1;
+      }
+      if (minmax_arr[min] > minmax_arr[g_child2] && g_child2 <= last_index) {
+        min = g_child2;
+      }
+      if (minmax_arr[min] > minmax_arr[g_child3] && g_child3 <= last_index) {
+        min = g_child3;
+      }
+      if (minmax_arr[min] > minmax_arr[g_child4] && g_child4 <= last_index) {
+        min = g_child4;
+      }
+      if (index != min) {
+        std::cout << "swapping " << minmax_arr[index] << "with " << minmax_arr[min] << '\n';
+        int temp = minmax_arr[index];
+        minmax_arr[index] = minmax_arr[min];
+        minmax_arr[min] = temp;
+      }
+    }
+    else {
+      std::cout << "on max level" << '\n';
+
+      int max = index;
+      int g_child1 = index*4;
+      int g_child2 = index*4+1;
+      int g_child3 = index*4+2;
+      int g_child4 = index*4+3;
+
+      if (minmax_arr[max] < minmax_arr[g_child1]) {
+        max = g_child1;
+      }
+      if (minmax_arr[max] < minmax_arr[g_child2] && g_child2 <= last_index) {
+        max = g_child2;
+      }
+      if (minmax_arr[max] < minmax_arr[g_child3] && g_child3 <= last_index) {
+        max = g_child3;
+      }
+      if (minmax_arr[max] < minmax_arr[g_child4] && g_child4 <= last_index) {
+        max = g_child4;
+      }
+      if (index != max) {
+        std::cout << "swapping " << minmax_arr[index] << "with " << minmax_arr[max] << '\n';
+        int temp = minmax_arr[index];
+        minmax_arr[index] = minmax_arr[max];
+        minmax_arr[max] = temp;
+      }
+    }
+  }
+  bool MinMaxHeap::isMinLevel(int index) {
+    int num = floor(log2(index));
+    if(fmod(num, 2) == 0) {
+      return true;
+    }
+    else {
+      return false;
     }
   }
   void MinMaxHeap::insert(const int value){
@@ -153,12 +284,17 @@
       std::cout << "Minmax heap is empty\n";
     }
     else {
+      int j = 1;
       for (int i = 1; i <= last_index; i++) {
         std::cout << minmax_arr[i] << " ";
-        if (i==1 || i==5 || i==30 || i==155) {
-        std::cout << "\n";
+        int last_child = pow(2, j)-1;
+        // std::cout << "last child = " << last_child << '\n';
+        // std::cout << "current child = " << i << '\n';
+        if (i == last_child) {
+          std::cout << "\n";
+          j++;
         }
-        else if (i%5 == 1 && i!=last_index) {
+        else if (i%2 == 1 && i!=last_index) {
         std::cout << "- ";
         }
       }

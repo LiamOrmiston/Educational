@@ -28,6 +28,6 @@ class Execute {
     int value;
     int choice;
     // initalize MinMaxHeap;
-		MinMaxHeap* my_min;
+		MinMaxHeap* my_minmax;
   };
   #endif
