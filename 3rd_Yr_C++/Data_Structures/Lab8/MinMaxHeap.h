@@ -2,7 +2,7 @@
  * MinMaxHeap.h
  * Liam Ormiston
  * 4-2-18
- * Minmax heap class header
+ * Min-max heap class header
  */
 #ifndef MIN_MAX_HEAP
 #define MIN_MAX_HEAP
