@@ -172,6 +172,7 @@ void MinMaxHeap::patch_with_child(int index) {
   int min = child1, max = child1;
   if(child1 > last_index) {
     last_index--;
+    swap(index);
   }
   else if(isMinLevel(index)) {
     if (minmax_arr[min] >= minmax_arr[child2] && child2 <= last_index) {
@@ -232,12 +233,23 @@ void MinMaxHeap::patch_with_gchild(int index) {
 }
 void MinMaxHeap::deleteMax(){
   if (last_index > 1) {
-    int max_index = 2;
-    if (minmax_arr[max_index] < minmax_arr[3] && last_index > 2) {
-      patch(3);
+    if (minmax_arr[2] < minmax_arr[3] && last_index > 2) {
+      if(3*2>last_index) {
+        minmax_arr[3] = minmax_arr[last_index];
+        last_index--;
+      }
+      else {
+        patch(3);
+      }
     }
     else {
-      patch(2);
+      if(2*2>last_index) {
+        minmax_arr[2] = minmax_arr[last_index];
+        last_index--;
+      }
+      else {
+        patch(2);
+      }
     }
     levelOrder();
   }
