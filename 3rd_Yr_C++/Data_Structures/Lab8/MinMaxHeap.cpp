@@ -22,43 +22,10 @@
     // delete minmax_arr;
   }
   void MinMaxHeap::buildHeap(){
-    // int smallest_child = last_index;
-    // int current_parent = last_parent;
-    // int temp_parent = 0;
     int last_parent = floor(last_index/2);
     for (int i = last_parent; i > 0; i--) {
       swap(i);
-      // temp_parent = floor(((i-1)-1)/5);
-      // if (temp_parent == current_parent && i != 1) {
-      //   if (minmax_arr[smallest_child] > minmax_arr[i-1]) {
-      //     smallest_child = i-1;
-      //   }
-      // }
-      // else {
-      //   if (minmax_arr[current_parent] > minmax_arr[smallest_child]) {
-      //     int temp = minmax_arr[current_parent];
-      //     minmax_arr[current_parent] = minmax_arr[smallest_child];
-      //     minmax_arr[smallest_child] = temp;
-      //     bool done = false;
-      //     while (!done && (5*smallest_child+1) < last_index) {
-      //       int new_smallest = 5*smallest_child+1;
-      //       for(int j = new_smallest; j < last_index && j <= 5*smallest_child+5; j++) {
-      //         if(minmax_arr[new_smallest] > minmax_arr[j]) {
-      //           new_smallest = j;
-      //         }
-      //       }
-      //       if (minmax_arr[new_smallest] < minmax_arr[smallest_child]) {
-      //         temp = minmax_arr[smallest_child];
-      //         minmax_arr[smallest_child] = minmax_arr[new_smallest];
-      //         minmax_arr[new_smallest] = temp;
-      //       }
-      //       smallest_child = new_smallest;
-      //     }
-      //
-      //   }
-      //   current_parent = temp_parent;
-      //   smallest_child = i-1;
-      // }
+      }
     }
   }
   bool MinMaxHeap::has_gchild(int index) {
@@ -278,7 +245,6 @@
       std::cout << "Minmax heap is empty\n";
     }
   }
-  // TODO: make levelOrder mathematic
   void MinMaxHeap::levelOrder(){
     if(last_index < 1) {
       std::cout << "Minmax heap is empty\n";
@@ -288,8 +254,6 @@
       for (int i = 1; i <= last_index; i++) {
         std::cout << minmax_arr[i] << " ";
         int last_child = pow(2, j)-1;
-        // std::cout << "last child = " << last_child << '\n';
-        // std::cout << "current child = " << i << '\n';
         if (i == last_child) {
           std::cout << "\n";
           j++;
