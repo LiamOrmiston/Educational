@@ -231,16 +231,19 @@ void MinMaxHeap::patch_with_gchild(int index) {
   }
 }
 void MinMaxHeap::deleteMax(){
-  if (last_index >= 1) {
-    int max_index = floor((last_index-1)/5) + 1;
-    for (int i = max_index+1; i < last_index; i++) {
-      if (minmax_arr[max_index] < minmax_arr[i]) {
-        max_index = i;
-      }
+  if (last_index > 1) {
+    int max_index = 2;
+    if (minmax_arr[max_index] < minmax_arr[3] && last_index > 2) {
+      patch(3);
     }
-    minmax_arr[max_index] = minmax_arr[last_index];
-    last_index--;
+    else {
+      patch(2);
+    }
     levelOrder();
+  }
+  else if (last_index == 1) {
+    last_index--;
+    std::cout << "Minmax heap is empty.\n";
   }
   else {
     std::cout << "Minmax heap is empty.\n";
@@ -256,13 +259,13 @@ void MinMaxHeap::findMin(){
 }
 void MinMaxHeap::findMax(){
   if (last_index > 1) {
-    int max_index = floor((last_index-1)/5) + 1;
-    for (int i = max_index+1; i < last_index; i++) {
-      if (minmax_arr[max_index] < minmax_arr[i]) {
-        max_index = i;
-      }
+    int max_index = 2;
+    if (minmax_arr[max_index] < minmax_arr[3] && last_index > 2) {
+      std::cout << "Max value: " << minmax_arr[3] << std::endl;
     }
-    std::cout << "Max value: " << minmax_arr[max_index] << std::endl;
+    else {
+      std::cout << "Max value: " << minmax_arr[2] << std::endl;
+    }
   }
   else if(last_index == 1) {
     std::cout << "Max value: " << minmax_arr[1] << std::endl;
