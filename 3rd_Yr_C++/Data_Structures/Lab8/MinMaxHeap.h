@@ -20,6 +20,9 @@ public:
   void swap_child(int index);
   void swap_gchild(int index);
   bool isMinLevel(int index);
+  void patch(int index);
+  void patch_with_child(int index);
+  void patch_with_gchild(int index);
   void insert(const int value);
   void deleteMin();
   void deleteMax();
