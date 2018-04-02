@@ -14,7 +14,7 @@ ExecuteMax::ExecuteMax() {
 }
 // destructor
 ExecuteMax::~ExecuteMax() {
-  // delete MaxMinHeap;
+	delete my_maxmin;
 }
 // UI
 void ExecuteMax::run() {

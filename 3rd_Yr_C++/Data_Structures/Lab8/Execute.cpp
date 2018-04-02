@@ -14,7 +14,7 @@ Execute::Execute() {
 }
 // destructor
 Execute::~Execute() {
-  // delete MinMaxHeap;
+  delete my_minmax;
 }
 
 // UI
