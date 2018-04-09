@@ -69,13 +69,13 @@ int main (int argc, char *argv[])
    * 2. go to the location corresponding to the last byte
    lseek cmd
    */
-   lseek(fdin, i-1, SEEK_END);
+   lseek(fdout, i-1, SEEK_END);
 
   /*
    * 3. write a dummy byte at the last location
    falloc?
    */
-   if(write(fdin, "test", 1) < 0) {
+   if(write(fdout, "test", 1) < 0) {
      err_sys("writting dummy byte was unsuccessful\n");
    }
 
@@ -100,5 +100,5 @@ int main (int argc, char *argv[])
      * stores what is in the memory location pointed to by src into
      * the memory location pointed to by dest.
      */
-    *dst = *src;
+    memcpy(dst, src, i);
 }
