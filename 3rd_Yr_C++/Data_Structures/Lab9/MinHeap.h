@@ -22,7 +22,7 @@ public:
   void levelOrder();
 private:
 	int min_arr[10000000]{-1};
-  int last_index;
+  int last_index =0;
   std::ifstream file;
 };
 #endif

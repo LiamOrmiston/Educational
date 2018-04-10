@@ -18,12 +18,12 @@ Execute::~Execute() {
 	delete my_min;
 }
 void Execute::run() {
-	std::cout << "BST TESTS:\n";
-	BST_tests(1*m);
-	BST_tests(2*m);
-	BST_tests(3*m);
-	BST_tests(4*m);
-	BST_tests(5*m);
+	// std::cout << "BST TESTS:\n";
+	// BST_tests(1*m);
+	// BST_tests(2*m);
+	// BST_tests(3*m);
+	// BST_tests(4*m);
+	// BST_tests(5*m);
 
 	std::cout << "MAX HEAP TESTS:\n";
 	MAX_tests(1*m);
@@ -73,17 +73,23 @@ float* Execute::BST_build_test(int size) {
 		t = clock() - t;
 		build_avg = build_avg + t;
 
-		// new seed
-		srand(time(NULL));
-		int* rand_arr = new int[size];
+		BinarySearchTree<int>* BST_min_test = new BinarySearchTree<int>();
 		for (int i = 0; i < (size); i++) {
-			rand_arr[i] = rand();
+			int num = rand();
+			BST_min_test->add(num);
+		}
+		BinarySearchTree<int>* BST_max_test = new BinarySearchTree<int>();
+		for (int i = 0; i < (size); i++) {
+			int num = rand();
+			BST_max_test->add(num);
 		}
 
-		deleteMax_avg = deleteMax_avg + BST_deleteMin_test(BST_test, rand_arr, size);
-		deleteMin_avg = deleteMin_avg + BST_deleteMax_test(BST_test, rand_arr, size);
+		deleteMax_avg = deleteMax_avg + BST_deleteMax_test(BST_max_test, size);
+		deleteMin_avg = deleteMin_avg + BST_deleteMin_test(BST_min_test, size);
 
 		delete BST_test;
+		delete BST_max_test;
+		delete BST_min_test;
 	}
 	build_avg = build_avg/5;
 	deleteMax_avg = deleteMax_avg/5;
@@ -94,7 +100,7 @@ float* Execute::BST_build_test(int size) {
 	myArr[2] = deleteMin_avg;
 	return myArr;
 }
-float Execute::BST_deleteMax_test(BinarySearchTree<int>* BST_test, int* rand_arr, int size) {
+float Execute::BST_deleteMax_test(BinarySearchTree<int>* BST_test, int size) {
 	clock_t t;
 	float deleteMax = 0.00;
 
@@ -108,7 +114,7 @@ float Execute::BST_deleteMax_test(BinarySearchTree<int>* BST_test, int* rand_arr
 	}
 	return deleteMax;
 }
-float Execute::BST_deleteMin_test(BinarySearchTree<int>* BST_test, int* rand_arr, int size) {
+float Execute::BST_deleteMin_test(BinarySearchTree<int>* BST_test, int size) {
 	clock_t t;
 	float deleteMin = 0.00;
 
@@ -129,6 +135,7 @@ MAX HEAP TEST
 
 void Execute::MAX_tests(int size) {
 	float *myArr = new float[3];
+	std::cout << "calling build test" << '\n';
 	myArr = MAX_build_test(size);
 
 	printf("Build of %d took %f seconds\n", size, (float)myArr[0]/CLOCKS_PER_SEC);
@@ -144,29 +151,39 @@ float* Execute::MAX_build_test(int size) {
 	float deleteMax_avg = 0.00;
 	float deleteMin_avg = 0.00;
 	for(int i=0; i < 5; i++) {
+		std::cout << "starting clock" << '\n';
 		// start clock
 		t = clock();
 		// build and insert
+		std::cout << "building and inserting" << '\n';
 		MaxHeap* MAX_test = new MaxHeap();
 		for (int i = 0; i < (size); i++) {
 			int num = rand();
 			MAX_test->insert(num);
 		}
+		std::cout << "done building. stopping clock" << '\n';
 		// end clock
 		t = clock() - t;
 		build_avg = build_avg + t;
-
-		// new seed
-		srand(time(NULL));
-		int* rand_arr = new int[size];
+ std::cout << "create heaps to test delete" << '\n';
+		MaxHeap* MAX_max_test = new MaxHeap();
 		for (int i = 0; i < (size); i++) {
-			rand_arr[i] = rand();
+			int num = rand();
+			MAX_max_test->insert(num);
+		}
+		MaxHeap* MAX_min_test = new MaxHeap();
+		for (int i = 0; i < (size); i++) {
+			int num = rand();
+			MAX_min_test->insert(num);
 		}
 
-		deleteMax_avg = deleteMax_avg + MAX_deleteMin_test(MAX_test, rand_arr, size);
-		deleteMin_avg = deleteMin_avg + MAX_deleteMax_test(MAX_test, rand_arr, size);
-
+		// deleteMax_avg = deleteMax_avg + MAX_deleteMax_test(MAX_max_test, size);
+		// deleteMin_avg = deleteMin_avg + MAX_deleteMin_test(MAX_min_test, size);
+std::cout << "deleting previously created heaps" << '\n';
 		delete MAX_test;
+		delete MAX_max_test;
+		delete MAX_min_test;
+		std::cout << "done" << '\n';
 	}
 	build_avg = build_avg/5;
 	deleteMax_avg = deleteMax_avg/5;
@@ -177,7 +194,7 @@ float* Execute::MAX_build_test(int size) {
 	myArr[2] = deleteMin_avg;
 	return myArr;
 }
-float Execute::MAX_deleteMax_test(MaxHeap* MAX_test, int* rand_arr, int size) {
+float Execute::MAX_deleteMax_test(MaxHeap* MAX_test, int size) {
 	clock_t t;
 	float deleteMax = 0.00;
 
@@ -190,7 +207,7 @@ float Execute::MAX_deleteMax_test(MaxHeap* MAX_test, int* rand_arr, int size) {
 	}
 	return deleteMax;
 }
-float Execute::MAX_deleteMin_test(MaxHeap* MAX_test, int* rand_arr, int size) {
+float Execute::MAX_deleteMin_test(MaxHeap* MAX_test, int size) {
 	clock_t t;
 	float deleteMin = 0.00;
 
@@ -237,17 +254,23 @@ float* Execute::MIN_build_test(int size) {
 		t = clock() - t;
 		build_avg = build_avg + t;
 
-		// new seed
-		srand(time(NULL));
-		int* rand_arr = new int[size];
+		MinHeap* MIN_max_test = new MinHeap();
 		for (int i = 0; i < (size); i++) {
-			rand_arr[i] = rand();
+			int num = rand();
+			MIN_max_test->insert(num);
+		}
+		MinHeap* MIN_min_test = new MinHeap();
+		for (int i = 0; i < (size); i++) {
+			int num = rand();
+			MIN_min_test->insert(num);
 		}
 
-		deleteMax_avg = deleteMax_avg + MIN_deleteMin_test(MIN_test, rand_arr, size);
-		deleteMin_avg = deleteMin_avg + MIN_deleteMax_test(MIN_test, rand_arr, size);
+		deleteMax_avg = deleteMax_avg + MIN_deleteMax_test(MIN_max_test, size);
+		deleteMin_avg = deleteMin_avg + MIN_deleteMin_test(MIN_min_test, size);
 
 		delete MIN_test;
+		delete MIN_max_test;
+		delete MIN_min_test;
 	}
 	build_avg = build_avg/5;
 	deleteMax_avg = deleteMax_avg/5;
@@ -258,7 +281,7 @@ float* Execute::MIN_build_test(int size) {
 	myArr[2] = deleteMin_avg;
 	return myArr;
 }
-float Execute::MIN_deleteMax_test(MinHeap* MIN_test, int* rand_arr, int size) {
+float Execute::MIN_deleteMax_test(MinHeap* MIN_test, int size) {
 	clock_t t;
 	float deleteMax = 0.00;
 
@@ -271,7 +294,7 @@ float Execute::MIN_deleteMax_test(MinHeap* MIN_test, int* rand_arr, int size) {
 	}
 	return deleteMax;
 }
-float Execute::MIN_deleteMin_test(MinHeap* MIN_test, int* rand_arr, int size) {
+float Execute::MIN_deleteMin_test(MinHeap* MIN_test, int size) {
 	clock_t t;
 	float deleteMin = 0.00;
 

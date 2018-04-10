@@ -8,16 +8,16 @@
 #include <math.h>
 
   MaxHeap::MaxHeap(){
-    // initalize MaxHeap with values from data.txt
-    file.open("data.txt");
-    int value = 0;
-    int i = 0;
-    while (file >> value) {
-      max_arr[i] = value;
-      last_index = i;
-      i++;
-    }
-    buildHeap();
+    // // initalize MaxHeap with values from data.txt
+    // file.open("data.txt");
+    // int value = 0;
+    // int i = 0;
+    // while (file >> value) {
+    //   max_arr[i] = value;
+    //   last_index = i;
+    //   i++;
+    // }
+    // buildHeap();
   }
   MaxHeap::~MaxHeap(){
     // delete max_arr;
@@ -54,7 +54,6 @@
             }
             largest_child = new_largest;
           }
-
         }
         current_parent = temp_parent;
         largest_child = i-1;
@@ -62,11 +61,11 @@
     }
   }
   void MaxHeap::insert(const int value){
-    if (last_index<500) {
+    if (last_index<10000000) {
       last_index++;
       max_arr[last_index] = value;
       buildHeap();
-      levelOrder();
+      // levelOrder();
     }
     else {
       std::cout << "Max heap is full. Cannot insert " << value << std::endl;
@@ -100,7 +99,7 @@
           max_arr[parent] = -1;
         }
       }
-      levelOrder();
+      // levelOrder();
     }
     else {
       std::cout << "Max heap is empty." << std::endl;
@@ -116,7 +115,7 @@
       }
       max_arr[min_index] = max_arr[last_index];
       last_index--;
-      levelOrder();
+      // levelOrder();
     }
     else {
       std::cout << "Max heap is empty\n";

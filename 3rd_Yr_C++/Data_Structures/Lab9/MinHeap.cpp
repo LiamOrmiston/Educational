@@ -9,15 +9,15 @@
 
   MinHeap::MinHeap(){
     // initalize MinHeap with values from data.txt
-    file.open("data.txt");
-    int value = 0;
-    int i = 0;
-    while (file >> value) {
-      min_arr[i] = value;
-      last_index = i;
-      i++;
-    }
-    buildHeap();
+    // file.open("data.txt");
+    // int value = 0;
+    // int i = 0;
+    // while (file >> value) {
+    //   min_arr[i] = value;
+    //   last_index = i;
+    //   i++;
+    // }
+    // buildHeap();
   }
   MinHeap::~MinHeap(){
     // delete min_arr;
@@ -62,11 +62,11 @@
     }
   }
   void MinHeap::insert(const int value){
-    if (last_index<500) {
+    if (last_index<10000000) {
       last_index++;
       min_arr[last_index] = value;
       buildHeap();
-      levelOrder();
+      // levelOrder();
     }
     else {
       std::cout << "Min heap is full. Cannot insert " << value << std::endl;
@@ -100,7 +100,7 @@
           min_arr[parent] = -1;
         }
       }
-      levelOrder();
+      // levelOrder();
     }
     else {
       std::cout << "Min heap is empty." << std::endl;
@@ -116,7 +116,7 @@
       }
       min_arr[max_index] = min_arr[last_index];
       last_index--;
-      levelOrder();
+      // levelOrder();
     }
     else {
       std::cout << "Min heap is empty\n";
