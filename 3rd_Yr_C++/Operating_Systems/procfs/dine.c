@@ -16,7 +16,7 @@
 #define NUM_CHOPS NUM_PHILS
 #define FIELDS_TO_IGNORE 13
 
-#define DEADLOCK 1
+#define DEADLOCK 0
 #define ACTIVE_DURATION 200
 
 typedef struct {
@@ -244,9 +244,8 @@ int check_for_deadlock()
      * also need to determine how many fields to skip over - see proc(5)
      * HINT: Use the the * qualifier to skip tokens without storing them.
      */
-     while(j!=14) {
+     for(j=0; j<FIELDS_TO_IGNORE; j++) {
        fscanf(statf, "%*s");
-       j++;
      }
 
 
@@ -258,15 +257,20 @@ int check_for_deadlock()
      * 4. Read the time values you want. Use fscanf again.
      */
 
-       fscanf(statf, "%lu %lu", &new_sys_time, &new_user_time);
+       fscanf(statf, "%lu %lu", &new_user_time, &new_sys_time);
+       user_progress[i] = new_user_time - user_progress[i];
+       sys_progress[i] =  new_sys_time - sys_progress[i];
+       user_time[i] = new_user_time;
+       sys_time[i] = new_sys_time;
+
 
 
 
     /*
-     * TODO: 5. Use time values to determine if deadlock has occurred.
+     *  5. Use time values to determine if deadlock has occurred.
      */
 
-     if(new_sys_time==new_user_time) {
+     if(new_sys_time!=new_user_time) {
        deadlock = 0;
      }
 

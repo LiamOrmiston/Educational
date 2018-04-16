@@ -1,10 +1,10 @@
-STUDENT_ID=XXXXXXX
+STUDENT_ID=2767240
 
 all:
 	@echo "Please use an explicit target. We suggest test1"
 
 dine: dine.c
-	gcc -Wall -g -o dine -l pthread dine.c
+	gcc -Wall -g -pthread -o dine dine.c
 
 procstat: procstat.c
 	gcc -o procstat procstat.c
@@ -19,7 +19,7 @@ clean:
 	rm -f dine procstat
 	rm -f *~
 
-zip: 
+zip:
 	make clean
 	mkdir $(STUDENT_ID)-procfs-lab
 	cp Makefile dine.c $(STUDENT_ID)-procfs-lab/
