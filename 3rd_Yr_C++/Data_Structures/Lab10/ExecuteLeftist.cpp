@@ -27,7 +27,7 @@ void ExecuteLeftist::run() {
 		std::cout << "2 - deleteMin" << std::endl;
     std::cout << "3 - pre" << std::endl;
 		std::cout << "4 - in" << std::endl;
-    std::cout << "5 - post" << std::endl;
+    std::cout << "5 - level" << std::endl;
     std::cout << "6 - end" << std::endl;
 		std::cin >> input;
 		bool argument = true;

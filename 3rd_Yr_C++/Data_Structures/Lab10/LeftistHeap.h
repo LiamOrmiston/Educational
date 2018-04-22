@@ -19,7 +19,8 @@ public:
   LeftistNode<T>* concate(LeftistNode<T>*H1, LeftistNode<T>*H2);
   void insert(const int value);
   void deleteMin();
-  void findMin();
+  void setRank(LeftistNode<T>* subTreePtr);
+  int getRank(LeftistNode<T>* subTreePtr);
   // Traversals
  void pre();
  void preHelper(LeftistNode<T>* subTreePtr);

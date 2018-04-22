@@ -31,10 +31,22 @@ LeftistNode<T>* LeftistHeap<T>::concate(LeftistNode<T>* H1, LeftistNode<T>* H2) 
     std::cout << "attempting to concate: " <<H1->getValue()<<" with "<<H2->getValue()<< '\n';
     if(H1->getValue() <= H2->getValue()) {
       H1->setRightChildPtr(concate(H1->getRightChildPtr(), H2));
+      setRank(H1);
+      if(getRank(H1->getLeftChildPtr()) < getRank(H1->getRightChildPtr())) {
+        LeftistNode<T>* temp = H1->getLeftChildPtr();
+        H1->setLeftChildPtr(H1->getRightChildPtr());
+        H1->setRightChildPtr(temp);
+      }
       return H1;
     }
     else {
       H2->setRightChildPtr(concate(H2->getRightChildPtr(), H1));
+      setRank(H2);
+      if(getRank(H2->getLeftChildPtr()) < getRank(H2->getRightChildPtr())) {
+        LeftistNode<T>* temp = H2->getLeftChildPtr();
+        H2->setLeftChildPtr(H2->getRightChildPtr());
+        H2->setRightChildPtr(temp);
+      }
       return H2;
     }
   }
@@ -45,7 +57,7 @@ LeftistNode<T>* LeftistHeap<T>::concate(LeftistNode<T>* H1, LeftistNode<T>* H2) 
     return H1;
   }
 }
-// insert a value at the end and then rebuild heap
+// insert a value
 template<typename T>
 void LeftistHeap<T>::insert(const int value){
   LeftistNode<T>* new_node = new LeftistNode<T>(value);
@@ -58,6 +70,7 @@ void LeftistHeap<T>::deleteMin(){
   // min is always the root so we delete then patch at the root
   if (rootPtr != nullptr) {
     // delete root and concate
+    rootPtr = concate(rootPtr->getRightChildPtr(), rootPtr->getLeftChildPtr());
   }
   else {
     std::cout << "Leftist heap is empty.\n";
@@ -66,12 +79,30 @@ void LeftistHeap<T>::deleteMin(){
 
 // find min
 template<typename T>
-void LeftistHeap<T>::findMin(){
-  if (rootPtr != nullptr) {
-    std::cout << "Min value is: " << rootPtr->getValue() << '\n';
+void LeftistHeap<T>::setRank(LeftistNode<T>* subTreePtr) {
+  int leftRank = 0;
+  int rightRank = 0;
+  if(subTreePtr->getLeftChildPtr()!=nullptr) {
+    leftRank = subTreePtr->getLeftChildPtr()->getRank();
+  }
+  if(subTreePtr->getRightChildPtr()!=nullptr) {
+    rightRank = subTreePtr->getRightChildPtr()->getRank();
+  }
+  if(leftRank<=rightRank) {
+    subTreePtr->setRank(leftRank+1);
   }
   else {
-    std::cout << "Leftist heap is empty.\n";
+    subTreePtr->setRank(rightRank+1);
+  }
+}
+
+template<typename T>
+int LeftistHeap<T>::getRank(LeftistNode<T>* subTreePtr) {
+  if(subTreePtr==nullptr) {
+    return 0;
+  }
+  else {
+    return subTreePtr->getRank();
   }
 }
 // prints all nodes in level order
