@@ -46,7 +46,7 @@ void LeftistNode<T>::setValue(const T& aValue) {
 
 template<typename T>
 void LeftistNode<T>::setRank(const T& aRank) {
-   rank = aValue;
+   rank = aRank;
 }
 
 template<typename T>

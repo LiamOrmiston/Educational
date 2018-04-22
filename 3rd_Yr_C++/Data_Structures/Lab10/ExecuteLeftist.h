@@ -27,7 +27,7 @@ class ExecuteLeftist {
     std::string input;
     int value;
     int choice;
-    // initalize LeftistHeap;
-		LeftistHeap* my_Leftist;
+    // // initalize LeftistHeap;
+		LeftistHeap<int>* LH;
   };
   #endif

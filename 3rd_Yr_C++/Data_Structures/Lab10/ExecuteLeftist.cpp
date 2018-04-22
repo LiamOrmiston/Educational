@@ -10,25 +10,25 @@
 
 // constructor
 ExecuteLeftist::ExecuteLeftist() {
-	// TODO: my_minmax = new MinMaxHeap();
+  // initalize LeftistHeap;
+  LH = new LeftistHeap<int>();
 }
 // destructor
 ExecuteLeftist::~ExecuteLeftist() {
-  delete my_minmax;
+  delete LH;
 }
 
 // UI
 void ExecuteLeftist::run() {
-	while (choice != 7) {
+	while (choice != 6) {
 		std::cout << "--------------------------------------------" << std::endl;
 		std::cout << "Please choose one of the following commands:" << std::endl;
 		std::cout << "1 - Insert" << std::endl;
 		std::cout << "2 - deleteMin" << std::endl;
-    std::cout << "3 - findMin" << std::endl;
-		std::cout << "4 - findMax" << std::endl;
-    std::cout << "5 - deleteMax" << std::endl;
-    std::cout << "6 - levelOrder" << std::endl;
-    std::cout << "7 - Exit" << std::endl;
+    std::cout << "3 - pre" << std::endl;
+		std::cout << "4 - in" << std::endl;
+    std::cout << "5 - post" << std::endl;
+    std::cout << "6 - end" << std::endl;
 		std::cin >> input;
 		bool argument = true;
 		// checks for correct input
@@ -43,32 +43,28 @@ void ExecuteLeftist::run() {
 		if (argument) {
       switch (choice) {
         case 1:
-        std::cout <<"\n";
-        choice_1();
-        break;
+          std::cout <<"\n";
+          choice_1();
+          break;
         case 2:
-        std::cout <<"\n";
-        choice_2();
-        break;
+          std::cout <<"\n";
+          choice_2();
+          break;
         case 3:
-        std::cout <<"\n";
-        choice_3();
-        break;
+          std::cout <<"\n";
+          choice_3();
+          break;
         case 4:
-        std::cout <<"\n";
-        choice_4();
-        break;
+          std::cout <<"\n";
+          choice_4();
+          break;
         case 5:
-        std::cout <<"\n";
-        choice_5();
-        break;
+          std::cout <<"\n";
+          choice_5();
+          break;
         case 6:
-        std::cout <<"\n";
-        choice_6();
-        break;
-        case 7:
-        std::cout <<"\n";
-        break;
+          std::cout <<"\n";
+          break;
         default:
 					std::cout <<"\n";
 					std::cout << "Invalid input. Please try again" << std::endl;
@@ -85,7 +81,7 @@ void ExecuteLeftist::choice_1() {
 	// error catching for improper input
 	try{
 		value = std::stoi(input);
-		my_minmax->insert(value);
+		LH->insert(value);
 	}
 	catch(const std::invalid_argument e) {
 		std::cout << "invalid input." << std::endl;
@@ -97,21 +93,17 @@ void ExecuteLeftist::choice_1() {
 
 // Delete Min value
 void ExecuteLeftist::choice_2() {
-	my_minmax->deleteMin();
+	LH->deleteMin();
 }
-// Find Min value
+// Print pre-order
 void ExecuteLeftist::choice_3() {
-	my_minmax->findMin();
+	LH->pre();
 }
-// Find Max value
+// Print in-order
 void ExecuteLeftist::choice_4() {
- my_minmax->findMax();
-}
-// Delete Max value
-void ExecuteLeftist::choice_5() {
-	my_minmax->deleteMax();
+ LH->in();
 }
 // Print level-order
-void ExecuteLeftist::choice_6() {
-	my_minmax->levelOrder();
+void ExecuteLeftist::choice_5() {
+	LH->level();
 }
