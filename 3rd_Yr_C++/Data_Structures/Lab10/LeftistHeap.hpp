@@ -14,7 +14,7 @@ LeftistHeap<T>::LeftistHeap(){
 }
 template<typename T>
 LeftistHeap<T>::~LeftistHeap(){
-  // delete Leftist_arr;
+  destroyTree(rootPtr);
 }
 template<typename T>
 void LeftistHeap<T>::buildHeap(){
@@ -190,19 +190,19 @@ void LeftistHeap<T>::level() {
   }
 }
 
-
-// template<typename T>
-// void LeftistHeap<T>::destroyTree(LeftistNode<T>* subTreePtr)
-// {
-//   //recurse left subtree
-//   if(subTreePtr->getLeftChildPtr() != nullptr) {
-//     destroyTree(subTreePtr->getLeftChildPtr());
-//   }
-//
-//   //recurse right subtree
-//   if(subTreePtr->getRightChildPtr() != nullptr) {
-//     destroyTree(subTreePtr->getRightChildPtr());
-//   }
-//   //deletes node
-//   delete subTreePtr;
-// }
+// destructor helper
+template<typename T>
+void LeftistHeap<T>::destroyTree(LeftistNode<T>* subTreePtr) {
+  if (subTreePtr != nullptr) {
+    //recurse left subtree
+    if(subTreePtr->getLeftChildPtr() != nullptr) {
+      destroyTree(subTreePtr->getLeftChildPtr());
+    }
+    //recurse right subtree
+    if(subTreePtr->getRightChildPtr() != nullptr) {
+      destroyTree(subTreePtr->getRightChildPtr());
+    }
+    //deletes node
+    delete subTreePtr;
+  }
+}

@@ -27,8 +27,8 @@ public:
  void level();
 private:
   SkewNode<T>* rootPtr;
-  // void destroyTree(SkewNode<T>* subTreePtr);
   std::ifstream file;
+  void destroyTree(SkewNode<T>* subTreePtr);
 };
 #include "SkewHeap.hpp"
 #endif

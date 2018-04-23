@@ -29,8 +29,8 @@ public:
  void level();
 private:
   LeftistNode<T>* rootPtr;
-  // void destroyTree(LeftistNode<T>* subTreePtr);
   std::ifstream file;
+  void destroyTree(LeftistNode<T>* subTreePtr);
 };
 #include "LeftistHeap.hpp"
 #endif

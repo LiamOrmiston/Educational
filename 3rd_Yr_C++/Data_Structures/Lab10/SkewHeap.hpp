@@ -14,7 +14,7 @@ SkewHeap<T>::SkewHeap(){
 }
 template<typename T>
 SkewHeap<T>::~SkewHeap(){
-  // delete Skew_arr;
+  destroyTree(rootPtr);
 }
 template<typename T>
 void SkewHeap<T>::buildHeap(){
@@ -154,19 +154,19 @@ void SkewHeap<T>::level() {
   }
 }
 
-
-// template<typename T>
-// void SkewHeap<T>::destroyTree(SkewNode<T>* subTreePtr)
-// {
-//   //recurse left subtree
-//   if(subTreePtr->getLeftChildPtr() != nullptr) {
-//     destroyTree(subTreePtr->getLeftChildPtr());
-//   }
-//
-//   //recurse right subtree
-//   if(subTreePtr->getRightChildPtr() != nullptr) {
-//     destroyTree(subTreePtr->getRightChildPtr());
-//   }
-//   //deletes node
-//   delete subTreePtr;
-// }
+// destructor helper
+template<typename T>
+void SkewHeap<T>::destroyTree(SkewNode<T>* subTreePtr) {
+  if (subTreePtr != nullptr) {
+    //recurse left subtree
+    if(subTreePtr->getLeftChildPtr() != nullptr) {
+      destroyTree(subTreePtr->getLeftChildPtr());
+    }
+    //recurse right subtree
+    if(subTreePtr->getRightChildPtr() != nullptr) {
+      destroyTree(subTreePtr->getRightChildPtr());
+    }
+    //deletes node
+    delete subTreePtr;
+  }
+}
