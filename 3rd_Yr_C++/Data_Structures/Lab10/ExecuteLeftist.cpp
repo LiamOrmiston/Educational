@@ -97,13 +97,16 @@ void ExecuteLeftist::choice_2() {
 }
 // Print pre-order
 void ExecuteLeftist::choice_3() {
-	LH->pre();
+	std::cout << "preorder: ";
+  LH->pre();
 }
 // Print in-order
 void ExecuteLeftist::choice_4() {
- LH->in();
+  std::cout << "inorder: ";
+  LH->in();
 }
 // Print level-order
 void ExecuteLeftist::choice_5() {
+  std::cout << "levelorder:" << '\n';
 	LH->level();
 }

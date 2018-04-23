@@ -121,7 +121,7 @@ void LeftistHeap<T>::preHelper(LeftistNode<T>* subTreePtr) {
 template<typename T>
 void LeftistHeap<T>::pre() {
   if (rootPtr == nullptr) {
-    std::cout << "Tree is empty";
+    std::cout << "Tree is empty\n";
   }
   else {
     preHelper(rootPtr);
@@ -145,7 +145,7 @@ void LeftistHeap<T>::inHelper(LeftistNode<T>* subTreePtr) {
 template<typename T>
 void LeftistHeap<T>::in() {
   if (rootPtr == nullptr) {
-    std::cout << "Tree is empty";
+    std::cout << "Tree is empty\n";
   }
   else {
     inHelper(rootPtr);
@@ -156,7 +156,7 @@ void LeftistHeap<T>::in() {
 template<typename T>
 void LeftistHeap<T>::level() {
   if (rootPtr == nullptr) {
-    std::cout << "Tree is empty";
+    std::cout << "Tree is empty\n";
   }
   else {
     std::queue<LeftistNode<T>*> Q_current;
