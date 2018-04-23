@@ -1,5 +1,5 @@
 /*
-* LeftistHeap.cpp
+* LeftistHeap.hpp
 * Liam Ormiston
 * 4-24-18
 * Leftist heap class
@@ -78,7 +78,10 @@ void LeftistHeap<T>::deleteMin(){
   // min is always the root so we delete then concate children
   if (rootPtr != nullptr) {
     // delete root and concate
-    rootPtr = concate(rootPtr->getRightChildPtr(), rootPtr->getLeftChildPtr());
+    LeftistNode<T>* temp = concate(rootPtr->getRightChildPtr(), rootPtr->getLeftChildPtr());
+    delete rootPtr;
+    rootPtr = temp;
+    temp = nullptr;
   }
   else {
     std::cout << "Leftist heap is empty.\n";

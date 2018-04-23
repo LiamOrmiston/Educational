@@ -1,5 +1,5 @@
 /*
-* SkewHeap.cpp
+* SkewHeap.hpp
 * Liam Ormiston
 * 4-24-18
 * Skew heap class
@@ -69,7 +69,10 @@ void SkewHeap<T>::deleteMin(){
   // min is always the root so we delete then concate children
   if (rootPtr != nullptr) {
     // delete root and concate
-    rootPtr = concate(rootPtr->getRightChildPtr(), rootPtr->getLeftChildPtr());
+    SkewNode<T>* temp = concate(rootPtr->getRightChildPtr(), rootPtr->getLeftChildPtr());
+    delete rootPtr;
+    rootPtr = temp;
+    temp = nullptr;
   }
   else {
     std::cout << "Skew heap is empty.\n";
