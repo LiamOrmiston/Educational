@@ -28,7 +28,6 @@ template<typename T>
 LeftistNode<T>* LeftistHeap<T>::concate(LeftistNode<T>* H1, LeftistNode<T>* H2) {
 
   if(H1 != nullptr && H2 != nullptr) {
-    std::cout << "attempting to concate: " <<H1->getValue()<<" with "<<H2->getValue()<< '\n';
     if(H1->getValue() <= H2->getValue()) {
       H1->setRightChildPtr(concate(H1->getRightChildPtr(), H2));
       setRank(H1);
@@ -105,11 +104,7 @@ int LeftistHeap<T>::getRank(LeftistNode<T>* subTreePtr) {
     return subTreePtr->getRank();
   }
 }
-// prints all nodes in level order
-// template<typename T>
-// void LeftistHeap<T>::levelOrder(){
-//
-// }
+
 //Pre, In, Post print methods
 template<typename T>
 void LeftistHeap<T>::preHelper(LeftistNode<T>* subTreePtr) {
@@ -131,6 +126,7 @@ void LeftistHeap<T>::pre() {
   else {
     preHelper(rootPtr);
   }
+  std::cout << '\n';
 }
 
 template<typename T>
@@ -154,20 +150,7 @@ void LeftistHeap<T>::in() {
   else {
     inHelper(rootPtr);
   }
-}
-
-template<typename T>
-void LeftistHeap<T>::levelHelper(LeftistNode<T>* subTreePtr) {
-  // Print siblings
-  // Print children
-  if(subTreePtr->getLeftChildPtr() != nullptr) {
-    levelHelper(subTreePtr->getLeftChildPtr());
-  }
-  if(subTreePtr->getRightChildPtr() != nullptr) {
-    levelHelper(subTreePtr->getRightChildPtr());
-  }
-
-  std::cout << subTreePtr->getValue() << " ";
+  std::cout << '\n';
 }
 
 template<typename T>
@@ -176,28 +159,28 @@ void LeftistHeap<T>::level() {
     std::cout << "Tree is empty";
   }
   else {
-    int count = 0;
-    int children = 1;
-    std::queue<LeftistNode<T>*> Q;
-    Q.push(rootPtr);
-    while(!Q.empty()) {
-      LeftistNode<T>* current = Q.front();
+    std::queue<LeftistNode<T>*> Q_current;
+    std::queue<LeftistNode<T>*> Q_next;
+    std::queue<LeftistNode<T>*> Q_temp;
+
+    Q_current.push(rootPtr);
+    while(!Q_current.empty()) {
+      LeftistNode<T>* current = Q_current.front();
       std::cout << current->getValue() << " ";
-      count++;
       if(current->getLeftChildPtr()!=nullptr) {
-        Q.push(current->getLeftChildPtr());
+        Q_next.push(current->getLeftChildPtr());
       }
       if(current->getRightChildPtr()!=nullptr) {
-        Q.push(current->getRightChildPtr());
+        Q_next.push(current->getRightChildPtr());
       }
-      Q.pop();
-      if(count%children == 0) {
+      Q_current.pop();
+      if(Q_current.empty()) {
         std::cout << '\n';
-        children = children*2;
-        count = 0;
+        Q_temp = Q_current;
+        Q_current = Q_next;
+        Q_next = Q_temp;
       }
     }
-    std::cout << '\n';
   }
 }
 

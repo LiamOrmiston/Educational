@@ -27,7 +27,6 @@ public:
  void in();
  void inHelper(LeftistNode<T>* subTreePtr);
  void level();
- void levelHelper(LeftistNode<T>* subTreePtr);
 private:
   LeftistNode<T>* rootPtr;
   // void destroyTree(LeftistNode<T>* subTreePtr);
