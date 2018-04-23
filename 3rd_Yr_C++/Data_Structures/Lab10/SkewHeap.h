@@ -26,7 +26,7 @@ public:
  void inHelper(SkewNode<T>* subTreePtr);
  void level();
 private:
-  SkewNode<T>* rootPtr;
+  SkewNode<T>* rootPtr = nullptr;
   std::ifstream file;
   void destroyTree(SkewNode<T>* subTreePtr);
 };

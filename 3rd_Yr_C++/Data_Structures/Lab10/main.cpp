@@ -15,13 +15,15 @@ int main(int argc, char const *argv[]) {
   }
   // Will execute min-leftist heap
   else if(strcmp(argv[1],"minleftist")==0){
-    ExecuteLeftist exec;
-    exec.run();
+    ExecuteLeftist *exec = new ExecuteLeftist();
+    exec->run();
+    delete exec;
   }
   // Will execute min-skew heap
   else if (strcmp(argv[1],"minskew")==0) {
-    ExecuteSkew exec;
-    exec.run();
+    ExecuteSkew *exec = new ExecuteSkew();
+    exec->run();
+    delete exec;
   }
   // user provided incorrect second argument
   else {

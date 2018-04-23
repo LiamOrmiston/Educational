@@ -25,9 +25,9 @@ class ExecuteSkew {
   private:
     std::ifstream file;
     std::string input;
-    int value;
-    int choice;
+    int value = 0;
+    int choice = 0;
     // initalize SkewHeap;
-		SkewHeap<int>* SH;
+		SkewHeap<int>* SH = nullptr;
   };
   #endif

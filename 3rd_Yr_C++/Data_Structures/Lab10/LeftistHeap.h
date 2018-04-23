@@ -28,7 +28,7 @@ public:
  void inHelper(LeftistNode<T>* subTreePtr);
  void level();
 private:
-  LeftistNode<T>* rootPtr;
+  LeftistNode<T>* rootPtr = nullptr;
   std::ifstream file;
   void destroyTree(LeftistNode<T>* subTreePtr);
 };

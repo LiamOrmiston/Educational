@@ -25,9 +25,9 @@ class ExecuteLeftist {
   private:
     std::ifstream file;
     std::string input;
-    int value;
-    int choice;
+    int value = 0;
+    int choice = 0;
     // // initalize LeftistHeap;
-		LeftistHeap<int>* LH;
+		LeftistHeap<int>* LH = nullptr;
   };
   #endif
