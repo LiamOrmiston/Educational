@@ -26,16 +26,11 @@ LeftistNode<T>::LeftistNode(const T& aValue, LeftistNode<T>* leftPtr, LeftistNod
   setLeftChildPtr(leftPtr);
   setRightChildPtr(rightPtr);
 }
-
+//destructor
 template<typename T>
 LeftistNode<T>::~LeftistNode() {
   leftChildPtr = nullptr;
   rightChildPtr = nullptr;
-}
-
-template<typename T>
-bool LeftistNode<T>::isLeaf() const {
-   return ((leftChildPtr == nullptr) && (rightChildPtr == nullptr));
 }
 
 // Setters

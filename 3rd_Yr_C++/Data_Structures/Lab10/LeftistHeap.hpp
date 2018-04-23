@@ -18,6 +18,7 @@ LeftistHeap<T>::~LeftistHeap(){
 }
 template<typename T>
 void LeftistHeap<T>::buildHeap(){
+  // open the data file and insert each value
   file.open("data.txt");
   int value = 0;
   while (file >> value) {
@@ -28,9 +29,13 @@ template<typename T>
 LeftistNode<T>* LeftistHeap<T>::concate(LeftistNode<T>* H1, LeftistNode<T>* H2) {
 
   if(H1 != nullptr && H2 != nullptr) {
+    // check which tree has the smaller root. the smaller root will keep its
+    // left subtree and will concate the larger root tree with its right subtree
     if(H1->getValue() <= H2->getValue()) {
       H1->setRightChildPtr(concate(H1->getRightChildPtr(), H2));
+      // reconfigure rank
       setRank(H1);
+      // swap if rank if right child rank is larger than left child rank
       if(getRank(H1->getLeftChildPtr()) < getRank(H1->getRightChildPtr())) {
         LeftistNode<T>* temp = H1->getLeftChildPtr();
         H1->setLeftChildPtr(H1->getRightChildPtr());
@@ -40,7 +45,9 @@ LeftistNode<T>* LeftistHeap<T>::concate(LeftistNode<T>* H1, LeftistNode<T>* H2) 
     }
     else {
       H2->setRightChildPtr(concate(H2->getRightChildPtr(), H1));
+      // reconfigure rank
       setRank(H2);
+      // swap if rank if right child rank is larger than left child rank
       if(getRank(H2->getLeftChildPtr()) < getRank(H2->getRightChildPtr())) {
         LeftistNode<T>* temp = H2->getLeftChildPtr();
         H2->setLeftChildPtr(H2->getRightChildPtr());
@@ -49,6 +56,7 @@ LeftistNode<T>* LeftistHeap<T>::concate(LeftistNode<T>* H1, LeftistNode<T>* H2) 
       return H2;
     }
   }
+  // if one of the tree is a nullptr then just add the other tree by returning it.
   else if(H1 == nullptr) {
     return H2;
   }
@@ -59,6 +67,7 @@ LeftistNode<T>* LeftistHeap<T>::concate(LeftistNode<T>* H1, LeftistNode<T>* H2) 
 // insert a value
 template<typename T>
 void LeftistHeap<T>::insert(const int value){
+  // new node created and then concated with the existing tree
   LeftistNode<T>* new_node = new LeftistNode<T>(value);
   rootPtr = concate(rootPtr, new_node);
 }
@@ -66,7 +75,7 @@ void LeftistHeap<T>::insert(const int value){
 // delete min
 template<typename T>
 void LeftistHeap<T>::deleteMin(){
-  // min is always the root so we delete then patch at the root
+  // min is always the root so we delete then concate children
   if (rootPtr != nullptr) {
     // delete root and concate
     rootPtr = concate(rootPtr->getRightChildPtr(), rootPtr->getLeftChildPtr());
@@ -76,17 +85,14 @@ void LeftistHeap<T>::deleteMin(){
   }
 }
 
-// find min
+// rank helper. called after concate
 template<typename T>
 void LeftistHeap<T>::setRank(LeftistNode<T>* subTreePtr) {
-  int leftRank = 0;
-  int rightRank = 0;
-  if(subTreePtr->getLeftChildPtr()!=nullptr) {
-    leftRank = subTreePtr->getLeftChildPtr()->getRank();
-  }
-  if(subTreePtr->getRightChildPtr()!=nullptr) {
-    rightRank = subTreePtr->getRightChildPtr()->getRank();
-  }
+  // finds rank of left and right children
+  int leftRank = getRank(subTreePtr->getLeftChildPtr());
+  int rightRank = getRank(subTreePtr->getRightChildPtr());
+
+  // sets rank by adding 1 to the minumum child rank
   if(leftRank<=rightRank) {
     subTreePtr->setRank(leftRank+1);
   }
@@ -97,6 +103,7 @@ void LeftistHeap<T>::setRank(LeftistNode<T>* subTreePtr) {
 
 template<typename T>
 int LeftistHeap<T>::getRank(LeftistNode<T>* subTreePtr) {
+  // if subtree is nullptr then rank is 0. otherwise, return the rank stored
   if(subTreePtr==nullptr) {
     return 0;
   }
@@ -105,12 +112,11 @@ int LeftistHeap<T>::getRank(LeftistNode<T>* subTreePtr) {
   }
 }
 
-//Pre, In, Post print methods
+// Pre, In, Post print methods
+// Pre: print, recurse-left, recurse-right
 template<typename T>
 void LeftistHeap<T>::preHelper(LeftistNode<T>* subTreePtr) {
-
   std::cout << subTreePtr->getValue() << " ";
-
   if(subTreePtr->getLeftChildPtr() != nullptr) {
     preHelper(subTreePtr->getLeftChildPtr());
   }
@@ -129,19 +135,17 @@ void LeftistHeap<T>::pre() {
   std::cout << '\n';
 }
 
+// In: recurse-left, print, recurse-right
 template<typename T>
 void LeftistHeap<T>::inHelper(LeftistNode<T>* subTreePtr) {
   if(subTreePtr->getLeftChildPtr() != nullptr) {
     inHelper(subTreePtr->getLeftChildPtr());
   }
-
   std::cout << subTreePtr->getValue() << " ";
-
   if(subTreePtr->getRightChildPtr() != nullptr) {
     inHelper(subTreePtr->getRightChildPtr());
   }
 }
-
 template<typename T>
 void LeftistHeap<T>::in() {
   if (rootPtr == nullptr) {
@@ -153,6 +157,8 @@ void LeftistHeap<T>::in() {
   std::cout << '\n';
 }
 
+// Level: store parent in current-queue and children in next-queue. Once
+// current-queue is empty print new line and set next-queue to current-queue
 template<typename T>
 void LeftistHeap<T>::level() {
   if (rootPtr == nullptr) {

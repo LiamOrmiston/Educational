@@ -20,7 +20,7 @@ public:
    void setRightChildPtr(SkewNode<T>* rightPtr);
 
 private:
-  T value;           // Data portion
+  T value;                     // Data portion
   SkewNode<T>* leftChildPtr;   // Pointer to left child
   SkewNode<T>* rightChildPtr;  // Pointer to right child
 };

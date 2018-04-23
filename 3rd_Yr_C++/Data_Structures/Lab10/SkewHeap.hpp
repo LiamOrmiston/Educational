@@ -18,6 +18,7 @@ SkewHeap<T>::~SkewHeap(){
 }
 template<typename T>
 void SkewHeap<T>::buildHeap(){
+  // open the data file and insert each value
   file.open("data.txt");
   int value = 0;
   while (file >> value) {
@@ -28,6 +29,8 @@ template<typename T>
 SkewNode<T>* SkewHeap<T>::concate(SkewNode<T>* H1, SkewNode<T>* H2) {
 
   if(H1 != nullptr && H2 != nullptr) {
+    // check which tree has the smaller root. the smaller root will keep its
+    // left subtree and will concate the larger root tree with its right subtree
     if(H1->getValue() <= H2->getValue()) {
       H1->setRightChildPtr(concate(H1->getRightChildPtr(), H2));
       // Swap
@@ -55,6 +58,7 @@ SkewNode<T>* SkewHeap<T>::concate(SkewNode<T>* H1, SkewNode<T>* H2) {
 // insert a value
 template<typename T>
 void SkewHeap<T>::insert(const int value){
+  // new node created and then concated with the existing tree
   SkewNode<T>* new_node = new SkewNode<T>(value);
   rootPtr = concate(rootPtr, new_node);
 }
@@ -62,7 +66,7 @@ void SkewHeap<T>::insert(const int value){
 // delete min
 template<typename T>
 void SkewHeap<T>::deleteMin(){
-  // min is always the root so we delete then patch at the root
+  // min is always the root so we delete then concate children
   if (rootPtr != nullptr) {
     // delete root and concate
     rootPtr = concate(rootPtr->getRightChildPtr(), rootPtr->getLeftChildPtr());
@@ -72,12 +76,11 @@ void SkewHeap<T>::deleteMin(){
   }
 }
 
-//Pre, In, Post print methods
+// Pre, In, Post print methods
+// Pre: print, recurse-left, recurse-right
 template<typename T>
 void SkewHeap<T>::preHelper(SkewNode<T>* subTreePtr) {
-
   std::cout << subTreePtr->getValue() << " ";
-
   if(subTreePtr->getLeftChildPtr() != nullptr) {
     preHelper(subTreePtr->getLeftChildPtr());
   }
@@ -96,19 +99,17 @@ void SkewHeap<T>::pre() {
   std::cout << '\n';
 }
 
+// In: recurse-left, print, recurse-right
 template<typename T>
 void SkewHeap<T>::inHelper(SkewNode<T>* subTreePtr) {
   if(subTreePtr->getLeftChildPtr() != nullptr) {
     inHelper(subTreePtr->getLeftChildPtr());
   }
-
   std::cout << subTreePtr->getValue() << " ";
-
   if(subTreePtr->getRightChildPtr() != nullptr) {
     inHelper(subTreePtr->getRightChildPtr());
   }
 }
-
 template<typename T>
 void SkewHeap<T>::in() {
   if (rootPtr == nullptr) {
@@ -120,6 +121,8 @@ void SkewHeap<T>::in() {
   std::cout << '\n';
 }
 
+// Level: store parent in current-queue and children in next-queue. Once
+// current-queue is empty print new line and set next-queue to current-queue
 template<typename T>
 void SkewHeap<T>::level() {
   if (rootPtr == nullptr) {

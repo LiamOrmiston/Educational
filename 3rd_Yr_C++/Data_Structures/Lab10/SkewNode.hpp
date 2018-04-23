@@ -24,7 +24,7 @@ SkewNode<T>::SkewNode(const T& aValue, SkewNode<T>* leftPtr, SkewNode<T>* rightP
   setLeftChildPtr(leftPtr);
   setRightChildPtr(rightPtr);
 }
-
+// destructor
 template<typename T>
 SkewNode<T>::~SkewNode() {
   leftChildPtr = nullptr;

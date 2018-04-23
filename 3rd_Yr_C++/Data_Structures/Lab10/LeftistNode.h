@@ -8,7 +8,6 @@ public:
    ~LeftistNode();
    LeftistNode(const T& value);
    LeftistNode(const T& value, LeftistNode<T>* leftPtr, LeftistNode<T>* rightPtr);
-   bool isLeaf() const;
 
    // Getters
    T getValue() const;
@@ -23,8 +22,8 @@ public:
    void setRightChildPtr(LeftistNode<T>* rightPtr);
 
 private:
-  T value;           // Data portion
-  T rank;            // Data portion
+  T value;                        // Data portion
+  T rank;                         // Data portion
   LeftistNode<T>* leftChildPtr;   // Pointer to left child
   LeftistNode<T>* rightChildPtr;  // Pointer to right child
 };
