@@ -1,3 +1,9 @@
+/*
+* SkewNode.h
+* Liam Ormiston
+* 4-24-18
+* Skew node header
+*/
 #ifndef SKEW_NODE
 #define SKEW_NODE
 

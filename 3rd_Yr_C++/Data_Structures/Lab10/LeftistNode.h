@@ -1,3 +1,9 @@
+/*
+* LeftistNode.h
+* Liam Ormiston
+* 4-24-18
+* Leftist node header
+*/
 #ifndef LEFTIST_NODE
 #define LEFTIST_NODE
 

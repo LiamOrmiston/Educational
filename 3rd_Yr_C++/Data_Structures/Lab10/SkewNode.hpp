@@ -1,3 +1,9 @@
+/*
+* SkewNode.hpp
+* Liam Ormiston
+* 4-24-18
+* Skew node class
+*/
 #include "SkewNode.h"
 #include <cstddef>
 

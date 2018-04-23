@@ -1,3 +1,9 @@
+/*
+* LeftistNode.hpp
+* Liam Ormiston
+* 4-24-18
+* Leftist node class
+*/
 #include "LeftistNode.h"
 #include <cstddef>
 

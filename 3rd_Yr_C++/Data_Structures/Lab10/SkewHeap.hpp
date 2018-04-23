@@ -134,8 +134,6 @@ void SkewHeap<T>::level() {
   else {
     std::queue<SkewNode<T>*> Q_current;
     std::queue<SkewNode<T>*> Q_next;
-    std::queue<SkewNode<T>*> Q_temp;
-
     Q_current.push(rootPtr);
     while(!Q_current.empty()) {
       SkewNode<T>* current = Q_current.front();
@@ -149,9 +147,7 @@ void SkewHeap<T>::level() {
       Q_current.pop();
       if(Q_current.empty()) {
         std::cout << '\n';
-        Q_temp = Q_current;
-        Q_current = Q_next;
-        Q_next = Q_temp;
+        swap(Q_current, Q_next);
       }
     }
   }

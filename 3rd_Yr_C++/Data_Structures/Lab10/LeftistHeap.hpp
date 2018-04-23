@@ -170,8 +170,6 @@ void LeftistHeap<T>::level() {
   else {
     std::queue<LeftistNode<T>*> Q_current;
     std::queue<LeftistNode<T>*> Q_next;
-    std::queue<LeftistNode<T>*> Q_temp;
-
     Q_current.push(rootPtr);
     while(!Q_current.empty()) {
       LeftistNode<T>* current = Q_current.front();
@@ -185,9 +183,7 @@ void LeftistHeap<T>::level() {
       Q_current.pop();
       if(Q_current.empty()) {
         std::cout << '\n';
-        Q_temp = Q_current;
-        Q_current = Q_next;
-        Q_next = Q_temp;
+        swap(Q_current, Q_next);
       }
     }
   }

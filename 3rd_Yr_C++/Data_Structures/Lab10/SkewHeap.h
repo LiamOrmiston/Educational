@@ -2,7 +2,7 @@
  * SkewHeap.h
  * Liam Ormiston
  * 4-24-18
- * Leftist heap class header
+ * Skew heap header
  */
 #ifndef SKEW_HEAP
 #define SKEW_HEAP

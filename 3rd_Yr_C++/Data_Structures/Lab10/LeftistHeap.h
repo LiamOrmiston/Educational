@@ -2,7 +2,7 @@
  * LeftistHeap.h
  * Liam Ormiston
  * 4-24-18
- * Leftist heap class header
+ * Leftist heap  header
  */
 #ifndef LEFTIST_HEAP
 #define LEFTIST_HEAP
